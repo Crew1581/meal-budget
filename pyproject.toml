@@ -1,0 +1,28 @@
+[project]
+name = "meal-budget"
+version = "0.1.0"
+description = "Минимальный backend планирования питания"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "fastapi>=0.141.1,<1.0",
+    "pydantic>=2.13.4,<3.0",
+    "pydantic-settings>=2.15.0,<3.0",
+    "uvicorn>=0.52.3,<1.0",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28.1,<1.0", "pytest>=8.4.2,<10.0", "ruff>=0.12.9,<1.0"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
