@@ -1,0 +1,14 @@
+{
+  "recipes": [
+    {
+      "id": "oats-demo",
+      "name": "Технический пример овсяных хлопьев",
+      "servings": 2,
+      "ingredients": [{"product_id": "oats", "grams": 100}]
+    }
+  ],
+  "days": [
+    {"day": 1, "meals": [{"recipe_id": "oats-demo", "servings": 1}]}
+  ],
+  "budget": 100
+}
