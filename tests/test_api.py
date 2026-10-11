@@ -44,5 +44,9 @@ def test_products_contract(client):
 def test_documentation_and_no_generation_endpoint(client):
     for path in ("/docs", "/redoc", "/openapi.json"):
         assert client.get(path).status_code == 200
-    assert set(client.get("/openapi.json").json()["paths"]) == {"/health", "/v1/products"}
+    assert set(client.get("/openapi.json").json()["paths"]) == {
+        "/health",
+        "/v1/products",
+        "/v1/menu-calculations",
+    }
     assert client.post("/v1/generations", json={}).status_code == 404
