@@ -9,7 +9,8 @@ ENV UV_PYTHON_DOWNLOADS=never \
     APP_ENVIRONMENT=production
 COPY pyproject.toml uv.lock .python-version ./
 RUN uv sync --frozen --no-dev --no-cache && \
-    groupadd --gid 10001 app && useradd --uid 10001 --gid app --no-create-home app
+    groupadd --gid 10001 app && useradd --uid 10001 --gid app --no-create-home app && \
+    mkdir generated && chown 10001:10001 generated && chmod 700 generated
 COPY src/ ./src/
 COPY data/ ./data/
 USER 10001:10001

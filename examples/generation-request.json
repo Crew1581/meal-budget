@@ -1,0 +1,16 @@
+{
+  "days": 1,
+  "budget": 200,
+  "daily_targets": {
+    "calories_kcal": 370,
+    "protein_g": 13,
+    "fat_g": 7,
+    "carbs_g": 62
+  },
+  "excluded_product_ids": [],
+  "disliked_product_ids": [],
+  "max_cooking_minutes": 20,
+  "meals_per_day": 1,
+  "price_region": "Москва",
+  "wishes": "Технический тест интеграции: один рецепт из 100 г овсяных хлопьев. Это не рекомендация для дневного питания."
+}
