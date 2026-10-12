@@ -28,16 +28,21 @@ def rounded(value: Decimal) -> Decimal:
     return value.quantize(CENT, rounding=ROUND_HALF_UP)
 
 
-def nutrition(values: dict[str, Decimal], denominator: int) -> CalculatedNutrition:
+def nutrition(
+    values: dict[str, Decimal], denominator: int, *, round_output: bool
+) -> CalculatedNutrition:
     return CalculatedNutrition(
-        **{key: rounded(value / denominator) for key, value in values.items()}
+        **{
+            key: rounded(value / denominator) if round_output else value / denominator
+            for key, value in values.items()
+        }
     )
 
 
 def calculate_menu(
-    menu: MenuCalculationRequest, catalog: ProductCatalog
+    menu: MenuCalculationRequest, catalog: ProductCatalog, *, round_output: bool = True
 ) -> MenuCalculationResponse:
-    """Расчет без HTTP, изменения меню и округления промежуточных значений."""
+    """Расчет без HTTP и изменения меню; round_output=False сохраняет точные КБЖУ."""
     products = {product.id: product for product in catalog.products}
     recipes = {recipe.id: recipe for recipe in menu.recipes}
     for i, recipe in enumerate(menu.recipes):
@@ -95,7 +100,7 @@ def calculate_menu(
                     CalculatedMeal(
                         recipe_id=meal.recipe_id,
                         servings=meal.servings,
-                        nutrition=nutrition(values, denominator),
+                        nutrition=nutrition(values, denominator, round_output=round_output),
                     )
                 )
                 for ingredient in sorted(recipe.ingredients, key=lambda item: item.product_id):
@@ -107,7 +112,9 @@ def calculate_menu(
                 total[key] += day_values[key]
             days.append(
                 CalculatedDay(
-                    day=day.day, meals=meals, nutrition=nutrition(day_values, denominator)
+                    day=day.day,
+                    meals=meals,
+                    nutrition=nutrition(day_values, denominator, round_output=round_output),
                 )
             )
 
@@ -139,7 +146,7 @@ def calculate_menu(
             data_status=catalog.data_status,
             warning=catalog.warning,
             days=days,
-            nutrition=nutrition(total, denominator),
+            nutrition=nutrition(total, denominator, round_output=round_output),
             shopping_list=shopping,
             budget=menu.budget,
             total_cost=rounded(total_cost),

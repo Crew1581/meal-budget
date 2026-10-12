@@ -1,7 +1,8 @@
+from decimal import Decimal
 from pathlib import Path
 from typing import Literal
 
-from pydantic import HttpUrl, SecretStr, field_validator
+from pydantic import Field, HttpUrl, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -17,6 +18,19 @@ class Settings(BaseSettings):
     deepseek_api_key: SecretStr = SecretStr("")
     deepseek_base_url: HttpUrl = HttpUrl("https://api.deepseek.com")
     deepseek_model: str = ""
+    # omit позволяет использовать модель без поддержки параметра thinking.
+    deepseek_thinking: Literal["disabled", "enabled", "omit"] = "disabled"
+    deepseek_reasoning_effort: Literal["low", "high", "max"] = "low"
+    deepseek_connect_timeout: float = Field(default=10, gt=0, le=60, allow_inf_nan=False)
+    deepseek_read_timeout: float = Field(default=60, gt=0, le=300, allow_inf_nan=False)
+    deepseek_write_timeout: float = Field(default=10, gt=0, le=60, allow_inf_nan=False)
+    deepseek_pool_timeout: float = Field(default=10, gt=0, le=60, allow_inf_nan=False)
+    deepseek_max_output_tokens: int = Field(default=8192, ge=1, le=32768)
+    deepseek_max_response_bytes: int = Field(default=262144, ge=1024, le=1048576)
+    generation_total_timeout: float = Field(default=180, gt=0, le=600, allow_inf_nan=False)
+    generation_nutrition_tolerance: Decimal = Field(
+        default=Decimal("0.10"), ge=0, le=1, allow_inf_nan=False
+    )
 
     @field_validator("catalog_path")
     @classmethod
