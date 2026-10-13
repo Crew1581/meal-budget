@@ -14,12 +14,15 @@
 - Валидация каталога при запуске; повреждённый файл прерывает запуск.
 - `/docs`, `/redoc`, `/openapi.json` — стандартная документация FastAPI.
 - Отдельный сервис DeepSeek: структурированное меню, проверка ядром и до двух исправлений.
-- Ручной CLI генерации из JSON-файла, **без публичного endpoint**.
+- Ручной CLI генерации из JSON-файла.
+- Закрытый `POST /v1/menu-generations` для разработчика: выключен по умолчанию,
+  отдельный Bearer-токен, одна генерация на процесс и тело до 64 KiB.
 
 Данные каталога помечены `demo_unverified`: цены и КБЖУ не проверены,
 использовать их для реального планирования питания нельзя.
 Серверной БД, аккаунтов и фоновых заданий пока нет. DeepSeek вызывается только
-при явном ручном запуске; API не требует его конфигурации.
+при явном CLI-запуске или авторизованном POST после включения endpoint.
+По умолчанию API не требует ключа или модели DeepSeek.
 
 ## Установка и запуск
 
@@ -82,7 +85,7 @@ lifespan, разделение роутеров/схем/логики, наст�
 | --- | --- |
 | `APP_ENVIRONMENT` | `local`; также `test`, `staging`, `production` |
 | `CATALOG_PATH` | `data/products.json`; относительный путь от корня проекта, не cwd |
-| `DEEPSEEK_API_KEY` | Пусто; секрет только из окружения для CLI |
+| `DEEPSEEK_API_KEY` | Пусто; серверный секрет, для CLI только из окружения |
 | `DEEPSEEK_BASE_URL` | `https://api.deepseek.com`; к нему добавляется `/chat/completions`, допустим `/v1` |
 | `DEEPSEEK_MODEL` | Пусто в Settings; пример `.env.example`: `deepseek-flash` |
 | `DEEPSEEK_THINKING` | `disabled`; также `enabled` или `omit` для модели без этого параметра |
@@ -91,6 +94,8 @@ lifespan, разделение роутеров/схем/логики, наст�
 | `DEEPSEEK_MAX_OUTPUT_TOKENS` | 8192; предел настройки 32768 на вызов |
 | `DEEPSEEK_MAX_RESPONSE_BYTES` | 262144; полный ответ, включая thinking и keep-alive; максимум 1048576 |
 | `GENERATION_TOTAL_TIMEOUT` | 180 секунд на весь цикл; максимум 600 |
+| `GENERATION_HTTP_ENABLED` | `false`; включает закрытый endpoint разработчика |
+| `GENERATION_ACCESS_TOKEN` | Пусто; отдельный серверный SecretStr, обязателен при включении; печатный ASCII без пробелов |
 | `GENERATION_NUTRITION_TOLERANCE` | `0.10`: каждый показатель каждого дня в ±10%, границы включительно |
 
 Отсутствие ключа не мешает запуску. Модель не выбирается по модели OpenCode.
@@ -185,6 +190,89 @@ uv run --frozen pytest tests/test_generate_menu_platform.py tests/test_deepseek_
 
 Тесты и CI не запускают платный сценарий. Публичный endpoint появится только
 вместе с заданиями, токенами установок, идемпотентностью и защитой расходов.
+
+## Закрытая HTTP-генерация MEAL-3
+
+Это **доступ разработчика для тестов, не публичный API для Flutter**.
+Не встраивайте `GENERATION_ACCESS_TOKEN` в будущий клиент. Endpoint выключен
+по умолчанию (404 и отсутствует в OpenAPI), не создает HTTPX-клиент и не требует
+DeepSeek-ключа. Включение без непустого корректного access token прерывает сборку
+приложения понятной ошибкой конфигурации без значения секрета.
+Ключ/модель провайдера проверяются сервисом: отсутствие дает 503, не платный вызов.
+
+Только **один процесс Uvicorn, `--workers 1`, без reload**. Один слот на процесс;
+конкурентный авторизованный POST немедленно получает 429, без очереди и вызова
+DeepSeek. Bearer проверяется через `secrets.compare_digest` до чтения тела;
+лимит **65536 байт**, включая chunked, действует до полного JSON-разбора (413).
+HTTPX-клиент переиспользуется через lifespan и закрывается при shutdown;
+отмена задачи закрывает поток ответа и освобождает слот, общий клиент остается
+доступен следующим запросам. Старые health/каталог/расчет не вызывают провайдера.
+
+ASGI `root_path` поддерживается, в том числе вложенный: guard и обработчики ошибок
+сопоставляют путь тем же способом, что Starlette/FastAPI. Endpoint требует серверное
+подтверждение guard для конкретного запроса; если middleware не отработал, генерация
+отвергается с 401 даже с правильным Bearer. Завершающий `/` не обходит защиту:
+только после проверок возможен 307 на канонический маршрут, без вызова провайдера.
+При `--root-path /api` внешний proxy должен удалить `/api` из передаваемого пути:
+внешний `/api/v1/menu-generations` → upstream `/v1/menu-generations`.
+Сам параметр Uvicorn не удаляет префикс из входного HTTP URL. Поэтому при прямой
+проверке Uvicorn curl отправляется на `/v1/menu-generations`; Location редиректа
+содержит внешний `/api`. Не добавляйте `-L` к платному POST автоматически.
+
+Сервис прежний: одно предложение + до двух исправлений — **до трех платных
+вызовов на один POST**, общий deadline 180 секунд по умолчанию, без автоматических
+сетевых повторов. Возвращается только проверенный `GenerationResult` с расчетом,
+`demo_unverified`, предупреждением каталога и доступными моделью/usage.
+Нет идемпотентности: повторный POST — новая потенциально платная генерация.
+Таймаут или отключение клиента **не гарантируют отсутствие расходов**;
+Uvicorn не обязан отменять обработчик при разрыве соединения. Слот в этом случае
+может оставаться занятым до завершения/общего deadline. Меню на сервере не сохраняется.
+
+**Следующий пример потенциально платный; во время реализации с DeepSeek не запускался.**
+В bash из корня проекта, терминал сервера (не используйте shell tracing):
+
+```bash
+set +x
+uv sync --frozen
+read -r -s -p 'DeepSeek API key: ' DEEPSEEK_API_KEY
+export DEEPSEEK_API_KEY
+read -r -s -p 'Generation access token (отдельный секрет): ' GENERATION_ACCESS_TOKEN
+export GENERATION_ACCESS_TOKEN
+export GENERATION_HTTP_ENABLED=true
+export DEEPSEEK_MODEL=deepseek-flash
+export DEEPSEEK_THINKING=disabled
+uv run --frozen uvicorn meal_budget.main:app --app-dir src \
+  --host 127.0.0.1 --port 8000 --workers 1
+# После остановки сервера:
+unset DEEPSEEK_API_KEY GENERATION_ACCESS_TOKEN GENERATION_HTTP_ENABLED
+```
+
+В другом терминале введите **тот же access token**, но не DeepSeek-ключ.
+`curl --disable` отключает пользовательский curlrc (в том числе скрытые retries),
+`--noproxy '*'` исключает proxy для локального запроса. Токен передается через
+stdin-заголовок (`--header @-`), не argv. Не используйте `-v`, `--trace`,
+`--retry` или автоматическое повторение POST. Результат — новый файл внутри
+игнорируемого `generated/`, с правами 0600 благодаря mktemp/umask:
+
+```bash
+set +x
+umask 077
+mkdir -p generated
+read -r -s -p 'Generation access token: ' GENERATION_ACCESS_TOKEN
+output=$(mktemp generated/http-menu.XXXXXX.json)
+printf 'Authorization: Bearer %s\n' "$GENERATION_ACCESS_TOKEN" | \
+  curl --disable --noproxy '*' --silent --show-error --fail --header @- \
+  --header 'Content-Type: application/json' \
+  --data-binary @examples/generation-request.json \
+  --output "$output" http://127.0.0.1:8000/v1/menu-generations
+unset GENERATION_ACCESS_TOKEN
+```
+
+При HTTP-ошибке curl завершается с ненулевым кодом; файл может остаться пустым,
+это не меню. Анкета примера — техническая проверка, не дневная рекомендация.
+HTTP-коды и формат ошибок — в [API](docs/API.md).
+Автономная HTTP-проверка, включая живой Uvicorn и локальный тестовый провайдер:
+`uv run --frozen pytest tests/test_generation_http.py tests/test_generation_root_path.py tests/test_generation_http_live.py`.
 
 ## Деньги и хранение
 
