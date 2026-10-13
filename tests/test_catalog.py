@@ -4,9 +4,9 @@ from decimal import Decimal
 import pytest
 from fastapi.testclient import TestClient
 
+from main import create_app
 from meal_budget.catalog import load_catalog
 from meal_budget.core.config import PROJECT_ROOT, Settings
-from meal_budget.main import create_app
 
 
 @pytest.mark.parametrize("contents", ["{", "{}", '{"products": []}', "null"])

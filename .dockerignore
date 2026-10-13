@@ -3,8 +3,10 @@
 !pyproject.toml
 !uv.lock
 !.python-version
-!src/
-!src/**
+!main.py
+!manage.py
+!meal_budget/
+!meal_budget/**
 !data/
 !data/products.json
 **/__pycache__/

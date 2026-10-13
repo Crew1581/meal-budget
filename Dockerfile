@@ -11,8 +11,9 @@ COPY pyproject.toml uv.lock .python-version ./
 RUN uv sync --frozen --no-dev --no-cache && \
     groupadd --gid 10001 app && useradd --uid 10001 --gid app --no-create-home app && \
     mkdir generated && chown 10001:10001 generated && chmod 700 generated
-COPY src/ ./src/
+COPY main.py manage.py ./
+COPY meal_budget/ ./meal_budget/
 COPY data/ ./data/
 USER 10001:10001
 EXPOSE 8000
-CMD ["uvicorn", "meal_budget.main:app", "--app-dir", "src", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "manage.py", "--host", "0.0.0.0", "--port", "8000"]

@@ -72,3 +72,13 @@ class GenerationResult(Contract):
     warnings: list[str]
     nutrition_tolerance: Decimal
     metadata: GenerationMetadata
+
+
+class GenerationHTTPError(Contract):
+    code: str
+    message: str
+    metadata: GenerationMetadata | None = None
+
+
+class GenerationHTTPErrorResponse(Contract):
+    detail: GenerationHTTPError

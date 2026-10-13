@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
+from main import create_app
 from meal_budget.core.config import Settings
-from meal_budget.main import create_app
 
 
 @pytest.fixture

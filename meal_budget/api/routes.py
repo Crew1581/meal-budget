@@ -4,7 +4,9 @@ from fastapi import APIRouter, Request
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette._utils import get_route_path
 
+from meal_budget.api.generations import GENERATION_PATH, error_response
 from meal_budget.schemas.common import Contract
 from meal_budget.schemas.menu import (
     CalculationErrorResponse,
@@ -32,7 +34,10 @@ def products(request: Request) -> ProductCatalog:
 
 
 async def calculation_validation_error(request: Request, exc: RequestValidationError):
-    if request.url.path != "/v1/menu-calculations":
+    path = get_route_path(request.scope)
+    if path == GENERATION_PATH:
+        return error_response(422, "invalid_request", "Некорректная анкета генерации.")
+    if path != "/v1/menu-calculations":
         return await request_validation_exception_handler(request, exc)
     return JSONResponse(
         status_code=422,
