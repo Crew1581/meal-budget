@@ -12,7 +12,7 @@ def run_process(code, directory):
     return subprocess.run(
         [sys.executable, "-c", code],
         cwd=directory,
-        env={"PYTHONPATH": str(PROJECT_ROOT / "src")},
+        env={"PYTHONPATH": str(PROJECT_ROOT)},
         capture_output=True,
         text=True,
         timeout=15,
@@ -95,7 +95,7 @@ def test_module_help_in_separate_process(tmp_path):
     result = subprocess.run(
         [sys.executable, "-m", "meal_budget.generate_menu", "--help"],
         cwd=tmp_path,
-        env={"PYTHONPATH": str(PROJECT_ROOT / "src")},
+        env={"PYTHONPATH": str(PROJECT_ROOT)},
         capture_output=True,
         text=True,
         timeout=15,

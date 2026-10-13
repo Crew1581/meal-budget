@@ -33,13 +33,46 @@
 
 ```bash
 uv sync --frozen
-uv run --frozen uvicorn meal_budget.main:app --app-dir src --reload
+uv run --frozen python manage.py
 ```
 
 Зависимости зафиксированы в `uv.lock`, окружение создаётся в `.venv`.
 Не используйте параллельно pip/requirements.txt. uv может установить отдельный
 Python 3.13 в пользовательский каталог; системный Python не меняется.
-Без reload: уберите `--reload`. Локальный адрес: `http://127.0.0.1:8000`.
+Локальный адрес: `http://127.0.0.1:8000`. По умолчанию один worker, без reload.
+Для разработки без генерационного HTTP endpoint: `uv run --frozen python manage.py --reload`.
+При `GENERATION_HTTP_ENABLED=true` launcher запрещает reload; настройки секретов
+не принимает через аргументы и не выводит. Порт/адрес меняются через `--port`/`--host`.
+`--help` доступен без загрузки настроек и запуска приложения.
+`manage.py` определяет пути от своего файла, поэтому работает также при запуске
+абсолютным путем из другой рабочей директории, без ручного PYTHONPATH.
+
+Если удобно активировать окружение в терминале:
+
+```bash
+source .venv/bin/activate
+python manage.py
+```
+
+### PyCharm
+
+Для запуска HTTP-сервера выбирайте корневой **`manage.py`**.
+Interpreter: `.venv/bin/python` (Python 3.13), Script path: `$PROJECT_DIR$/manage.py`,
+Working directory: `$PROJECT_DIR$`; без дополнительных параметров.
+Для этого рабочего проекта подготовлена локальная конфигурация **Meal Budget API**:
+выберите ее в списке Run/Debug. Если IDE еще не подхватила файлы, переоткройте проект.
+`.idea/` не входит в Git; на другой машине конфигурацию нужно создать вручную.
+Корень проекта отмечается Sources Root, `tests/` — Test Sources Root, `.venv/`
+исключается из исходников. Системный Python 3.12 и глобальные настройки IDE менять не требуется.
+
+Корневой `main.py` собирает приложение в `create_app()`: подключает маршруты,
+обработчики ошибок и middleware, владеет каталогом и HTTPX-клиентом через lifespan.
+`manage.py` отвечает только за запуск Uvicorn. Альтернативный запуск из корня:
+
+```bash
+uv run --frozen uvicorn main:create_app --factory \
+  --host 127.0.0.1 --port 8000 --workers 1
+```
 
 ```bash
 curl http://127.0.0.1:8000/health
@@ -57,8 +90,9 @@ uv run --frozen pytest
 ## Структура
 
 ```text
-src/meal_budget/
-  main.py          # create_app(), lifespan и приложение
+main.py            # create_app(), lifespan, ресурсы, маршруты и middleware
+manage.py          # запуск API через Uvicorn, в том числе из PyCharm
+meal_budget/
   catalog.py       # чтение и проверка локального JSON
   api/             # тонкие HTTP-маршруты
   core/            # конфигурация
@@ -71,9 +105,9 @@ docs/              # продукт, архитектура, API, решения
 ```
 
 Расчет отделен от генерации; пустые интерфейсы не создаются.
-Из read-only референса `styl-backend` адаптированы фабрика приложения,
-lifespan, разделение роутеров/схем/логики, настройки, uv и подход к проверкам.
-Его бизнес-логика, инфраструктура и зависимости не перенесены.
+Пакет `meal_budget/` находится рядом с точками входа: нет адаптеров сборки,
+вложенного main.py или ручного изменения sys.path. Импорты пакета работают
+при запуске корневого manage.py и модулей из корня проекта.
 
 ## Переменные окружения
 
@@ -134,7 +168,7 @@ read -r -s -p 'DeepSeek API key: ' DEEPSEEK_API_KEY
 export DEEPSEEK_API_KEY
 export DEEPSEEK_MODEL=deepseek-flash
 export DEEPSEEK_THINKING=disabled
-PYTHONPATH=src uv run --frozen python -m meal_budget.generate_menu \
+uv run --frozen python -m meal_budget.generate_menu \
   --request examples/generation-request.json --output personal-menu.json
 unset DEEPSEEK_API_KEY
 ```
@@ -241,8 +275,7 @@ export GENERATION_ACCESS_TOKEN
 export GENERATION_HTTP_ENABLED=true
 export DEEPSEEK_MODEL=deepseek-flash
 export DEEPSEEK_THINKING=disabled
-uv run --frozen uvicorn meal_budget.main:app --app-dir src \
-  --host 127.0.0.1 --port 8000 --workers 1
+uv run --frozen python manage.py
 # После остановки сервера:
 unset DEEPSEEK_API_KEY GENERATION_ACCESS_TOKEN GENERATION_HTTP_ENABLED
 ```
@@ -296,6 +329,8 @@ docker run --rm -p 8000:8000 meal-budget:local
 Контейнер работает под UID/GID 10001 без reload, устанавливает runtime-зависимости
 из lock-файла, содержит демонстрационный каталог. `.env` и секреты не копируются;
 настройки передаются через окружение при запуске. Compose не нужен.
+В образ копируются корневые main.py/manage.py и пакет meal_budget/;
+сервер запускается `python manage.py --host 0.0.0.0 --port 8000` с одним worker.
 `/app/generated` доступен UID 10001 для ручного CLI; результаты внутри контейнера
 эфемерны. Для сохранения вне контейнера можно отдельно подключить каталог в
 `/app/generated` с правами на запись UID 10001. Генерация при запуске API не выполняется.

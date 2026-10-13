@@ -1,4 +1,4 @@
-"""Ручной запуск: PYTHONPATH=src uv run --frozen python -m meal_budget.generate_menu."""
+"""Ручной запуск из корня: uv run --frozen python -m meal_budget.generate_menu."""
 
 import argparse
 import asyncio

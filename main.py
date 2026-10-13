@@ -1,3 +1,5 @@
+"""Сборка FastAPI-приложения и владение ресурсами через lifespan."""
+
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -16,6 +18,7 @@ from meal_budget.services.menu_generation import MenuGenerationService
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
+    """Создает приложение; каталог и клиент провайдера открываются только в lifespan."""
     app_settings = settings if settings is not None else Settings()
     token = app_settings.generation_access_token.get_secret_value()
     if app_settings.generation_http_enabled and (
@@ -49,6 +52,3 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         application.add_exception_handler(HTTPException, generation_http_exception)
     application.add_exception_handler(RequestValidationError, calculation_validation_error)
     return application
-
-
-app = create_app()

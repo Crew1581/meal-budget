@@ -16,10 +16,10 @@ from test_generation_http import (
 )
 from test_generation_http import app_factory as app_factory
 
+from main import create_app
 from meal_budget.api.generation_guard import MAX_REQUEST_BYTES, GenerationGuard
 from meal_budget.api.generations import GENERATION_PATH, GUARDED_REQUEST_KEY
 from meal_budget.core.config import PROJECT_ROOT, Settings
-from meal_budget.main import create_app
 
 ROOT_PATHS = ["", "/api", "/gateway/api"]
 

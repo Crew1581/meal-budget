@@ -23,8 +23,8 @@ from test_generation_http import (
     example_request,
 )
 
+from main import create_app
 from meal_budget.core.config import PROJECT_ROOT, Settings
-from meal_budget.main import create_app
 
 
 @contextmanager
@@ -185,7 +185,7 @@ def cli_server(provider_url):
     read_fd, write_fd = os.pipe()
     env = {
         **os.environ,
-        "PYTHONPATH": str(PROJECT_ROOT / "src"),
+        "PYTHONPATH": str(PROJECT_ROOT),
         "GENERATION_HTTP_ENABLED": "false",
         "DEEPSEEK_API_KEY": PROVIDER_KEY,
         "MEAL_TEST_PROVIDER_URL": provider_url,

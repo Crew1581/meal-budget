@@ -8,7 +8,7 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
-from meal_budget import main
+import main
 from meal_budget.api.generation_guard import MAX_REQUEST_BYTES
 from meal_budget.api.generations import GENERATION_PATH
 from meal_budget.core.config import PROJECT_ROOT, Settings
