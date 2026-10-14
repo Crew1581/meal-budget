@@ -16,6 +16,7 @@ from meal_budget.services.menu_calculation import MenuCalculationError, calculat
 def small_catalog():
     return ProductCatalog.model_validate(
         {
+            "catalog_version": "synthetic-calculation-v1",
             "data_status": "demo_unverified",
             "warning": "Тестовые демонстрационные данные",
             "products": [
@@ -26,9 +27,7 @@ def small_catalog():
                     "nutrition_per_100g": nutrients,
                     "package_size_g": 100,
                     "price": price,
-                    "price_region": "Тест",
-                    "price_source": "Тест",
-                    "price_updated_at": "2026-10-10",
+                    "provenance": {"kind": "synthetic_fixture", "note": "unit test"},
                 }
                 for product_id, state, nutrients, price in [
                     (
@@ -342,7 +341,14 @@ def test_api_success_numbers_and_exceeded_budget(calculation_client, menu_payloa
     def no_numeric_strings(value):
         if isinstance(value, dict):
             for key, item in value.items():
-                if key not in {"product_id", "recipe_id", "name", "data_status", "warning"}:
+                if key not in {
+                    "product_id",
+                    "recipe_id",
+                    "name",
+                    "data_status",
+                    "warning",
+                    "catalog_version",
+                }:
                     no_numeric_strings(item)
         elif isinstance(value, list):
             for item in value:
@@ -352,7 +358,7 @@ def test_api_success_numbers_and_exceeded_budget(calculation_client, menu_payloa
 
     no_numeric_strings(body)
     assert calculation_client.get("/health").json() == {"status": "ok"}
-    assert calculation_client.get("/v1/products").json()["products"][0]["package_size_g"] == "100"
+    assert calculation_client.get("/v1/products").json()["products"][0]["package_size_g"] == 100
 
 
 def test_loaded_catalog_used_after_file_deleted(tmp_path, small_catalog):

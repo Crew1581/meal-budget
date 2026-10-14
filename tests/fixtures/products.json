@@ -1,0 +1,25 @@
+{
+  "catalog_version": "synthetic-meal-3-v1",
+  "data_status": "demo_unverified",
+  "warning": "Синтетические fixtures MEAL-3, не реальные товары и не проверенные цены или КБЖУ.",
+  "products": [
+    {
+      "id": "oats", "name": "Овсяные хлопья", "state": "dry",
+      "nutrition_per_100g": {"calories_kcal": 370, "protein_g": 13, "fat_g": 7, "carbs_g": 62},
+      "package_size_g": 500, "price": 89.90,
+      "provenance": {"kind": "synthetic_fixture", "note": "Прежние demo-данные MEAL-3; только автономные тесты"}
+    },
+    {
+      "id": "buckwheat", "name": "Гречневая крупа", "state": "dry",
+      "nutrition_per_100g": {"calories_kcal": 340, "protein_g": 13, "fat_g": 3, "carbs_g": 68},
+      "package_size_g": 800, "price": 119.90,
+      "provenance": {"kind": "synthetic_fixture", "note": "Прежние demo-данные MEAL-3; только автономные тесты"}
+    },
+    {
+      "id": "chicken", "name": "Куриное филе", "state": "raw",
+      "nutrition_per_100g": {"calories_kcal": 110, "protein_g": 23, "fat_g": 2, "carbs_g": 0},
+      "package_size_g": 600, "price": 299.90,
+      "provenance": {"kind": "synthetic_fixture", "note": "Прежние demo-данные MEAL-3; только автономные тесты"}
+    }
+  ]
+}

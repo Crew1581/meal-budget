@@ -1,27 +1,25 @@
 {
+  "catalog_version": "demo-meal-3-v1",
   "data_status": "demo_unverified",
-  "warning": "Демонстрационные данные. Цены и КБЖУ не проверены и не пригодны для реального планирования питания.",
+  "warning": "Демонстрационные синтетические данные MEAL-3, не реальные товары «Пятёрочки». Цены, КБЖУ, регион, магазин и наличие не проверены. Не использовать для реального планирования питания; реальный снимок выбирается отдельно через CATALOG_PATH.",
   "products": [
     {
       "id": "oats", "name": "Овсяные хлопья", "state": "dry",
       "nutrition_per_100g": {"calories_kcal": 370, "protein_g": 13, "fat_g": 7, "carbs_g": 62},
       "package_size_g": 500, "price": 89.90,
-      "price_region": "Москва", "price_source": "Демонстрационная оценка, не магазин",
-      "price_updated_at": "2026-10-10"
+      "provenance": {"kind": "synthetic_demo", "note": "Синтетические demo-данные MEAL-3, не карточка товара сети"}
     },
     {
       "id": "buckwheat", "name": "Гречневая крупа", "state": "dry",
       "nutrition_per_100g": {"calories_kcal": 340, "protein_g": 13, "fat_g": 3, "carbs_g": 68},
       "package_size_g": 800, "price": 119.90,
-      "price_region": "Москва", "price_source": "Демонстрационная оценка, не магазин",
-      "price_updated_at": "2026-10-10"
+      "provenance": {"kind": "synthetic_demo", "note": "Синтетические demo-данные MEAL-3, не карточка товара сети"}
     },
     {
       "id": "chicken", "name": "Куриное филе", "state": "raw",
       "nutrition_per_100g": {"calories_kcal": 110, "protein_g": 23, "fat_g": 2, "carbs_g": 0},
       "package_size_g": 600, "price": 299.90,
-      "price_region": "Москва", "price_source": "Демонстрационная оценка, не магазин",
-      "price_updated_at": "2026-10-10"
+      "provenance": {"kind": "synthetic_demo", "note": "Синтетические demo-данные MEAL-3, не карточка товара сети"}
     }
   ]
 }

@@ -22,6 +22,7 @@ bearer = HTTPBearer(auto_error=False, scheme_name="GenerationAccessToken")
 router = APIRouter()
 
 ERROR_STATUSES = {
+    "catalog_unavailable": 503,
     "invalid_request": 422,
     "attempts_exhausted": 422,
     "provider_timeout": 504,

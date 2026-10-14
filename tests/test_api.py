@@ -14,6 +14,7 @@ def test_products_contract(client):
     body = response.json()
     assert body["data_status"] == "demo_unverified"
     assert body["warning"]
+    assert body["catalog_version"] == "synthetic-meal-3-v1"
     product = body["products"][0]
     assert set(product) == {
         "id",
@@ -22,6 +23,7 @@ def test_products_contract(client):
         "nutrition_per_100g",
         "package_size_g",
         "price",
+        "provenance",
         "price_region",
         "price_source",
         "price_updated_at",
@@ -34,7 +36,7 @@ def test_products_contract(client):
     }
     assert product["id"] == "oats"
     assert product["state"] == "dry"
-    assert product["package_size_g"] == "500"
+    assert product["package_size_g"] == 500
     assert isinstance(product["price"], (int, float))
     assert json.loads(response.text, parse_float=Decimal)["products"][0]["price"] == Decimal(
         "89.90"

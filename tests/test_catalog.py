@@ -30,7 +30,7 @@ def test_missing_catalog_prevents_startup(tmp_path):
 
 @pytest.mark.parametrize("problem", ["duplicate", "invalid_price", "nonfinite"])
 def test_catalog_validation(tmp_path, problem):
-    raw = json.loads((PROJECT_ROOT / "data/products.json").read_text(encoding="utf-8"))
+    raw = json.loads((PROJECT_ROOT / "tests/fixtures/products.json").read_text(encoding="utf-8"))
     if problem == "duplicate":
         raw["products"].append(raw["products"][0])
     elif problem == "invalid_price":
@@ -47,7 +47,7 @@ def test_paths_do_not_depend_on_cwd(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     for settings in (
         Settings(_env_file=None),
-        Settings(_env_file=None, catalog_path="data/products.json"),
+        Settings(_env_file=None, catalog_path="tests/fixtures/products.json"),
     ):
         with TestClient(create_app(settings)) as client:
             assert client.get("/v1/products").status_code == 200

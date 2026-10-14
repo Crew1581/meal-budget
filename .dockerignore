@@ -9,5 +9,9 @@
 !meal_budget/**
 !data/
 !data/products.json
+!data/5ka-products.json
+!examples/
+!examples/evaluation/
+!examples/evaluation/scenarios.json
 **/__pycache__/
 **/*.pyc

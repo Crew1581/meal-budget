@@ -14,6 +14,7 @@ RUN uv sync --frozen --no-dev --no-cache && \
 COPY main.py manage.py ./
 COPY meal_budget/ ./meal_budget/
 COPY data/ ./data/
+COPY examples/evaluation/scenarios.json ./examples/evaluation/scenarios.json
 USER 10001:10001
 EXPOSE 8000
 CMD ["python", "manage.py", "--host", "0.0.0.0", "--port", "8000"]
