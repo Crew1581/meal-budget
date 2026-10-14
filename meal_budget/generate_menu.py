@@ -11,6 +11,12 @@ from pathlib import Path
 
 from meal_budget.catalog import load_catalog
 from meal_budget.core.config import PROJECT_ROOT, Settings
+from meal_budget.evaluation import (
+    ScenarioPreparationError,
+    require_ready_scenario,
+    verify_preparation,
+)
+from meal_budget.schemas.evaluation import RunSummary
 from meal_budget.schemas.generation import GenerationRequest, GenerationResult
 from meal_budget.schemas.products import ProductCatalog
 from meal_budget.services.deepseek import DeepSeekProvider, GenerationError, parse_json
@@ -72,6 +78,49 @@ def check_output(directory: int, name: str, *, overwrite: bool) -> None:
         raise FileExistsError("output exists")
 
 
+def normalized_output_path(path: Path) -> Path:
+    # Лексическая нормализация Path удаляет ./ и повторные /, но не следует symlink.
+    if path.is_absolute() or not path.parts or ".." in path.parts:
+        raise ValueError("invalid output path")
+    return path
+
+
+def check_existing_output(path: Path, *, overwrite: bool) -> None:
+    """Проверяет существующую часть пути, ничего не создавая."""
+    flags = directory_flags()
+    directory = os.open(PROJECT_ROOT, flags)
+    try:
+        for part in ("generated", *path.parts[:-1]):
+            try:
+                child = os.open(part, flags, dir_fd=directory)
+            except FileNotFoundError:
+                # Ниже отсутствующего родителя нет существующих конфликтующих файлов.
+                break
+            os.close(directory)
+            directory = child
+        else:
+            check_output(directory, path.name, overwrite=overwrite)
+        if not os.access(".", os.W_OK | os.X_OK, dir_fd=directory, effective_ids=True):
+            raise PermissionError("output directory is not writable")
+    finally:
+        os.close(directory)
+
+
+def check_output_paths(
+    output: Path, report: Path | None, *, overwrite: bool
+) -> tuple[Path, Path | None]:
+    output = normalized_output_path(output)
+    if report is not None:
+        report = normalized_output_path(report)
+        if output == report or output in report.parents or report in output.parents:
+            raise ValueError("output and report paths conflict")
+    # Общая проверка обеих целей ДО mkdir: никакой частичной подготовки при конфликте.
+    for path in (output, report):
+        if path is not None:
+            check_existing_output(path, overwrite=overwrite)
+    return output, report
+
+
 def save_result(path: Path, content: str, *, overwrite: bool) -> None:
     # dir_fd фиксирует родителя: подмена пути symlink не перенаправит запись.
     with output_directory(path) as (directory, name):
@@ -117,6 +166,8 @@ def main(argv=None) -> int:
         "или tests/run-1.json; без .. и symlink",
     )
     parser.add_argument("--overwrite", action="store_true", help="Явно разрешить замену результата")
+    parser.add_argument("--scenario", help="ID подготовленного ready-сценария из manifest")
+    parser.add_argument("--report", type=Path, help="Сводка успеха/ошибки внутри generated/")
     args = parser.parse_args(argv)
     try:
         directory_flags()
@@ -124,8 +175,14 @@ def main(argv=None) -> int:
         print(str(exc), file=sys.stderr)
         return 2
     try:
-        with output_directory(args.output) as (directory, name):
-            check_output(directory, name, overwrite=args.overwrite)
+        scenario = require_ready_scenario(args.scenario) if args.scenario is not None else None
+    except ScenarioPreparationError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    try:
+        args.output, args.report = check_output_paths(
+            args.output, args.report, overwrite=args.overwrite
+        )
     except FileExistsError:
         print("Результат уже существует; для замены нужен --overwrite.", file=sys.stderr)
         return 2
@@ -141,13 +198,51 @@ def main(argv=None) -> int:
             raise ValueError("request size limit")
         request = GenerationRequest.model_validate(parse_json(raw))
         catalog = load_catalog(settings.catalog_path)
+        if scenario is not None:
+            verify_preparation(scenario, request, catalog, settings.generation_nutrition_tolerance)
+        summary = RunSummary(
+            scenario=args.scenario if args.scenario is not None else "unspecified",
+            catalog_version=catalog.catalog_version,
+            requested_model=settings.deepseek_model or None,
+            thinking=settings.deepseek_thinking,
+            outcome="not_run",
+        )
+    except ScenarioPreparationError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     except (OSError, ValueError, RuntimeError, RecursionError):
         print("Некорректная конфигурация, анкета или каталог.", file=sys.stderr)
         return 2
     try:
+        # Все назначения уже проверены. Ошибка создания родителей также до провайдера.
+        for path in (args.output, args.report):
+            if path is not None:
+                with output_directory(path) as (directory, name):
+                    check_output(directory, name, overwrite=args.overwrite)
+    except (OSError, ValueError):
+        print("Не удалось подготовить назначения внутри generated/.", file=sys.stderr)
+        return 2
+    try:
         result = asyncio.run(run_generation(request, catalog, settings))
         save_result(args.output, result.model_dump_json(indent=2), overwrite=args.overwrite)
+        if args.report:
+            summary.outcome = "success"
+            summary.metadata = result.metadata
+            summary.budget_pass = result.calculation.within_budget
+            summary.nutrition_pass = True
+            save_result(args.report, summary.model_dump_json(indent=2), overwrite=args.overwrite)
     except GenerationError as exc:
+        if args.report:
+            summary.outcome = "error"
+            summary.error_code = exc.code
+            summary.metadata = exc.metadata
+            try:
+                save_result(
+                    args.report, summary.model_dump_json(indent=2), overwrite=args.overwrite
+                )
+            except (OSError, ValueError):
+                print("Не удалось сохранить сводку ошибки.", file=sys.stderr)
+                return 2
         print(f"{exc.code}: {exc}", file=sys.stderr)
         return 1
     except (OSError, ValueError):

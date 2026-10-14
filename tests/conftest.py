@@ -2,7 +2,13 @@ import pytest
 from fastapi.testclient import TestClient
 
 from main import create_app
-from meal_budget.core.config import Settings
+from meal_budget.core.config import PROJECT_ROOT, Settings
+
+
+@pytest.fixture(autouse=True)
+def isolated_catalog(monkeypatch):
+    # Обычные тесты не зависят от обновляемого веб-каталога.
+    monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "tests/fixtures/products.json"))
 
 
 @pytest.fixture

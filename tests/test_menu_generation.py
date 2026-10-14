@@ -12,7 +12,7 @@ import httpx
 import pytest
 from pydantic import ValidationError
 
-from meal_budget import generate_menu
+from meal_budget import evaluation, generate_menu
 from meal_budget.core.config import PROJECT_ROOT, Settings
 from meal_budget.schemas.generation import GeneratedPlan, GenerationRequest
 from meal_budget.schemas.products import ProductCatalog
@@ -36,6 +36,7 @@ def provider_settings():
 def generation_catalog():
     return ProductCatalog.model_validate(
         {
+            "catalog_version": "synthetic-generation-v1",
             "data_status": "demo_unverified",
             "warning": "Тестовые непроверенные данные",
             "products": [
@@ -51,9 +52,7 @@ def generation_catalog():
                     },
                     "package_size_g": 100,
                     "price": price,
-                    "price_region": "Тест",
-                    "price_source": "Тест",
-                    "price_updated_at": "2026-10-10",
+                    "provenance": {"kind": "synthetic_fixture", "note": "unit test"},
                 }
                 for key, state, factor, price in [
                     ("a", "dry", 1, "10.00"),
@@ -202,8 +201,10 @@ def test_one_call_and_prompt(
     assert [product["id"] for product in products] == ["a"]
     assert products[0]["state"] == "dry"
     assert products[0]["price"] == 10
-    assert products[0]["package_size_g"] == "100"
-    assert products[0]["nutrition_per_100g"]["protein_g"] == "10"
+    assert products[0]["package_size_g"] == 100
+    assert products[0]["nutrition_per_100g"]["protein_g"] == 10
+    assert "Обычная питьевая вода" in system["content"]
+    assert "Все остальные пищевые ингредиенты" in system["content"]
 
 
 @pytest.mark.parametrize("thinking,expected", [("enabled", {"type": "enabled"}), ("omit", None)])
@@ -553,6 +554,35 @@ def cli_transport(monkeypatch, replies):
     return transport
 
 
+@pytest.fixture
+def ready_scenario_file(
+    tmp_path, monkeypatch, generation_request, generation_catalog, generated_plan
+):
+    witness = copy.deepcopy(generated_plan)
+    witness["recipes"][0]["steps"] = ["Ручное свидетельство, не отправлять провайдеру"]
+    path = tmp_path / "scenarios.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "ordinary",
+                    "title": "Синтетический ready-сценарий",
+                    "status": "ready",
+                    "expected": "success",
+                    "preparation": "Только автономный тест",
+                    "catalog_version": generation_catalog.catalog_version,
+                    "request": generation_request.model_dump(mode="json"),
+                    "witness": witness,
+                }
+            ],
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(evaluation, "SCENARIOS_PATH", path)
+    return path
+
+
 def test_cli_success_and_no_overwrite(cli_inputs, monkeypatch, generated_plan, capsys):
     request_path, output = cli_inputs
     transport = cli_transport(monkeypatch, [response(generated_plan)])
@@ -723,7 +753,7 @@ def test_model_totals_not_accepted(
 
 def test_cli_documented_example(cli_inputs, monkeypatch, generated_plan):
     _, output = cli_inputs
-    monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "data/products.json"))
+    monkeypatch.delenv("CATALOG_PATH")
     generated_plan["recipes"][0]["ingredients"][0]["product_id"] = "oats"
     cli_transport(monkeypatch, [response(generated_plan)])
     assert (
@@ -740,7 +770,394 @@ def test_cli_documented_example(cli_inputs, monkeypatch, generated_plan):
     result = json.loads(output.read_text(encoding="utf-8"), parse_float=Decimal)
     assert result["calculation"]["total_cost"] == Decimal("89.9")
     assert result["calculation"]["data_status"] == "demo_unverified"
+    assert result["catalog_version"] == "demo-meal-3-v1"
     assert result["metadata"]["calls"] == 1
+
+
+def test_cli_optional_report_success(cli_inputs, monkeypatch, generated_plan, ready_scenario_file):
+    request, output = cli_inputs
+    cli_transport(monkeypatch, [response(generated_plan)])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--scenario",
+                "ordinary",
+                "--report",
+                "reports/ordinary.json",
+            ]
+        )
+        == 0
+    )
+    report = json.loads((output.parent / "reports/ordinary.json").read_bytes())
+    assert report["outcome"] == "success"
+    assert report["catalog_version"] == "synthetic-generation-v1"
+    assert report["scenario"] == "ordinary"
+    assert report["thinking"] == "disabled"
+    assert report["budget_pass"] is report["nutrition_pass"] is True
+    assert report["metadata"]["calls"] == 1
+    assert report["metadata"]["responses"][0]["usage"]["total_tokens"] == 50
+    assert report["manual"]["conclusion"] is None
+
+
+def test_cli_report_empty_catalog_no_network(cli_inputs, monkeypatch):
+    request, output = cli_inputs
+    monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "data/5ka-products.json"))
+    transport = cli_transport(monkeypatch, [])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--report",
+                "error.json",
+            ]
+        )
+        == 1
+    )
+    report = json.loads((output.parent / "error.json").read_bytes())
+    assert report["outcome"] == "error"
+    assert report["error_code"] == "catalog_unavailable"
+    assert report["metadata"]["calls"] == 0
+    assert not output.exists()
+    assert not transport.requests
+
+
+@pytest.mark.parametrize("catalog", ["nonempty", "empty"])
+@pytest.mark.parametrize("scenario", ["ordinary", "unknown", "unspecified"])
+def test_cli_explicit_blocked_or_unknown_scenario_never_reaches_provider(
+    cli_inputs,
+    monkeypatch,
+    capsys,
+    catalog,
+    scenario,
+):
+    request, output = cli_inputs
+    if catalog == "empty":
+        monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "data/5ka-products.json"))
+    transport = cli_transport(monkeypatch, [])
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Scenario must be rejected before provider creation")
+
+    monkeypatch.setattr(generate_menu, "run_generation", forbidden)
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--scenario",
+                scenario,
+                "--report",
+                "report.json",
+            ]
+        )
+        == 2
+    )
+    assert not transport.requests
+    assert not output.parent.exists()
+    assert not output.exists()
+    error = capsys.readouterr().err
+    assert ("blocked" if scenario == "ordinary" else "Неизвестный сценарий") in error
+
+
+def test_ready_scenario_passes_and_witness_is_not_sent(
+    cli_inputs,
+    monkeypatch,
+    generated_plan,
+    ready_scenario_file,
+):
+    request, output = cli_inputs
+    transport = cli_transport(monkeypatch, [response(generated_plan)])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--scenario",
+                "ordinary",
+                "--report",
+                "report.json",
+            ]
+        )
+        == 0
+    )
+    assert len(transport.requests) == 1
+    assert "Ручное свидетельство" not in transport.requests[0].content.decode()
+    assert json.loads((output.parent / "report.json").read_bytes())["outcome"] == "success"
+
+
+@pytest.mark.parametrize(
+    "problem",
+    [
+        "missing_request",
+        "missing_witness",
+        "missing_version",
+        "wrong_version",
+        "wrong_request",
+        "invalid_witness",
+        "unverified_lower_bound",
+        "missing_manifest",
+    ],
+)
+def test_cli_rejects_unprepared_scenario_before_provider(
+    cli_inputs,
+    monkeypatch,
+    ready_scenario_file,
+    problem,
+):
+    request, output = cli_inputs
+    raw = json.loads(ready_scenario_file.read_bytes())
+    scenario = raw[0]
+    if problem in {"missing_request", "missing_witness", "missing_version"}:
+        field = {
+            "missing_request": "request",
+            "missing_witness": "witness",
+            "missing_version": "catalog_version",
+        }[problem]
+        scenario[field] = None
+    elif problem == "wrong_version":
+        scenario["catalog_version"] = "old-catalog"
+    elif problem == "wrong_request":
+        scenario["request"]["budget"] = 11
+    elif problem == "invalid_witness":
+        scenario["witness"]["recipes"][0]["ingredients"][0]["grams"] = 80
+    elif problem == "unverified_lower_bound":
+        scenario["expected"] = "unsatisfiable"
+        scenario["minimum_purchase"] = 30
+    if problem == "missing_manifest":
+        monkeypatch.setattr(evaluation, "SCENARIOS_PATH", output.parent / "missing.json")
+    else:
+        ready_scenario_file.write_text(json.dumps(raw), encoding="utf-8")
+    transport = cli_transport(monkeypatch, [])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--scenario",
+                "ordinary",
+            ]
+        )
+        == 2
+    )
+    assert not transport.requests
+    assert not output.parent.exists()
+
+
+@pytest.mark.parametrize(
+    "output,report",
+    [
+        ("menu.json", "menu.json/report.json"),
+        ("report.json/menu.json", "report.json"),
+        ("menu.json", "menu.json"),
+        ("./shared//menu.json", "shared/./menu.json"),
+        ("shared/./menu.json", "./shared//menu.json/report.json"),
+        ("/tmp/not-generated.json", "report.json"),
+        ("menu.json", "../not-generated.json"),
+    ],
+)
+@pytest.mark.parametrize("overwrite", [False, True])
+def test_cli_common_path_conflicts_no_provider_or_directories(
+    cli_inputs,
+    monkeypatch,
+    output,
+    report,
+    overwrite,
+):
+    request, result = cli_inputs
+    transport = cli_transport(monkeypatch, [])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output,
+                "--report",
+                report,
+                *(["--overwrite"] if overwrite else []),
+            ]
+        )
+        == 2
+    )
+    assert not transport.requests
+    assert not result.parent.exists()
+
+
+@pytest.mark.parametrize("destination", ["output", "report"])
+@pytest.mark.parametrize("problem", ["directory", "parent_file", "file", "symlink", "unwritable"])
+def test_cli_existing_conflicts_do_not_create_other_parents(
+    cli_inputs,
+    monkeypatch,
+    destination,
+    problem,
+):
+    request, result = cli_inputs
+    root = result.parent
+    root.mkdir()
+    obstructing = root / "obstructing"
+    target = "obstructing"
+    if problem in {"directory", "unwritable"}:
+        obstructing.mkdir()
+        if problem == "unwritable":
+            target = "obstructing/menu.json"
+            original_access = generate_menu.os.access
+
+            def deny_obstructing(path, mode, **kwargs):
+                parent = Path(os.readlink(f"/proc/self/fd/{kwargs['dir_fd']}"))
+                return parent != obstructing and original_access(path, mode, **kwargs)
+
+            monkeypatch.setattr(generate_menu.os, "access", deny_obstructing)
+    elif problem == "symlink":
+        obstructing.symlink_to(root / "uncreated-target")
+    else:
+        obstructing.write_text("foreign", encoding="utf-8")
+        if problem == "parent_file":
+            target = "obstructing/menu.json"
+    output = target if destination == "output" else "new-output/menu.json"
+    report = target if destination == "report" else "new-report/report.json"
+    transport = cli_transport(monkeypatch, [])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output,
+                "--report",
+                report,
+            ]
+        )
+        == 2
+    )
+    assert not transport.requests
+    assert list(root.iterdir()) == [obstructing]
+    if problem in {"file", "parent_file"}:
+        assert obstructing.read_text() == "foreign"
+
+
+@pytest.mark.parametrize(
+    "output,report",
+    [
+        ("menu.json", "report.json"),
+        ("runs/menu.json", "runs/report.json"),
+        ("runs/menus/menu.json", "runs/reports/report.json"),
+    ],
+)
+def test_cli_valid_joint_destinations_without_explicit_scenario(
+    cli_inputs,
+    monkeypatch,
+    generated_plan,
+    output,
+    report,
+):
+    request, result = cli_inputs
+    transport = cli_transport(monkeypatch, [response(generated_plan)])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output,
+                "--report",
+                report,
+            ]
+        )
+        == 0
+    )
+    assert len(transport.requests) == 1
+    root = result.parent
+    assert json.loads((root / output).read_bytes())["metadata"]["calls"] == 1
+    saved = json.loads((root / report).read_bytes())
+    assert saved["scenario"] == "unspecified"
+    assert saved["outcome"] == "success"
+
+
+def test_ordinary_generation_does_not_require_manifest(cli_inputs, monkeypatch, generated_plan):
+    request, output = cli_inputs
+    monkeypatch.setattr(evaluation, "SCENARIOS_PATH", output.parent / "missing-manifest.json")
+    transport = cli_transport(monkeypatch, [response(generated_plan)])
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--report",
+                "report.json",
+            ]
+        )
+        == 0
+    )
+    assert len(transport.requests) == 1
+    assert json.loads((output.parent / "report.json").read_bytes())["scenario"] == "unspecified"
+
+
+def test_joint_output_report_overwrite_remains_explicit(cli_inputs, monkeypatch, generated_plan):
+    request, output = cli_inputs
+    report = output.parent / "report.json"
+    output.parent.mkdir()
+    output.write_text("previous menu", encoding="utf-8")
+    report.write_text("previous report", encoding="utf-8")
+    transport = cli_transport(monkeypatch, [response(generated_plan)])
+    args = ["--request", str(request), "--output", output.name, "--report", report.name]
+    assert generate_menu.main(args) == 2
+    assert not transport.requests
+    assert output.read_text() == "previous menu"
+    assert report.read_text() == "previous report"
+    assert generate_menu.main([*args, "--overwrite"]) == 0
+    assert len(transport.requests) == 1
+    assert json.loads(output.read_bytes())["metadata"]["calls"] == 1
+    assert json.loads(report.read_bytes())["outcome"] == "success"
+
+
+def test_report_publication_race_does_not_overwrite_foreign_file(
+    cli_inputs,
+    monkeypatch,
+    generated_plan,
+):
+    request, output = cli_inputs
+    transport = cli_transport(monkeypatch, [response(generated_plan)])
+    report = output.parent / "report.json"
+    original_link = generate_menu.os.link
+
+    def race(source, destination, **kwargs):
+        if destination == report.name:
+            report.write_text("foreign report", encoding="utf-8")
+        return original_link(source, destination, **kwargs)
+
+    monkeypatch.setattr(generate_menu.os, "link", race)
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--report",
+                report.name,
+            ]
+        )
+        == 2
+    )
+    assert len(transport.requests) == 1
+    assert report.read_text() == "foreign report"
+    assert output.is_file()
+    assert set(output.parent.iterdir()) == {output, report}
 
 
 def test_atomic_publication_no_overwrite(tmp_path, monkeypatch):

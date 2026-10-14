@@ -4,14 +4,14 @@ from typing import Annotated, Literal
 from pydantic import Field, PlainSerializer, model_validator
 from pydantic_core import PydanticCustomError
 
-from meal_budget.schemas.common import Contract, Money, ProductId, ShortText
+from meal_budget.schemas.common import Contract, JSONNumber, Money, ProductId, ShortText
 
 Quantity = Annotated[
-    Decimal,
+    JSONNumber,
     Field(gt=0, le=100_000, max_digits=12, decimal_places=6, allow_inf_nan=False),
 ]
 MealServings = Annotated[
-    Decimal, Field(gt=0, le=100, max_digits=9, decimal_places=6, allow_inf_nan=False)
+    JSONNumber, Field(gt=0, le=100, max_digits=9, decimal_places=6, allow_inf_nan=False)
 ]
 OutputNumber = Annotated[
     Decimal,
@@ -108,6 +108,7 @@ class ShoppingItem(Contract):
 
 
 class MenuCalculationResponse(Contract):
+    catalog_version: ShortText
     data_status: Literal["demo_unverified"]
     warning: str
     days: list[CalculatedDay]

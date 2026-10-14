@@ -18,7 +18,7 @@ def process_environment(**overrides):
     # Не передаем секреты из окружения разработчика дочерним процессам.
     return {
         "APP_ENVIRONMENT": "test",
-        "CATALOG_PATH": str(PROJECT_ROOT / "data/products.json"),
+        "CATALOG_PATH": str(PROJECT_ROOT / "tests/fixtures/products.json"),
         "DEEPSEEK_API_KEY": "",
         "DEEPSEEK_MODEL": "",
         "GENERATION_ACCESS_TOKEN": "",

@@ -1,9 +1,16 @@
 from decimal import Decimal
 from typing import Annotated
 
-from pydantic import Field
+from pydantic import Field, model_validator
 
-from meal_budget.schemas.common import Contract, Money, PositiveNumber, ProductId, ShortText
+from meal_budget.schemas.common import (
+    Contract,
+    JSONNumber,
+    Money,
+    PositiveNumber,
+    ProductId,
+    ShortText,
+)
 from meal_budget.schemas.menu import (
     MenuCalculationRequest,
     MenuCalculationResponse,
@@ -67,11 +74,18 @@ class GenerationMetadata(Contract):
 
 
 class GenerationResult(Contract):
+    catalog_version: ShortText
     plan: GeneratedPlan
     calculation: MenuCalculationResponse
     warnings: list[str]
-    nutrition_tolerance: Decimal
+    nutrition_tolerance: Annotated[JSONNumber, Field(ge=0, le=1, allow_inf_nan=False)]
     metadata: GenerationMetadata
+
+    @model_validator(mode="after")
+    def same_catalog_version(self) -> "GenerationResult":
+        if self.catalog_version != self.calculation.catalog_version:
+            raise ValueError("generation and calculation catalog versions must match")
+        return self
 
 
 class GenerationHTTPError(Contract):

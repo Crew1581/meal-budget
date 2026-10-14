@@ -12,6 +12,7 @@ from meal_budget.core.config import Settings
 from meal_budget.schemas.generation import CallMetadata, GenerationMetadata
 
 ERROR_MESSAGES = {
+    "catalog_unavailable": "Активный каталог пуст; генерация недоступна без проверенных товаров.",
     "configuration_missing": "Не настроены ключ или модель DeepSeek.",
     "provider_unavailable": "Провайдер генерации недоступен.",
     "provider_authorization": "Ошибка авторизации у провайдера генерации.",

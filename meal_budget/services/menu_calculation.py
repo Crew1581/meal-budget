@@ -143,6 +143,7 @@ def calculate_menu(
                 )
             )
         return MenuCalculationResponse(
+            catalog_version=catalog.catalog_version,
             data_status=catalog.data_status,
             warning=catalog.warning,
             days=days,
