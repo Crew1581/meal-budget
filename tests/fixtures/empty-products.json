@@ -1,0 +1,6 @@
+{
+  "catalog_version": "empty-test-v1",
+  "data_status": "demo_unverified",
+  "warning": "Пустой синтетический каталог для проверки отказа без провайдера.",
+  "products": []
+}

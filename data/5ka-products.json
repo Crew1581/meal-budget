@@ -1,6 +1,3087 @@
 {
-  "catalog_version": "5ka-2026-10-13-blocked-v1",
+  "catalog_version": "5ka-2026-10-14-observed-v3",
   "data_status": "demo_unverified",
-  "warning": "Сбор карточек 5ka.ru заблокирован HTTP 403: проверенных товаров нет. Регион, магазин, цены и наличие не подтверждены. Будущий снимок онлайн-доставки не гарантирует цену или наличие в конкретном офлайн-магазине.",
-  "products": []
+  "warning": "Снимок прочитанных карточек 5ka.ru от 14.10.2026, включая кеш веб-инструмента. Регион/магазин не выбраны, касса и наличие не проверены. Цена не гарантируется на весь октябрь. КБЖУ перенесены из карточек, этикетки не сверены. Для разработки, требуется ручная проверка.",
+  "products": [
+    {
+      "id": "5ka_3446523",
+      "name": "Спагетти Makfa цельнозерновые 500г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 365.0,
+        "protein_g": 15.5,
+        "fat_g": 1.4,
+        "carbs_g": 72.7
+      },
+      "package_size_g": 500.0,
+      "price": 109.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/spagetti-makfa-tselnozernovye-500g--3446523/",
+        "retailer_product_id": "3446523",
+        "nutrition": {
+          "url": "https://5ka.ru/product/spagetti-makfa-tselnozernovye-500g--3446523/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/spagetti-makfa-tselnozernovye-500g--3446523/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/spagetti-makfa-tselnozernovye-500g--3446523/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4065775",
+      "name": "Творог Станция Молочная 5% БЗМЖ 180г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 121.0,
+        "protein_g": 16.0,
+        "fat_g": 5.0,
+        "carbs_g": 3.0
+      },
+      "package_size_g": 180.0,
+      "price": 69.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-5-bzmzh-180g--4065775/",
+        "retailer_product_id": "4065775",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-5-bzmzh-180g--4065775/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-5-bzmzh-180g--4065775/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-5-bzmzh-180g--4065775/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4379638",
+      "name": "Капуста Брокколи и Цветная Agama замороженная, 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 30.0,
+        "protein_g": 3.0,
+        "fat_g": 0.0,
+        "carbs_g": 5.0
+      },
+      "package_size_g": 400.0,
+      "price": 197.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kapusta-brokkoli-i-tsvetnaya-agama-zamorozhennaya--4379638/",
+        "retailer_product_id": "4379638",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kapusta-brokkoli-i-tsvetnaya-agama-zamorozhennaya--4379638/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kapusta-brokkoli-i-tsvetnaya-agama-zamorozhennaya--4379638/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kapusta-brokkoli-i-tsvetnaya-agama-zamorozhennaya--4379638/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4130483",
+      "name": "Чечевица Мистраль красная колотая 450г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 328.3,
+        "protein_g": 24.5,
+        "fat_g": 1.2,
+        "carbs_g": 54.6
+      },
+      "package_size_g": 450.0,
+      "price": 88.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/chechevitsa-mistral-krasnaya-kolotaya-450g--4130483/",
+        "retailer_product_id": "4130483",
+        "nutrition": {
+          "url": "https://5ka.ru/product/chechevitsa-mistral-krasnaya-kolotaya-450g--4130483/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/chechevitsa-mistral-krasnaya-kolotaya-450g--4130483/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/chechevitsa-mistral-krasnaya-kolotaya-450g--4130483/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4380066",
+      "name": "Хлопья Вкус & Польза овсяные из голозерного овса без содержания глютена 375г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 387.0,
+        "protein_g": 10.0,
+        "fat_g": 11.0,
+        "carbs_g": 57.0
+      },
+      "package_size_g": 375.0,
+      "price": 179.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khlopya-vkus-polza-ovsyanye-iz-golozernogo-ovsa-be--4380066/",
+        "retailer_product_id": "4380066",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khlopya-vkus-polza-ovsyanye-iz-golozernogo-ovsa-be--4380066/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khlopya-vkus-polza-ovsyanye-iz-golozernogo-ovsa-be--4380066/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khlopya-vkus-polza-ovsyanye-iz-golozernogo-ovsa-be--4380066/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_23862",
+      "name": "Творог Искренне Ваш 5% БЗМЖ 180г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 121.0,
+        "protein_g": 16.0,
+        "fat_g": 5.0,
+        "carbs_g": 3.0
+      },
+      "package_size_g": 180.0,
+      "price": 79.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tvorog-iskrenne-vash-5-bzmzh-180g--23862/",
+        "retailer_product_id": "23862",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tvorog-iskrenne-vash-5-bzmzh-180g--23862/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tvorog-iskrenne-vash-5-bzmzh-180g--23862/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tvorog-iskrenne-vash-5-bzmzh-180g--23862/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3487310",
+      "name": "Творог Простоквашино традиционный 9% БЗМЖ 180г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 157.0,
+        "protein_g": 16.0,
+        "fat_g": 9.0,
+        "carbs_g": 3.0
+      },
+      "package_size_g": 180.0,
+      "price": 145.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tvorog-prostokvashino-traditsionnyy-9-bzmzh-180g--3487310/",
+        "retailer_product_id": "3487310",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tvorog-prostokvashino-traditsionnyy-9-bzmzh-180g--3487310/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tvorog-prostokvashino-traditsionnyy-9-bzmzh-180g--3487310/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tvorog-prostokvashino-traditsionnyy-9-bzmzh-180g--3487310/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4089117",
+      "name": "Сыр Hochland Грюнландер полутвёрдый 50% БЗМЖ, 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 365.0,
+        "protein_g": 23.7,
+        "fat_g": 30.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 400.0,
+      "price": 379.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/syr-hochland-gryunlander-polutvyordyy-50-bzmzh-400--4089117/",
+        "retailer_product_id": "4089117",
+        "nutrition": {
+          "url": "https://5ka.ru/product/syr-hochland-gryunlander-polutvyordyy-50-bzmzh-400--4089117/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/syr-hochland-gryunlander-polutvyordyy-50-bzmzh-400--4089117/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/syr-hochland-gryunlander-polutvyordyy-50-bzmzh-400--4089117/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4124097",
+      "name": "Овощная смесь Зимовье Рататуй по-домашнему замороженный, 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 24.0,
+        "protein_g": 1.1,
+        "fat_g": 0.3,
+        "carbs_g": 4.3
+      },
+      "package_size_g": 400.0,
+      "price": 145.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/ovoshchnaya-smes-zimove-ratatuy-po-domashnemu-zamo--4124097/",
+        "retailer_product_id": "4124097",
+        "nutrition": {
+          "url": "https://5ka.ru/product/ovoshchnaya-smes-zimove-ratatuy-po-domashnemu-zamo--4124097/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/ovoshchnaya-smes-zimove-ratatuy-po-domashnemu-zamo--4124097/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/ovoshchnaya-smes-zimove-ratatuy-po-domashnemu-zamo--4124097/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3979117",
+      "name": "Филе грудки Пава-Пава индейки премиум 500г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 110.0,
+        "protein_g": 24.0,
+        "fat_g": 1.5,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 500.0,
+      "price": 405.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/file-grudki-pava-pava-indeyki-premium-500g--3979117/",
+        "retailer_product_id": "3979117",
+        "nutrition": {
+          "url": "https://5ka.ru/product/file-grudki-pava-pava-indeyki-premium-500g--3979117/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/file-grudki-pava-pava-indeyki-premium-500g--3979117/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/file-grudki-pava-pava-indeyki-premium-500g--3979117/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3413519",
+      "name": "Масло сладкосливочное Брест-Литовск 82.5% БЗМЖ 180г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 747.7,
+        "protein_g": 0.5,
+        "fat_g": 82.5,
+        "carbs_g": 0.8
+      },
+      "package_size_g": 180.0,
+      "price": 197.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/maslo-sladkoslivochnoe-brest-litovsk-82-5-bzmzh-18--3413519/",
+        "retailer_product_id": "3413519",
+        "nutrition": {
+          "url": "https://5ka.ru/product/maslo-sladkoslivochnoe-brest-litovsk-82-5-bzmzh-18--3413519/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/maslo-sladkoslivochnoe-brest-litovsk-82-5-bzmzh-18--3413519/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/maslo-sladkoslivochnoe-brest-litovsk-82-5-bzmzh-18--3413519/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4461341",
+      "name": "Филе бедра цыплят Петелинка охлажденное, 2х400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 180.0,
+        "protein_g": 18.0,
+        "fat_g": 12.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 800.0,
+      "price": 613.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/file-bedra-tsyplyat-petelinka-okhlazhdennoe-2kh400--4461341/",
+        "retailer_product_id": "4461341",
+        "nutrition": {
+          "url": "https://5ka.ru/product/file-bedra-tsyplyat-petelinka-okhlazhdennoe-2kh400--4461341/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/file-bedra-tsyplyat-petelinka-okhlazhdennoe-2kh400--4461341/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/file-bedra-tsyplyat-petelinka-okhlazhdennoe-2kh400--4461341/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4353603",
+      "name": "Рис Националь Лазер длиннозерный шлифованный для плова и гарниров 800г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 7.5,
+        "fat_g": 1.5,
+        "carbs_g": 77.0
+      },
+      "package_size_g": 800.0,
+      "price": 179.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/ris-natsional-lazer-dlinnozernyy-shlifovannyy-dlya--4353603/",
+        "retailer_product_id": "4353603",
+        "nutrition": {
+          "url": "https://5ka.ru/product/ris-natsional-lazer-dlinnozernyy-shlifovannyy-dlya--4353603/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/ris-natsional-lazer-dlinnozernyy-shlifovannyy-dlya--4353603/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/ris-natsional-lazer-dlinnozernyy-shlifovannyy-dlya--4353603/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3433425",
+      "name": "Кефир Асеньевская Ферма 3.2% БЗМЖ 900г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 57.0,
+        "protein_g": 3.0,
+        "fat_g": 3.2,
+        "carbs_g": 4.0
+      },
+      "package_size_g": 900.0,
+      "price": 119.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kefir-asenevskaya-ferma-3-2-bzmzh-900g--3433425/",
+        "retailer_product_id": "3433425",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kefir-asenevskaya-ferma-3-2-bzmzh-900g--3433425/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kefir-asenevskaya-ferma-3-2-bzmzh-900g--3433425/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kefir-asenevskaya-ferma-3-2-bzmzh-900g--3433425/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3665624",
+      "name": "Сметана Домик в деревне 15% БЗМЖ 300г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 160.0,
+        "protein_g": 2.6,
+        "fat_g": 15.0,
+        "carbs_g": 3.6
+      },
+      "package_size_g": 300.0,
+      "price": 94.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/smetana-domik-v-derevne-15-bzmzh-300g--3665624/",
+        "retailer_product_id": "3665624",
+        "nutrition": {
+          "url": "https://5ka.ru/product/smetana-domik-v-derevne-15-bzmzh-300g--3665624/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/smetana-domik-v-derevne-15-bzmzh-300g--3665624/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/smetana-domik-v-derevne-15-bzmzh-300g--3665624/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4103219",
+      "name": "Хлеб Сибирский пекарь зерновой мультизлаковый со льном нарезка 280г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 228.0,
+        "protein_g": 6.2,
+        "fat_g": 2.3,
+        "carbs_g": 48.9
+      },
+      "package_size_g": 280.0,
+      "price": 74.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-sibirskiy-pekar-zernovoy-multizlakovyy-so-ln--4103219/",
+        "retailer_product_id": "4103219",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-sibirskiy-pekar-zernovoy-multizlakovyy-so-ln--4103219/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-sibirskiy-pekar-zernovoy-multizlakovyy-so-ln--4103219/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-sibirskiy-pekar-zernovoy-multizlakovyy-so-ln--4103219/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_2149541",
+      "name": "Хлеб Черемушки Бородинский нарезка 390г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 207.0,
+        "protein_g": 6.8,
+        "fat_g": 1.3,
+        "carbs_g": 41.5
+      },
+      "package_size_g": 390.0,
+      "price": 64.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-cheremushki-borodinskiy-narezka-390g--2149541/",
+        "retailer_product_id": "2149541",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-cheremushki-borodinskiy-narezka-390g--2149541/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-cheremushki-borodinskiy-narezka-390g--2149541/",
+          "checked_at": "2026-10-14T18:12:06Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "На прочитанной карточке одна цена, без отображенных условий карты или нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-cheremushki-borodinskiy-narezka-390g--2149541/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_14301",
+      "name": "Гречка Агро-Альянс Экстра элитная 900г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 13.0,
+        "fat_g": 3.0,
+        "carbs_g": 68.0
+      },
+      "package_size_g": 900.0,
+      "price": 149.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-agro-alyans-ekstra-elitnaya-900g--14301/",
+        "retailer_product_id": "14301",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-agro-alyans-ekstra-elitnaya-900g--14301/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-agro-alyans-ekstra-elitnaya-900g--14301/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-agro-alyans-ekstra-elitnaya-900g--14301/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3934932",
+      "name": "Гречка Селяночка ядрица быстроразваривающаяся 5х80г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 13.0,
+        "fat_g": 2.5,
+        "carbs_g": 68.0
+      },
+      "package_size_g": 400.0,
+      "price": 82.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-selyanochka-yadritsa-bystrorazvarivayushch--3934932/",
+        "retailer_product_id": "3934932",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-selyanochka-yadritsa-bystrorazvarivayushch--3934932/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "6 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-selyanochka-yadritsa-bystrorazvarivayushch--3934932/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "6 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-selyanochka-yadritsa-bystrorazvarivayushch--3934932/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3991887",
+      "name": "Крупа Увелка гречневая ядрица 450г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 329.0,
+        "protein_g": 12.6,
+        "fat_g": 2.6,
+        "carbs_g": 68.0
+      },
+      "package_size_g": 450.0,
+      "price": 129.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-yadritsa-450g--3991887/",
+        "retailer_product_id": "3991887",
+        "nutrition": {
+          "url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-yadritsa-450g--3991887/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-yadritsa-450g--3991887/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/krupa-uvelka-grechnevaya-yadritsa-450g--3991887/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3996273",
+      "name": "Гречка Националь Алтайская 800г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 13.0,
+        "fat_g": 2.5,
+        "carbs_g": 68.0
+      },
+      "package_size_g": 800.0,
+      "price": 139.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-natsional-altayskaya-800g--3996273/",
+        "retailer_product_id": "3996273",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-natsional-altayskaya-800g--3996273/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-natsional-altayskaya-800g--3996273/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-natsional-altayskaya-800g--3996273/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4175043",
+      "name": "Грибы эринги 200г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 43.0,
+        "protein_g": 3.0,
+        "fat_g": 0.5,
+        "carbs_g": 4.0
+      },
+      "package_size_g": 200.0,
+      "price": 169.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/griby-eringi-200g--4175043/",
+        "retailer_product_id": "4175043",
+        "nutrition": {
+          "url": "https://5ka.ru/product/griby-eringi-200g--4175043/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/griby-eringi-200g--4175043/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/griby-eringi-200g--4175043/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3655737",
+      "name": "Шампиньоны Global Village 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 22.0,
+        "protein_g": 2.1,
+        "fat_g": 0.3,
+        "carbs_g": 2.6
+      },
+      "package_size_g": 400.0,
+      "price": 149.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/shampinony-global-village-400g--3655737/",
+        "retailer_product_id": "3655737",
+        "nutrition": {
+          "url": "https://5ka.ru/product/shampinony-global-village-400g--3655737/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/shampinony-global-village-400g--3655737/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/shampinony-global-village-400g--3655737/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4169429",
+      "name": "Вишня Livianta без косточки замороженная 300г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 52.0,
+        "protein_g": 0.9,
+        "fat_g": 0.5,
+        "carbs_g": 11.0
+      },
+      "package_size_g": 300.0,
+      "price": 379.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/vishnya-livianta-bez-kostochki-zamorozhennaya-300g--4169429/",
+        "retailer_product_id": "4169429",
+        "nutrition": {
+          "url": "https://5ka.ru/product/vishnya-livianta-bez-kostochki-zamorozhennaya-300g--4169429/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/vishnya-livianta-bez-kostochki-zamorozhennaya-300g--4169429/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/vishnya-livianta-bez-kostochki-zamorozhennaya-300g--4169429/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4087615",
+      "name": "Смесь овощная Бондюэль Вок овощи по-азиатски замороженная 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 30.0,
+        "protein_g": 2.8,
+        "fat_g": 0.2,
+        "carbs_g": 4.5
+      },
+      "package_size_g": 400.0,
+      "price": 259.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-vok-ovoshchi-po-aziatski--4087615/",
+        "retailer_product_id": "4087615",
+        "nutrition": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-vok-ovoshchi-po-aziatski--4087615/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-vok-ovoshchi-po-aziatski--4087615/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-vok-ovoshchi-po-aziatski--4087615/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4119553",
+      "name": "Треска атлантическая Borealis филе без кожи замороженная 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 77.0,
+        "protein_g": 17.0,
+        "fat_g": 1.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 400.0,
+      "price": 1039.0,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/treska-atlanticheskaya-borealis-file-bez-kozhi-zam--4119553/",
+        "retailer_product_id": "4119553",
+        "nutrition": {
+          "url": "https://5ka.ru/product/treska-atlanticheskaya-borealis-file-bez-kozhi-zam--4119553/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "3 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/treska-atlanticheskaya-borealis-file-bez-kozhi-zam--4119553/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "3 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/treska-atlanticheskaya-borealis-file-bez-kozhi-zam--4119553/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3624880",
+      "name": "Тунец Вкус Арт филе без кожи замороженное 500г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 101.0,
+        "protein_g": 23.0,
+        "fat_g": 1.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 500.0,
+      "price": 613.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tunets-vkus-art-file-bez-kozhi-zamorozhennoe-500g--3624880/",
+        "retailer_product_id": "3624880",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tunets-vkus-art-file-bez-kozhi-zamorozhennoe-500g--3624880/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tunets-vkus-art-file-bez-kozhi-zamorozhennoe-500g--3624880/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tunets-vkus-art-file-bez-kozhi-zamorozhennoe-500g--3624880/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3387455",
+      "name": "Форель Русское Море филе-кусок слабосоленая 200г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 180.0,
+        "protein_g": 18.0,
+        "fat_g": 12.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 200.0,
+      "price": 769.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-200g--3387455/",
+        "retailer_product_id": "3387455",
+        "nutrition": {
+          "url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-200g--3387455/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-200g--3387455/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-200g--3387455/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3923407",
+      "name": "Форель Балтийский берег филе-кусок слабосоленая 200г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 200.0,
+        "protein_g": 20.0,
+        "fat_g": 13.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 200.0,
+      "price": 478.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/forel-baltiyskiy-bereg-file-kusok-slabosolenaya-20--3923407/",
+        "retailer_product_id": "3923407",
+        "nutrition": {
+          "url": "https://5ka.ru/product/forel-baltiyskiy-bereg-file-kusok-slabosolenaya-20--3923407/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/forel-baltiyskiy-bereg-file-kusok-slabosolenaya-20--3923407/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/forel-baltiyskiy-bereg-file-kusok-slabosolenaya-20--3923407/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4252535",
+      "name": "Смесь овощная Global Village Овощи По-Деревенски быстрозамороженная 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 75.0,
+        "protein_g": 1.9,
+        "fat_g": 0.6,
+        "carbs_g": 15.2
+      },
+      "package_size_g": 400.0,
+      "price": 166.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-ovoshchi-po-dereve--4252535/",
+        "retailer_product_id": "4252535",
+        "nutrition": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-ovoshchi-po-dereve--4252535/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-ovoshchi-po-dereve--4252535/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/smes-ovoshchnaya-global-village-ovoshchi-po-dereve--4252535/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4252536",
+      "name": "Смесь овощная Global Village 8 Овощей быстрозамороженная 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 45.0,
+        "protein_g": 2.7,
+        "fat_g": 0.2,
+        "carbs_g": 8.2
+      },
+      "package_size_g": 400.0,
+      "price": 159.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-8-ovoshchey-bystro--4252536/",
+        "retailer_product_id": "4252536",
+        "nutrition": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-8-ovoshchey-bystro--4252536/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-8-ovoshchey-bystro--4252536/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/smes-ovoshchnaya-global-village-8-ovoshchey-bystro--4252536/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_52306",
+      "name": "Макароны De cecco Tagliatelle alluovo n.107 со шпинатом 250г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 367.0,
+        "protein_g": 15.2,
+        "fat_g": 4.2,
+        "carbs_g": 65.2
+      },
+      "package_size_g": 250.0,
+      "price": 369.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-alluovo-n-107-so-shp--52306/",
+        "retailer_product_id": "52306",
+        "nutrition": {
+          "url": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-alluovo-n-107-so-shp--52306/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-alluovo-n-107-so-shp--52306/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-alluovo-n-107-so-shp--52306/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4052128",
+      "name": "Творог Савушкин Рассыпчатый 5% БЗМЖ 700г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 117.0,
+        "protein_g": 16.5,
+        "fat_g": 5.0,
+        "carbs_g": 1.5
+      },
+      "package_size_g": 700.0,
+      "price": 289.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tvorog-savushkin-rassypchatyy-5-bzmzh-700g--4052128/",
+        "retailer_product_id": "4052128",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tvorog-savushkin-rassypchatyy-5-bzmzh-700g--4052128/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tvorog-savushkin-rassypchatyy-5-bzmzh-700g--4052128/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tvorog-savushkin-rassypchatyy-5-bzmzh-700g--4052128/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4266462",
+      "name": "Творог Станция Молочная 9% БЗМЖ 750г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 157.0,
+        "protein_g": 16.0,
+        "fat_g": 9.0,
+        "carbs_g": 3.0
+      },
+      "package_size_g": 750.0,
+      "price": 299.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-9-bzmzh-750g--4266462/",
+        "retailer_product_id": "4266462",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-9-bzmzh-750g--4266462/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-9-bzmzh-750g--4266462/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-9-bzmzh-750g--4266462/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4215262",
+      "name": "Филе индейки Индилайт с томатами и орегано 600г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 95.0,
+        "protein_g": 17.0,
+        "fat_g": 3.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 600.0,
+      "price": 502.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/file-indeyki-indilayt-s-tomatami-i-oregano-600g--4215262/",
+        "retailer_product_id": "4215262",
+        "nutrition": {
+          "url": "https://5ka.ru/product/file-indeyki-indilayt-s-tomatami-i-oregano-600g--4215262/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/file-indeyki-indilayt-s-tomatami-i-oregano-600g--4215262/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/file-indeyki-indilayt-s-tomatami-i-oregano-600g--4215262/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3428419",
+      "name": "Миндаль Семушка жареный 150г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 641.0,
+        "protein_g": 18.0,
+        "fat_g": 57.0,
+        "carbs_g": 14.0
+      },
+      "package_size_g": 150.0,
+      "price": 469.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/mindal-semushka-zharenyy-150g--3428419/",
+        "retailer_product_id": "3428419",
+        "nutrition": {
+          "url": "https://5ka.ru/product/mindal-semushka-zharenyy-150g--3428419/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/mindal-semushka-zharenyy-150g--3428419/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/mindal-semushka-zharenyy-150g--3428419/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4264824",
+      "name": "Гранола Bionova Ягодная протеиновая 280г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 370.0,
+        "protein_g": 20.7,
+        "fat_g": 8.9,
+        "carbs_g": 43.1
+      },
+      "package_size_g": 280.0,
+      "price": 429.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/granola-bionova-yagodnaya-proteinovaya-280g--4264824/",
+        "retailer_product_id": "4264824",
+        "nutrition": {
+          "url": "https://5ka.ru/product/granola-bionova-yagodnaya-proteinovaya-280g--4264824/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "6 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/granola-bionova-yagodnaya-proteinovaya-280g--4264824/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "6 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/granola-bionova-yagodnaya-proteinovaya-280g--4264824/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3469543",
+      "name": "Горох Мистраль желтый колотый 900г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 317.0,
+        "protein_g": 20.8,
+        "fat_g": 1.4,
+        "carbs_g": 64.2
+      },
+      "package_size_g": 900.0,
+      "price": 135.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/gorokh-mistral-zheltyy-kolotyy-900g--3469543/",
+        "retailer_product_id": "3469543",
+        "nutrition": {
+          "url": "https://5ka.ru/product/gorokh-mistral-zheltyy-kolotyy-900g--3469543/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/gorokh-mistral-zheltyy-kolotyy-900g--3469543/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/gorokh-mistral-zheltyy-kolotyy-900g--3469543/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3232765",
+      "name": "Горох Скайфуд колотый шлифованный 900г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 299.0,
+        "protein_g": 23.0,
+        "fat_g": 1.6,
+        "carbs_g": 48.1
+      },
+      "package_size_g": 900.0,
+      "price": 35.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/gorokh-skayfud-kolotyy-shlifovannyy-900g--3232765/",
+        "retailer_product_id": "3232765",
+        "nutrition": {
+          "url": "https://5ka.ru/product/gorokh-skayfud-kolotyy-shlifovannyy-900g--3232765/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/gorokh-skayfud-kolotyy-shlifovannyy-900g--3232765/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/gorokh-skayfud-kolotyy-shlifovannyy-900g--3232765/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4046889",
+      "name": "Сыр Брест-Литовск Российский полутвердый 50% БЗМЖ 200г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 340.0,
+        "protein_g": 21.0,
+        "fat_g": 28.5,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 200.0,
+      "price": 179.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/syr-brest-litovsk-rossiyskiy-polutverdyy-50-bzmzh--4046889/",
+        "retailer_product_id": "4046889",
+        "nutrition": {
+          "url": "https://5ka.ru/product/syr-brest-litovsk-rossiyskiy-polutverdyy-50-bzmzh--4046889/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/syr-brest-litovsk-rossiyskiy-polutverdyy-50-bzmzh--4046889/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/syr-brest-litovsk-rossiyskiy-polutverdyy-50-bzmzh--4046889/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4409653",
+      "name": "Бананы вяленые 100г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 240.0,
+        "protein_g": 4.5,
+        "fat_g": 0.5,
+        "carbs_g": 54.0
+      },
+      "package_size_g": 100.0,
+      "price": 76.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/banany-vyalenye-100g--4409653/",
+        "retailer_product_id": "4409653",
+        "nutrition": {
+          "url": "https://5ka.ru/product/banany-vyalenye-100g--4409653/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/banany-vyalenye-100g--4409653/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/banany-vyalenye-100g--4409653/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_10234",
+      "name": "Каша овсяная Myllyn Paras 500г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 12.0,
+        "fat_g": 6.0,
+        "carbs_g": 62.0
+      },
+      "package_size_g": 500.0,
+      "price": 145.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kasha-ovsyanaya-myllyn-paras-500g--10234/",
+        "retailer_product_id": "10234",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kasha-ovsyanaya-myllyn-paras-500g--10234/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kasha-ovsyanaya-myllyn-paras-500g--10234/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kasha-ovsyanaya-myllyn-paras-500g--10234/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4216694",
+      "name": "Каша Овсяная на молоке Пятёрочка Кафе 200г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 90.0,
+        "protein_g": 3.0,
+        "fat_g": 3.5,
+        "carbs_g": 11.0
+      },
+      "package_size_g": 200.0,
+      "price": 109.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kasha-ovsyanaya-na-moloke-pyatyorochka-kafe-200g--4216694/",
+        "retailer_product_id": "4216694",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kasha-ovsyanaya-na-moloke-pyatyorochka-kafe-200g--4216694/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kasha-ovsyanaya-na-moloke-pyatyorochka-kafe-200g--4216694/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kasha-ovsyanaya-na-moloke-pyatyorochka-kafe-200g--4216694/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4266548",
+      "name": "Каша Красная Цена овсяная с клубникой быстрого приготовления 35г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 340.0,
+        "protein_g": 9.8,
+        "fat_g": 4.5,
+        "carbs_g": 62.0
+      },
+      "package_size_g": 35.0,
+      "price": 16.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kasha-krasnaya-tsena-ovsyanaya-s-klubnikoy-bystrog--4266548/",
+        "retailer_product_id": "4266548",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kasha-krasnaya-tsena-ovsyanaya-s-klubnikoy-bystrog--4266548/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kasha-krasnaya-tsena-ovsyanaya-s-klubnikoy-bystrog--4266548/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "2 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kasha-krasnaya-tsena-ovsyanaya-s-klubnikoy-bystrog--4266548/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4050775",
+      "name": "Хлеб Коломенское тостовый злаковый нарезка 250г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 290.0,
+        "protein_g": 9.0,
+        "fat_g": 5.5,
+        "carbs_g": 51.0
+      },
+      "package_size_g": 250.0,
+      "price": 83.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-kolomenskoe-tostovyy-zlakovyy-narezka-250g--4050775/",
+        "retailer_product_id": "4050775",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-kolomenskoe-tostovyy-zlakovyy-narezka-250g--4050775/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-kolomenskoe-tostovyy-zlakovyy-narezka-250g--4050775/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-kolomenskoe-tostovyy-zlakovyy-narezka-250g--4050775/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3424356",
+      "name": "Крупа Увелка Дружба смесь риса круглозерного и пшена 5х80г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 8.0,
+        "fat_g": 1.0,
+        "carbs_g": 77.0
+      },
+      "package_size_g": 400.0,
+      "price": 109.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/krupa-uvelka-druzhba-smes-risa-kruglozernogo-i-psh--3424356/",
+        "retailer_product_id": "3424356",
+        "nutrition": {
+          "url": "https://5ka.ru/product/krupa-uvelka-druzhba-smes-risa-kruglozernogo-i-psh--3424356/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/krupa-uvelka-druzhba-smes-risa-kruglozernogo-i-psh--3424356/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/krupa-uvelka-druzhba-smes-risa-kruglozernogo-i-psh--3424356/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4347960",
+      "name": "Рис Мистраль Осман белый круглозерный 500г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 348.8,
+        "protein_g": 5.6,
+        "fat_g": 0.2,
+        "carbs_g": 80.4
+      },
+      "package_size_g": 500.0,
+      "price": 218.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/ris-mistral-osman-belyy-kruglozernyy-500g--4347960/",
+        "retailer_product_id": "4347960",
+        "nutrition": {
+          "url": "https://5ka.ru/product/ris-mistral-osman-belyy-kruglozernyy-500g--4347960/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/ris-mistral-osman-belyy-kruglozernyy-500g--4347960/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/ris-mistral-osman-belyy-kruglozernyy-500g--4347960/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4289753",
+      "name": "Хлебцы Dr.Korner Корнерсы рисовые сметана и зелень 40г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 350.0,
+        "protein_g": 6.0,
+        "fat_g": 8.0,
+        "carbs_g": 65.0
+      },
+      "package_size_g": 40.0,
+      "price": 87.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khlebtsy-dr-korner-kornersy-risovye-smetana-i-zele--4289753/",
+        "retailer_product_id": "4289753",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khlebtsy-dr-korner-kornersy-risovye-smetana-i-zele--4289753/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khlebtsy-dr-korner-kornersy-risovye-smetana-i-zele--4289753/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "last week",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khlebtsy-dr-korner-kornersy-risovye-smetana-i-zele--4289753/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3231481",
+      "name": "Гречка ядрица 900г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 330.0,
+        "protein_g": 13.0,
+        "fat_g": 2.5,
+        "carbs_g": 68.0
+      },
+      "package_size_g": 900.0,
+      "price": 42.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-yadritsa-900g--3231481/",
+        "retailer_product_id": "3231481",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-yadritsa-900g--3231481/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-yadritsa-900g--3231481/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-yadritsa-900g--3231481/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3626624",
+      "name": "Йогурт Epica с манго и семенами чиа 5% 130г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 120.0,
+        "protein_g": 5.8,
+        "fat_g": 5.0,
+        "carbs_g": 13.9
+      },
+      "package_size_g": 130.0,
+      "price": 57.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/yogurt-epica-s-mango-i-semenami-chia-5-130g--3626624/",
+        "retailer_product_id": "3626624",
+        "nutrition": {
+          "url": "https://5ka.ru/product/yogurt-epica-s-mango-i-semenami-chia-5-130g--3626624/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/yogurt-epica-s-mango-i-semenami-chia-5-130g--3626624/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/yogurt-epica-s-mango-i-semenami-chia-5-130g--3626624/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3603166",
+      "name": "Гречка Увелка Экстра 5х80г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 360.0,
+        "protein_g": 13.0,
+        "fat_g": 2.0,
+        "carbs_g": 72.0
+      },
+      "package_size_g": 400.0,
+      "price": 81.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-uvelka-ekstra-5kh80g--3603166/",
+        "retailer_product_id": "3603166",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-uvelka-ekstra-5kh80g--3603166/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-uvelka-ekstra-5kh80g--3603166/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-uvelka-ekstra-5kh80g--3603166/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4413143",
+      "name": "Гречка Увелка Фермерская 800г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 340.0,
+        "protein_g": 13.0,
+        "fat_g": 2.5,
+        "carbs_g": 61.0
+      },
+      "package_size_g": 800.0,
+      "price": 129.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/grechka-uvelka-fermerskaya-800g--4413143/",
+        "retailer_product_id": "4413143",
+        "nutrition": {
+          "url": "https://5ka.ru/product/grechka-uvelka-fermerskaya-800g--4413143/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/grechka-uvelka-fermerskaya-800g--4413143/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/grechka-uvelka-fermerskaya-800g--4413143/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4437537",
+      "name": "Йогурт Сарафаново безлактозный 1.5%, 125г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 61.0,
+        "protein_g": 4.8,
+        "fat_g": 1.5,
+        "carbs_g": 7.1
+      },
+      "package_size_g": 125.0,
+      "price": 34.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/yogurt-sarafanovo-bezlaktoznyy-1-5-125g--4437537/",
+        "retailer_product_id": "4437537",
+        "nutrition": {
+          "url": "https://5ka.ru/product/yogurt-sarafanovo-bezlaktoznyy-1-5-125g--4437537/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/yogurt-sarafanovo-bezlaktoznyy-1-5-125g--4437537/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/yogurt-sarafanovo-bezlaktoznyy-1-5-125g--4437537/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3438133",
+      "name": "Суп-пюре Готово! из чечевицы 250г",
+      "state": "dry",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 330.0,
+        "protein_g": 24.0,
+        "fat_g": 1.0,
+        "carbs_g": 57.0
+      },
+      "package_size_g": 250.0,
+      "price": 135.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/sup-pyure-gotovo-iz-chechevitsy-250g--3438133/",
+        "retailer_product_id": "3438133",
+        "nutrition": {
+          "url": "https://5ka.ru/product/sup-pyure-gotovo-iz-chechevitsy-250g--3438133/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/sup-pyure-gotovo-iz-chechevitsy-250g--3438133/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/sup-pyure-gotovo-iz-chechevitsy-250g--3438133/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4410826",
+      "name": "Котлеты куриные Наша ряба Куролеты охлажденные 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 150.0,
+        "protein_g": 17.0,
+        "fat_g": 7.0,
+        "carbs_g": 5.0
+      },
+      "package_size_g": 400.0,
+      "price": 89.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kotlety-kurinye-nasha-ryaba-kurolety-okhlazhdennye--4410826/",
+        "retailer_product_id": "4410826",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kotlety-kurinye-nasha-ryaba-kurolety-okhlazhdennye--4410826/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kotlety-kurinye-nasha-ryaba-kurolety-okhlazhdennye--4410826/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kotlety-kurinye-nasha-ryaba-kurolety-okhlazhdennye--4410826/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4399349",
+      "name": "Тефтели Троекурово Классические куриные охлажденные 350г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 190.0,
+        "protein_g": 17.0,
+        "fat_g": 12.0,
+        "carbs_g": 4.0
+      },
+      "package_size_g": 350.0,
+      "price": 139.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/tefteli-troekurovo-klassicheskie-kurinye-okhlazhde--4399349/",
+        "retailer_product_id": "4399349",
+        "nutrition": {
+          "url": "https://5ka.ru/product/tefteli-troekurovo-klassicheskie-kurinye-okhlazhde--4399349/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "4 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/tefteli-troekurovo-klassicheskie-kurinye-okhlazhde--4399349/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "4 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/tefteli-troekurovo-klassicheskie-kurinye-okhlazhde--4399349/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3631395",
+      "name": "Колбаски куриные Первая Свежесть для жарки с сыром охлажденные 500г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 250.0,
+        "protein_g": 12.0,
+        "fat_g": 21.0,
+        "carbs_g": 3.0
+      },
+      "package_size_g": 500.0,
+      "price": 179.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kolbaski-kurinye-pervaya-svezhest-dlya-zharki-s-sy--3631395/",
+        "retailer_product_id": "3631395",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kolbaski-kurinye-pervaya-svezhest-dlya-zharki-s-sy--3631395/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kolbaski-kurinye-pervaya-svezhest-dlya-zharki-s-sy--3631395/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kolbaski-kurinye-pervaya-svezhest-dlya-zharki-s-sy--3631395/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4366946",
+      "name": "Курица в соусе терияки с рисом замороженная Главобед 300г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 179.0,
+        "protein_g": 7.5,
+        "fat_g": 7.8,
+        "carbs_g": 19.7
+      },
+      "package_size_g": 300.0,
+      "price": 274.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/kuritsa-v-souse-teriyaki-s-risom-zamorozhennaya-gl--4366946/",
+        "retailer_product_id": "4366946",
+        "nutrition": {
+          "url": "https://5ka.ru/product/kuritsa-v-souse-teriyaki-s-risom-zamorozhennaya-gl--4366946/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/kuritsa-v-souse-teriyaki-s-risom-zamorozhennaya-gl--4366946/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/kuritsa-v-souse-teriyaki-s-risom-zamorozhennaya-gl--4366946/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4280098",
+      "name": "Сыр Natura Сливочный нарезка 45% БЗМЖ 300г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 340.0,
+        "protein_g": 25.0,
+        "fat_g": 26.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 300.0,
+      "price": 449.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/syr-natura-slivochnyy-narezka-45-bzmzh-300g--4280098/",
+        "retailer_product_id": "4280098",
+        "nutrition": {
+          "url": "https://5ka.ru/product/syr-natura-slivochnyy-narezka-45-bzmzh-300g--4280098/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "3 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/syr-natura-slivochnyy-narezka-45-bzmzh-300g--4280098/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "3 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/syr-natura-slivochnyy-narezka-45-bzmzh-300g--4280098/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4280101",
+      "name": "Сыр Natura Сливочный лёгкий 16% БЗМЖ 400г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 260.0,
+        "protein_g": 28.0,
+        "fat_g": 16.0,
+        "carbs_g": 0.0
+      },
+      "package_size_g": 400.0,
+      "price": 509.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/syr-natura-slivochnyy-lyogkiy-16-bzmzh-400g--4280101/",
+        "retailer_product_id": "4280101",
+        "nutrition": {
+          "url": "https://5ka.ru/product/syr-natura-slivochnyy-lyogkiy-16-bzmzh-400g--4280101/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/syr-natura-slivochnyy-lyogkiy-16-bzmzh-400g--4280101/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/syr-natura-slivochnyy-lyogkiy-16-bzmzh-400g--4280101/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4135603",
+      "name": "Масло сливочное ЭкоНива Традиционное 82.5% БЗМЖ 180г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 748.0,
+        "protein_g": 0.6,
+        "fat_g": 82.5,
+        "carbs_g": 0.8
+      },
+      "package_size_g": 180.0,
+      "price": 205.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/maslo-slivochnoe-ekoniva-traditsionnoe-82-5-bzmzh--4135603/",
+        "retailer_product_id": "4135603",
+        "nutrition": {
+          "url": "https://5ka.ru/product/maslo-slivochnoe-ekoniva-traditsionnoe-82-5-bzmzh--4135603/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/maslo-slivochnoe-ekoniva-traditsionnoe-82-5-bzmzh--4135603/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "5 days ago",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/maslo-slivochnoe-ekoniva-traditsionnoe-82-5-bzmzh--4135603/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4357094",
+      "name": "Масло Экомилк Крестьянское сливочное 72.5% БЗМЖ 160г",
+      "state": "raw",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 662.0,
+        "protein_g": 1.0,
+        "fat_g": 72.5,
+        "carbs_g": 1.4
+      },
+      "package_size_g": 160.0,
+      "price": 164.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/maslo-ekomilk-krestyanskoe-slivochnoe-72-5-bzmzh-1--4357094/",
+        "retailer_product_id": "4357094",
+        "nutrition": {
+          "url": "https://5ka.ru/product/maslo-ekomilk-krestyanskoe-slivochnoe-72-5-bzmzh-1--4357094/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/maslo-ekomilk-krestyanskoe-slivochnoe-72-5-bzmzh-1--4357094/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/maslo-ekomilk-krestyanskoe-slivochnoe-72-5-bzmzh-1--4357094/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3668480",
+      "name": "Хлеб Schar Pan blanco без глютена нарезка 250г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 211.0,
+        "protein_g": 2.4,
+        "fat_g": 2.7,
+        "carbs_g": 41.0
+      },
+      "package_size_g": 250.0,
+      "price": 444.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-schar-pan-blanco-bez-glyutena-narezka-250g--3668480/",
+        "retailer_product_id": "3668480",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-schar-pan-blanco-bez-glyutena-narezka-250g--3668480/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-schar-pan-blanco-bez-glyutena-narezka-250g--3668480/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-schar-pan-blanco-bez-glyutena-narezka-250g--3668480/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4256835",
+      "name": "Булочка Bagerstat для бургера с кунжутом 3х56г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 260.0,
+        "protein_g": 7.0,
+        "fat_g": 3.5,
+        "carbs_g": 50.0
+      },
+      "package_size_g": 168.0,
+      "price": 129.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/bulochka-bagerstat-dlya-burgera-s-kunzhutom-3kh56g--4256835/",
+        "retailer_product_id": "4256835",
+        "nutrition": {
+          "url": "https://5ka.ru/product/bulochka-bagerstat-dlya-burgera-s-kunzhutom-3kh56g--4256835/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/bulochka-bagerstat-dlya-burgera-s-kunzhutom-3kh56g--4256835/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/bulochka-bagerstat-dlya-burgera-s-kunzhutom-3kh56g--4256835/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_2039592",
+      "name": "Лепешка пшеничная Delicados тортилья мексиканская сырная 400г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 270.0,
+        "protein_g": 6.5,
+        "fat_g": 7.0,
+        "carbs_g": 45.0
+      },
+      "package_size_g": 400.0,
+      "price": 219.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/lepeshka-pshenichnaya-delicados-tortilya-meksikans--2039592/",
+        "retailer_product_id": "2039592",
+        "nutrition": {
+          "url": "https://5ka.ru/product/lepeshka-pshenichnaya-delicados-tortilya-meksikans--2039592/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/lepeshka-pshenichnaya-delicados-tortilya-meksikans--2039592/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/lepeshka-pshenichnaya-delicados-tortilya-meksikans--2039592/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3498077",
+      "name": "Хлеб Черемушки Зерновик нарезка 460г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 260.0,
+        "protein_g": 12.0,
+        "fat_g": 10.0,
+        "carbs_g": 41.0
+      },
+      "package_size_g": 460.0,
+      "price": 119.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-cheremushki-zernovik-narezka-460g--3498077/",
+        "retailer_product_id": "3498077",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-cheremushki-zernovik-narezka-460g--3498077/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-cheremushki-zernovik-narezka-460g--3498077/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "yesterday",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-cheremushki-zernovik-narezka-460g--3498077/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_2061861",
+      "name": "Хлеб тостовый Harry's American Sandwich пшеничный нарезка 470г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 278.0,
+        "protein_g": 8.0,
+        "fat_g": 6.0,
+        "carbs_g": 48.0
+      },
+      "package_size_g": 470.0,
+      "price": 144.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khleb-tostovyy-harry-s-american-sandwich-pshenichn--2061861/",
+        "retailer_product_id": "2061861",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khleb-tostovyy-harry-s-american-sandwich-pshenichn--2061861/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khleb-tostovyy-harry-s-american-sandwich-pshenichn--2061861/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khleb-tostovyy-harry-s-american-sandwich-pshenichn--2061861/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4174080",
+      "name": "Хлебцы Magic Grain ржаные с семенами льна кунжута подсолнечника 160г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 386.0,
+        "protein_g": 11.0,
+        "fat_g": 18.0,
+        "carbs_g": 45.0
+      },
+      "package_size_g": 160.0,
+      "price": 184.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khlebtsy-magic-grain-rzhanye-s-semenami-lna-kunzhu--4174080/",
+        "retailer_product_id": "4174080",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khlebtsy-magic-grain-rzhanye-s-semenami-lna-kunzhu--4174080/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khlebtsy-magic-grain-rzhanye-s-semenami-lna-kunzhu--4174080/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khlebtsy-magic-grain-rzhanye-s-semenami-lna-kunzhu--4174080/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_4054469",
+      "name": "Хлебцы Croisette ржаные тонкие 200г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 320.0,
+        "protein_g": 12.0,
+        "fat_g": 3.0,
+        "carbs_g": 61.0
+      },
+      "package_size_g": 200.0,
+      "price": 193.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khlebtsy-croisette-rzhanye-tonkie-200g--4054469/",
+        "retailer_product_id": "4054469",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khlebtsy-croisette-rzhanye-tonkie-200g--4054469/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khlebtsy-croisette-rzhanye-tonkie-200g--4054469/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khlebtsy-croisette-rzhanye-tonkie-200g--4054469/",
+      "price_updated_at": null
+    },
+    {
+      "id": "5ka_3497593",
+      "name": "Хлебцы Щедрые ржаные тонкие 170г",
+      "state": "cooked",
+      "state_basis": "as_sold",
+      "nutrition_per_100g": {
+        "calories_kcal": 320.0,
+        "protein_g": 11.0,
+        "fat_g": 2.5,
+        "carbs_g": 64.0
+      },
+      "package_size_g": 170.0,
+      "price": 104.99,
+      "provenance": {
+        "kind": "web",
+        "chain": "Пятёрочка",
+        "product_url": "https://5ka.ru/product/khlebtsy-shchedrye-rzhanye-tonkie-170g--3497593/",
+        "retailer_product_id": "3497593",
+        "nutrition": {
+          "url": "https://5ka.ru/product/khlebtsy-shchedrye-rzhanye-tonkie-170g--3497593/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today"
+        },
+        "price": {
+          "url": "https://5ka.ru/product/khlebtsy-shchedrye-rzhanye-tonkie-170g--3497593/",
+          "checked_at": "2026-10-14T18:24:33Z",
+          "observation_method": "web_tool",
+          "web_cache_age": "today",
+          "channel": "online_delivery",
+          "region_confirmed": false,
+          "region": null,
+          "store": null,
+          "price_type": "displayed",
+          "single_package_without_card": null,
+          "conditions": "В прочитанной карточке одна цена, без отображенных условий карты или покупки нескольких упаковок. Корзина/касса не проверялись.",
+          "valid_from": null,
+          "valid_until": null
+        }
+      },
+      "price_region": null,
+      "price_source": "https://5ka.ru/product/khlebtsy-shchedrye-rzhanye-tonkie-170g--3497593/",
+      "price_updated_at": null
+    }
+  ]
 }

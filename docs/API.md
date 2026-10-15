@@ -12,16 +12,10 @@
 и `products`. Нет фильтров и пагинации. По умолчанию выбран demo-каталог
 `data/products.json` (`demo-meal-3-v1`), три synthetic_demo-продукта и явное
 demo_unverified-предупреждение. Реальный снимок выбирается явно:
-`CATALOG_PATH=data/5ka-products.json`. Ниже его текущий ответ при заблокированном сборе:
-
-```json
-{
-  "catalog_version": "5ka-2026-10-13-blocked-v1",
-  "data_status": "demo_unverified",
-  "warning": "Сбор карточек 5ka.ru заблокирован HTTP 403: проверенных товаров нет. Регион, магазин, цены и наличие не подтверждены. Будущий снимок онлайн-доставки не гарантирует цену или наличие в конкретном офлайн-магазине.",
-  "products": []
-}
-```
+`CATALOG_PATH=data/5ka-products.json`. Он возвращает 70 наблюдаемых SKU, версию
+`5ka-2026-10-14-observed-v3`, `demo_unverified` и предупреждение о кеше,
+неподтвержденной географии, кассе и этикетках. Это не актуальная московская корзина.
+Происхождение и новый контракт наблюдаемой цены — [CATALOG](CATALOG.md).
 
 Состояния: `dry`, `raw`, `cooked`. КБЖУ относятся к указанному состоянию
 и 100 г, размер упаковки — граммы. КБЖУ конкретного товара и все количества — числа.
@@ -29,7 +23,9 @@ demo_unverified-предупреждение. Реальный снимок вы
 `Product.provenance` расширяет прежние общие метаданные. `price_source`,
 `price_region`, `price_updated_at` сохранены как deprecated поля совместимости,
 производные от источника цены: URL, подтвержденный регион либо null и дата
-из timestamp. У synthetic demo/fixture регион и дата null, источник — явная note.
+из timestamp для прежних записей. У web_tool/displayed дата теперь null:
+время чтения не время обновления цены. У synthetic demo/fixture регион и дата null,
+источник — явная note.
 Эти общие поля не заменяют provenance, противоречия между ними отклоняются.
 Для web-записи обязательны:
 
@@ -40,16 +36,25 @@ demo_unverified-предупреждение. Реальный снимок вы
 - `channel=online_delivery|offline_store`, `region_confirmed`, `region`, `store`;
   неподтвержденные region/store — null, не «Москва» из пожелания пользователя;
   подтвержденный регион может не иметь выбранного магазина, офлайн-цена требует магазин;
-- `price_type=regular|promotional`; unclear отклоняется в активном каталоге;
-- `single_package_without_card=true`, `conditions` либо null, `valid_from`/`valid_until`
-  — опубликованные даты акции YYYY-MM-DD либо null. Для акции условия обязательны.
+- `price_type=regular|promotional|displayed`; unclear отклоняется в активном каталоге;
+- regular/promotional требуют `single_package_without_card=true`. Displayed — лишь
+  единственная отображенная онлайн-цена: поле строго null, обязательны conditions
+  с объяснением наблюдения; не подтверждает обычный тариф или условия без карты;
+- `valid_from`/`valid_until` — опубликованные даты акции YYYY-MM-DD либо null.
+  Для promotional опубликованные conditions обязательны;
+- у обоих источников `observation_method=unspecified|direct_page|web_tool`
+  (default unspecified), `web_cache_age` — буквальная относительная строка либо null,
+  разрешена только при web_tool. checked_at — чтение/сверка, не обновление цены;
+- `state_basis=physical_state|as_sold` (default physical_state). У импорта as_sold:
+  raw не означает непастеризованное молоко, cooked — термообработку слабосоленой рыбы.
+  Численная база массы и расчет граммов не меняются.
 
 Все записи в активном каталоге требуют корректной фиксированной массы в граммах.
 Схема не проверяет истинность страницы или полноту условий акции: обязательна
 ручная проверка [CATALOG](CATALOG.md). `synthetic_fixture` — только явно помеченные
 автономные тестовые данные с note; synthetic_demo — демонстрационные данные обычного
 запуска. Оба типа не данные сети. Старые demo-ID не переиспользованы.
-Реальный снимок пуст после HTTP 403; отсутствие товаров не нарушает startup.
+Отсутствие товаров в любом выбранном каталоге по-прежнему не нарушает startup.
 Автоматического fallback на другой каталог нет.
 
 ### POST /v1/menu-calculations
@@ -58,7 +63,7 @@ demo_unverified-предупреждение. Реальный снимок вы
 по питанию**. Каталог уже загружен приложением. Клиент не передает цены и КБЖУ.
 
 Исторический синтетический запрос (также `examples/menu-calculation.json`):
-работает по умолчанию с demo-каталогом и отдельно с тестовой fixture; в пустом реальном снимке
+работает по умолчанию с demo-каталогом и отдельно с тестовой fixture; в импортированном снимке
 дает 422 `unknown_product_id`. Это не реальная корзина «Пятёрочки».
 
 ```json
@@ -235,7 +240,11 @@ ASGI `root_path` (например `/api` или вложенный `/gateway/ap
 
 Ниже исторический пример формы, **не проверенный реальный сценарий MEAL-4**.
 Для автономного технического теста используются `examples/generation-request.json`
-и synthetic fixture; шесть будущих сценариев пока blocked (см. [EVALUATION](EVALUATION.md)).
+и synthetic fixture. По manifest MEAL-5 ordinary (3 дня × 3 приема) и weekly
+(7 дней × 3 приема) готовы по ручным witness для `5ka-2026-10-14-observed-v3`;
+preferences, quick, tight-budget и impossible остаются blocked.
+Цены, география и наличие не подтверждены; качество реальной генерации еще
+не оценено (см. [EVALUATION](EVALUATION.md) и [STATUS](STATUS.md)).
 
 ```json
 {

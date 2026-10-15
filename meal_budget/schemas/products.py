@@ -16,6 +16,14 @@ from meal_budget.schemas.common import (
 class Source(Contract):
     url: HttpUrl
     checked_at: AwareDatetime
+    observation_method: Literal["unspecified", "direct_page", "web_tool"] = "unspecified"
+    web_cache_age: ShortText | None = None
+
+    @model_validator(mode="after")
+    def cache_observation(self) -> "Source":
+        if self.web_cache_age is not None and self.observation_method != "web_tool":
+            raise ValueError("cache age requires a web tool observation")
+        return self
 
 
 class PriceEvidence(Source):
@@ -23,8 +31,8 @@ class PriceEvidence(Source):
     region_confirmed: bool = Field(strict=True)
     region: ShortText | None
     store: ShortText | None
-    price_type: Literal["regular", "promotional", "unclear"]
-    single_package_without_card: Literal[True]
+    price_type: Literal["regular", "promotional", "displayed", "unclear"]
+    single_package_without_card: Literal[True] | None
     conditions: str | None = Field(default=None, max_length=500)
     valid_from: date | None = None
     valid_until: date | None = None
@@ -39,6 +47,17 @@ class PriceEvidence(Source):
             raise ValueError("offline price requires a verified store")
         if self.price_type == "unclear":
             raise ValueError("unclear prices belong to candidates, not active products")
+        if self.price_type == "displayed":
+            if self.single_package_without_card is not None or not self.conditions:
+                raise ValueError(
+                    "displayed price requires unknown eligibility and observation notes"
+                )
+            if self.channel != "online_delivery":
+                raise ValueError("displayed price is an online observation, not an offline price")
+        elif self.single_package_without_card is not True:
+            raise ValueError(
+                "regular/promotional price requires confirmed single-package eligibility"
+            )
         if self.price_type == "promotional" and not self.conditions:
             raise ValueError("promotional price requires published conditions")
         if self.valid_from and self.valid_until and self.valid_until < self.valid_from:
@@ -76,6 +95,7 @@ class Product(Contract):
     id: ProductId
     name: ShortText
     state: Literal["dry", "raw", "cooked"]
+    state_basis: Literal["physical_state", "as_sold"] = "physical_state"
     nutrition_per_100g: Nutrition
     package_size_g: PositiveNumber
     price: Money
@@ -90,7 +110,12 @@ class Product(Contract):
         if isinstance(self.provenance, WebProvenance):
             region = self.provenance.price.region
             source = str(self.provenance.price.url)
-            updated_at = self.provenance.price.checked_at.date()
+            price = self.provenance.price
+            updated_at = (
+                None
+                if price.observation_method == "web_tool" or price.price_type == "displayed"
+                else price.checked_at.date()
+            )
         else:
             region, source, updated_at = None, self.provenance.note, None
         for key, value in (
