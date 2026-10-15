@@ -805,7 +805,7 @@ def test_cli_optional_report_success(cli_inputs, monkeypatch, generated_plan, re
 
 def test_cli_report_empty_catalog_no_network(cli_inputs, monkeypatch):
     request, output = cli_inputs
-    monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "data/5ka-products.json"))
+    monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "tests/fixtures/empty-products.json"))
     transport = cli_transport(monkeypatch, [])
     assert (
         generate_menu.main(
@@ -829,7 +829,9 @@ def test_cli_report_empty_catalog_no_network(cli_inputs, monkeypatch):
 
 
 @pytest.mark.parametrize("catalog", ["nonempty", "empty"])
-@pytest.mark.parametrize("scenario", ["ordinary", "unknown", "unspecified"])
+@pytest.mark.parametrize(
+    "scenario", ["preferences", "quick", "tight-budget", "impossible", "unknown", "unspecified"]
+)
 def test_cli_explicit_blocked_or_unknown_scenario_never_reaches_provider(
     cli_inputs,
     monkeypatch,
@@ -839,7 +841,7 @@ def test_cli_explicit_blocked_or_unknown_scenario_never_reaches_provider(
 ):
     request, output = cli_inputs
     if catalog == "empty":
-        monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "data/5ka-products.json"))
+        monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "tests/fixtures/empty-products.json"))
     transport = cli_transport(monkeypatch, [])
 
     def forbidden(*args, **kwargs):
@@ -865,7 +867,9 @@ def test_cli_explicit_blocked_or_unknown_scenario_never_reaches_provider(
     assert not output.parent.exists()
     assert not output.exists()
     error = capsys.readouterr().err
-    assert ("blocked" if scenario == "ordinary" else "Неизвестный сценарий") in error
+    assert (
+        "Неизвестный сценарий" if scenario in {"unknown", "unspecified"} else "blocked"
+    ) in error
 
 
 def test_ready_scenario_passes_and_witness_is_not_sent(

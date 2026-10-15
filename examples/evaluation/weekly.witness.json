@@ -1,0 +1,43 @@
+{
+  "recipes": [
+    {
+      "id": "oat-breakfast", "name": "Овсянка с вишней, творогом и миндалем", "servings": 1,
+      "ingredients": [{"product_id": "5ka_10234", "grams": 80}, {"product_id": "5ka_4052128", "grams": 150}, {"product_id": "5ka_4169429", "grams": 100}, {"product_id": "5ka_3428419", "grams": 20}],
+      "steps": ["Сварить овсянку на обычной питьевой воде до готовности по упаковке; вишню прогреть отдельно.", "Подать кашу с вишней, творог рядом, миндаль измельчить и добавить. Без сахара, соли и других добавок."],
+      "cooking_minutes": 20
+    },
+    {
+      "id": "chicken-buckwheat", "name": "Куриное бедро с гречкой и овощами", "servings": 1,
+      "ingredients": [{"product_id": "5ka_14301", "grams": 80}, {"product_id": "5ka_4461341", "grams": 150}, {"product_id": "5ka_4252536", "grams": 200}, {"product_id": "5ka_3413519", "grams": 10}],
+      "steps": ["Гречку сварить на обычной питьевой воде по упаковке.", "Филе бедра нарезать, тушить под крышкой с небольшим количеством воды до полной готовности; проверить готовность мяса. Овощи приготовить параллельно по упаковке.", "Подать мясо, гречку и овощи вместе, сливочное масло добавить в готовую гречку. Других пищевых добавок нет."],
+      "cooking_minutes": 40
+    },
+    {
+      "id": "tuna-pasta", "name": "Спагетти с тунцом, овощами и сыром", "servings": 1,
+      "ingredients": [{"product_id": "5ka_3446523", "grams": 90}, {"product_id": "5ka_3624880", "grams": 150}, {"product_id": "5ka_4252536", "grams": 200}, {"product_id": "5ka_3413519", "grams": 15}, {"product_id": "5ka_4046889", "grams": 25}],
+      "steps": ["Филе тунца заранее разморозить в холодильнике по упаковке; указанное время не включает размораживание.", "Спагетти сварить в обычной питьевой воде. Рыбу нарезать и тушить с овощами и небольшим количеством воды до полной готовности по упаковке.", "Соединить со спагетти, добавить сливочное масло и тертый сыр. Без соли, специй и соусов."],
+      "cooking_minutes": 35
+    },
+    {
+      "id": "turkey-rice", "name": "Индейка с рисом, овощами и сыром", "servings": 1,
+      "ingredients": [{"product_id": "5ka_4353603", "grams": 90}, {"product_id": "5ka_3979117", "grams": 150}, {"product_id": "5ka_4252536", "grams": 200}, {"product_id": "5ka_3413519", "grams": 20}, {"product_id": "5ka_4046889", "grams": 30}],
+      "steps": ["Рис сварить на обычной питьевой воде по упаковке.", "Индейку нарезать и тушить с небольшим количеством воды до полной готовности; проверить готовность мяса. Овощи приготовить параллельно по упаковке.", "Подать с рисом, сливочным маслом и тертым сыром. Не добавлять другие пищевые ингредиенты."],
+      "cooking_minutes": 40
+    },
+    {
+      "id": "lentil-dinner", "name": "Чечевица с рататуем, сметаной, хлебом и кефиром", "servings": 1,
+      "ingredients": [{"product_id": "5ka_4130483", "grams": 70}, {"product_id": "5ka_4124097", "grams": 200}, {"product_id": "5ka_3665624", "grams": 40}, {"product_id": "5ka_2149541", "grams": 100}, {"product_id": "5ka_3433425", "grams": 250}],
+      "steps": ["Чечевицу сварить на обычной питьевой воде до готовности по упаковке.", "Замороженный рататуй тушить с небольшим количеством воды по упаковке, соединить с чечевицей и сметаной.", "Подать с хлебом; кефир взвесить в граммах и выпить отдельно. Без соли, масла и специй."],
+      "cooking_minutes": 30
+    }
+  ],
+  "days": [
+    {"day": 1, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "chicken-buckwheat", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 2, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "tuna-pasta", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 3, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "turkey-rice", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 4, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "chicken-buckwheat", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 5, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "tuna-pasta", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 6, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "turkey-rice", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]},
+    {"day": 7, "meals": [{"recipe_id": "oat-breakfast", "servings": 1}, {"recipe_id": "chicken-buckwheat", "servings": 1}, {"recipe_id": "lentil-dinner", "servings": 1}]}
+  ]
+}

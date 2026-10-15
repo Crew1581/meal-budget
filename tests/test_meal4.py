@@ -128,11 +128,12 @@ def test_catalog_requires_version_and_unique_ids(web_product):
         ProductCatalog.model_validate(catalog)
 
 
-def test_active_snapshot_has_no_invented_products():
+def test_active_snapshot_has_only_observed_products():
     catalog = load_catalog(PROJECT_ROOT / "data/5ka-products.json")
-    assert catalog.products == []
-    assert catalog.catalog_version == "5ka-2026-10-13-blocked-v1"
-    assert "403" in catalog.warning
+    assert len(catalog.products) == 70
+    assert catalog.catalog_version == "5ka-2026-10-14-observed-v3"
+    assert all(p.provenance.price.price_type == "displayed" for p in catalog.products)
+    assert "кеш" in catalog.warning
 
 
 def test_empty_catalog_blocks_generation_before_provider():
@@ -143,7 +144,7 @@ def test_empty_catalog_blocks_generation_before_provider():
     request = GenerationRequest.model_validate_json(
         (PROJECT_ROOT / "examples/generation-request.json").read_bytes()
     )
-    catalog = load_catalog(PROJECT_ROOT / "data/5ka-products.json")
+    catalog = load_catalog(PROJECT_ROOT / "tests/fixtures/empty-products.json")
     service = MenuGenerationService(ForbiddenProvider(), Settings(_env_file=None))
     with pytest.raises(GenerationError) as error:
         asyncio.run(service.generate(request, catalog))
@@ -156,7 +157,7 @@ def test_actual_snapshot_http_routes_without_network():
     with TestClient(create_app(settings)) as client:
         assert client.get("/health").json() == {"status": "ok"}
         catalog = client.get("/v1/products").json()
-        assert catalog["products"] == []
+        assert len(catalog["products"]) == 70
         assert catalog["catalog_version"]
         menu = json.loads((PROJECT_ROOT / "examples/menu-calculation.json").read_bytes())
         response = client.post("/v1/menu-calculations", json=menu)
@@ -173,7 +174,7 @@ def test_empty_snapshot_generation_http_503_without_provider(monkeypatch):
     monkeypatch.setattr(DeepSeekProvider, "complete", forbidden)
     settings = Settings(
         _env_file=None,
-        catalog_path=PROJECT_ROOT / "data/5ka-products.json",
+        catalog_path=PROJECT_ROOT / "tests/fixtures/empty-products.json",
         generation_http_enabled=True,
         generation_access_token="test-access",
     )
@@ -192,11 +193,16 @@ def test_empty_snapshot_generation_http_503_without_provider(monkeypatch):
         assert schema["Product"]["properties"]["package_size_g"]["type"] == "number"
 
 
-def test_six_scenarios_are_explicitly_blocked():
+def test_six_scenarios_have_explicit_readiness():
     scenarios = evaluate_menu.load_scenarios()
     assert len(scenarios) == 6
     assert len({scenario.id for scenario in scenarios}) == 6
     for scenario in scenarios:
+        if scenario.id in {"ordinary", "weekly"}:
+            assert scenario.status == "ready"
+            assert scenario.request is not None
+            assert scenario.witness is not None
+            continue
         assert scenario.status == "blocked"
         assert scenario.request is None
         assert scenario.witness is None
@@ -261,7 +267,8 @@ def test_ready_scenario_infrastructure_with_synthetic_witness():
 def test_summary_is_offline_and_uses_protected_generated(tmp_path, monkeypatch):
     monkeypatch.setattr(generate_menu, "PROJECT_ROOT", tmp_path)
     assert (
-        evaluate_menu.main(["--scenario", "ordinary", "--output", "evaluation/summary.json"]) == 0
+        evaluate_menu.main(["--scenario", "preferences", "--output", "evaluation/summary.json"])
+        == 0
     )
     summary = evaluate_menu.read_report(Path("evaluation/summary.json"))
     assert summary.outcome == "blocked"
@@ -298,7 +305,7 @@ def test_report_schema_does_not_estimate_api_cost():
 def test_blocked_scenario_cannot_publish_success_summary(tmp_path, monkeypatch):
     monkeypatch.setattr(generate_menu, "PROJECT_ROOT", tmp_path)
     summary = RunSummary(
-        scenario="ordinary",
+        scenario="preferences",
         catalog_version="synthetic-meal-3-v1",
         outcome="success",
         budget_pass=True,
@@ -309,7 +316,7 @@ def test_blocked_scenario_cannot_publish_success_summary(tmp_path, monkeypatch):
         evaluate_menu.main(
             [
                 "--scenario",
-                "ordinary",
+                "preferences",
                 "--result",
                 "tampered.json",
                 "--output",

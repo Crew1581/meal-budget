@@ -1,0 +1,2387 @@
+{
+  "inventory_version": "5ka-2026-10-14-candidates-v1",
+  "schema_note": "Справочник кандидатов, не ProductCatalog. Не подключать к CATALOG_PATH. reported_weight_g — значение карточки, не масса съедобной части и не conversion_factor.",
+  "candidates": [
+    {
+      "id": "5ka_3667232",
+      "name": "Гречка ядрица Селяночка быстроразваривающаяся пропаренная 900г",
+      "product_url": "https://5ka.ru/product/grechka-yadritsa-selyanochka-bystrorazvarivayushch--3667232/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "2 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        119.99,
+        69.99
+      ],
+      "package_label": "900 г",
+      "reported_weight_g": 900,
+      "nutrition_per_100g": {
+        "protein_g": 12.6,
+        "fat_g": 2.6,
+        "carbs_g": 68,
+        "calories_kcal": 329
+      }
+    },
+    {
+      "id": "5ka_3391534",
+      "name": "Гречка Мистраль зелёная, 450г",
+      "product_url": "https://5ka.ru/product/grechka-mistral-zelyonaya-450g--3391534/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        124.99
+      ],
+      "package_label": "450 г",
+      "reported_weight_g": 450,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_3193948",
+      "name": "Картофель Global Village фасованный мытый для жарки, 3кг",
+      "product_url": "https://5ka.ru/product/kartofel-global-village-fasovannyy-mytyy-dlya-zhar--3193948/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Масса с кожурой; база КБЖУ и выход после очистки не подтверждены",
+      "displayed_prices_rub": [
+        299.99
+      ],
+      "package_label": "3 кг",
+      "reported_weight_g": 3000,
+      "nutrition_per_100g": {
+        "protein_g": 2,
+        "fat_g": 0.4,
+        "carbs_g": 16.3,
+        "calories_kcal": 77
+      }
+    },
+    {
+      "id": "5ka_54727",
+      "name": "Голубика 125г",
+      "product_url": "https://5ka.ru/product/golubika-125g--54727/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "125 г",
+      "reported_weight_g": 125,
+      "nutrition_per_100g": {
+        "protein_g": 1,
+        "fat_g": 0,
+        "carbs_g": 8.2,
+        "calories_kcal": 35
+      }
+    },
+    {
+      "id": "5ka_3431069",
+      "name": "Смесь овощная Морозко Green Овощное трио быстрозамороженная 400г",
+      "product_url": "https://5ka.ru/product/smes-ovoshchnaya-morozko-green-ovoshchnoe-trio-bys--3431069/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        129.99
+      ],
+      "package_label": "400 мл",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": {
+        "protein_g": 2.2,
+        "fat_g": 0.2,
+        "carbs_g": 5.8,
+        "calories_kcal": 36
+      }
+    },
+    {
+      "id": "5ka_4072222",
+      "name": "Смесь овощная Global Village Азиатская с соусом замороженная 400г",
+      "product_url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-aziatskaya-s-souso--4072222/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        249.99
+      ],
+      "package_label": "400 г",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_3428420",
+      "name": "Грецкий орех Семушка 110г",
+      "product_url": "https://5ka.ru/product/gretskiy-orekh-semushka-110g--3428420/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Существенное расхождение КБЖУ с калорийностью; нужна сверка этикетки",
+      "displayed_prices_rub": [
+        449.99
+      ],
+      "package_label": "110 г",
+      "reported_weight_g": 110,
+      "nutrition_per_100g": {
+        "protein_g": 16.8,
+        "fat_g": 22.3,
+        "carbs_g": 53.4,
+        "calories_kcal": 691
+      }
+    },
+    {
+      "id": "5ka_3645939",
+      "name": "Грецкий орех Grand Master, 380г",
+      "product_url": "https://5ka.ru/product/gretskiy-orekh-grand-master-380g--3645939/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        908.99
+      ],
+      "package_label": "380 г",
+      "reported_weight_g": 380,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_4357606",
+      "name": "Белок яичный Вкус & Польза пастеризованный жидкий охлажденный 330мл",
+      "product_url": "https://5ka.ru/product/belok-yaichnyy-vkus-polza-pasterizovannyy-zhidkiy--4357606/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        132.99
+      ],
+      "package_label": "330 мл",
+      "reported_weight_g": 330,
+      "nutrition_per_100g": {
+        "protein_g": 13,
+        "fat_g": 0,
+        "carbs_g": 1,
+        "calories_kcal": 56
+      }
+    },
+    {
+      "id": "5ka_4213682",
+      "name": "Яйцо Окское СВ столовое 10шт",
+      "product_url": "https://5ka.ru/product/yaytso-okskoe-sv-stolovoe-10sht--4213682/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        179.99
+      ],
+      "package_label": "10 шт",
+      "reported_weight_g": 200,
+      "nutrition_per_100g": {
+        "protein_g": 12.7,
+        "fat_g": 11.5,
+        "carbs_g": 0.7,
+        "calories_kcal": 157
+      }
+    },
+    {
+      "id": "5ka_3062835",
+      "name": "Яйцо куриное Окское столовое СО 10шт.",
+      "product_url": "https://5ka.ru/product/yaytso-kurinoe-okskoe-stolovoe-so-10sht--3062835/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "10 шт",
+      "reported_weight_g": 500,
+      "nutrition_per_100g": {
+        "protein_g": 12.7,
+        "fat_g": 11.5,
+        "carbs_g": 0.7,
+        "calories_kcal": 157
+      }
+    },
+    {
+      "id": "5ka_3341462",
+      "name": "Яйцо куриное Лето С1 20шт.",
+      "product_url": "https://5ka.ru/product/yaytso-kurinoe-leto-s1-20sht--3341462/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        239.99
+      ],
+      "package_label": "20 шт",
+      "reported_weight_g": 1298,
+      "nutrition_per_100g": {
+        "protein_g": 12.7,
+        "fat_g": 11.5,
+        "carbs_g": 0.7,
+        "calories_kcal": 157
+      }
+    },
+    {
+      "id": "5ka_3062836",
+      "name": "Яйцо куриное Окское столовое С1 10шт.",
+      "product_url": "https://5ka.ru/product/yaytso-kurinoe-okskoe-stolovoe-s1-10sht--3062836/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        119.99
+      ],
+      "package_label": "10 шт",
+      "reported_weight_g": 650,
+      "nutrition_per_100g": {
+        "protein_g": 12.7,
+        "fat_g": 11.5,
+        "carbs_g": 0.7,
+        "calories_kcal": 157
+      }
+    },
+    {
+      "id": "5ka_3001671",
+      "name": "Яйцо куриное Лето пищевое С1 10шт.",
+      "product_url": "https://5ka.ru/product/yaytso-kurinoe-leto-pishchevoe-s1-10sht--3001671/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        114.99
+      ],
+      "package_label": "10 шт",
+      "reported_weight_g": 250,
+      "nutrition_per_100g": {
+        "protein_g": 12.7,
+        "fat_g": 11.5,
+        "carbs_g": 0.7,
+        "calories_kcal": 157
+      }
+    },
+    {
+      "id": "5ka_4292180",
+      "name": "Креветка Вкус Арт Ваннамей очищенная без вены с хвостом замороженная 500г",
+      "product_url": "https://5ka.ru/product/krevetka-vkus-art-vannamey-ochishchennaya-bez-veny--4292180/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Неоднозначный съедобный выход: хвосты, скорлупа или кости",
+      "displayed_prices_rub": [
+        949.99
+      ],
+      "package_label": "500 г",
+      "reported_weight_g": 500,
+      "nutrition_per_100g": {
+        "protein_g": 16,
+        "fat_g": 2,
+        "carbs_g": 2,
+        "calories_kcal": 80
+      }
+    },
+    {
+      "id": "5ka_4385565",
+      "name": "Творог Станция Молочная обезжиренный БЗМЖ 300г",
+      "product_url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-obezzhirennyy-bzmzh-30--4385565/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Название обезжиренного творога и опубликованный жир/калорийность требуют сверки этикетки",
+      "displayed_prices_rub": [
+        104.99
+      ],
+      "package_label": "300 г",
+      "reported_weight_g": 300,
+      "nutrition_per_100g": {
+        "protein_g": 18,
+        "fat_g": 1.8,
+        "carbs_g": 3.3,
+        "calories_kcal": 85
+      }
+    },
+    {
+      "id": "5ka_3463740",
+      "name": "Творог Из Углича обезжиренный 1.8% БЗМЖ 200г",
+      "product_url": "https://5ka.ru/product/tvorog-iz-uglicha-obezzhirennyy-1-8-bzmzh-200g--3463740/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "200 г",
+      "reported_weight_g": 200,
+      "nutrition_per_100g": {
+        "protein_g": 18,
+        "fat_g": 1.8,
+        "carbs_g": 3.3,
+        "calories_kcal": 101
+      }
+    },
+    {
+      "id": "5ka_3335498",
+      "name": "Сыр Красная цена Российский 45% БЗМЖ",
+      "product_url": "https://5ka.ru/product/syr-krasnaya-tsena-rossiyskiy-45-bzmzh--3335498/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Цена за вес, не фиксированную упаковку",
+      "displayed_prices_rub": [
+        57.99
+      ],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 24.5,
+        "fat_g": 25.5,
+        "carbs_g": 0,
+        "calories_kcal": 330
+      }
+    },
+    {
+      "id": "5ka_4292987",
+      "name": "Горох Селяночка колотый шлифованный 800г",
+      "product_url": "https://5ka.ru/product/gorokh-selyanochka-kolotyy-shlifovannyy-800g--4292987/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "2 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        69.99,
+        62.99
+      ],
+      "package_label": "800 г",
+      "reported_weight_g": 800,
+      "nutrition_per_100g": {
+        "protein_g": 22,
+        "fat_g": 2,
+        "carbs_g": 53,
+        "calories_kcal": 310
+      }
+    },
+    {
+      "id": "5ka_3194302",
+      "name": "Творог Савушкин Мягкий обезжиренный 0.1% БЗМЖ 125г",
+      "product_url": "https://5ka.ru/product/tvorog-savushkin-myagkiy-obezzhirennyy-0-1-bzmzh-1--3194302/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        46.99,
+        42.29
+      ],
+      "package_label": "125 г",
+      "reported_weight_g": 125,
+      "nutrition_per_100g": {
+        "protein_g": 10,
+        "fat_g": 0.1,
+        "carbs_g": 1,
+        "calories_kcal": 44.9
+      }
+    },
+    {
+      "id": "5ka_3658261",
+      "name": "Морковь мытая в подложке 600г",
+      "product_url": "https://5ka.ru/product/morkov-mytaya-v-podlozhke-600g--3658261/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "600 г",
+      "reported_weight_g": 600,
+      "nutrition_per_100g": {
+        "protein_g": 1.3,
+        "fat_g": 0.1,
+        "carbs_g": 6.9,
+        "calories_kcal": 32
+      }
+    },
+    {
+      "id": "5ka_2071663",
+      "name": "Масло подсолнечное нерафинированное, 900мл",
+      "product_url": "https://5ka.ru/product/maslo-podsolnechnoe-nerafinirovannoe-900ml--2071663/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        109.99
+      ],
+      "package_label": "900 мл",
+      "reported_weight_g": 828,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 99.9,
+        "carbs_g": 0,
+        "calories_kcal": 899
+      }
+    },
+    {
+      "id": "5ka_3021692",
+      "name": "Бананы Красная Цена фасованные",
+      "product_url": "https://5ka.ru/product/banany-krasnaya-tsena-fasovannye--3021692/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 1.1,
+        "fat_g": 0.3,
+        "carbs_g": 23,
+        "calories_kcal": 89
+      }
+    },
+    {
+      "id": "5ka_21676",
+      "name": "Масло подсолнечное Слобода рафинированное дезодорированное 1л",
+      "product_url": "https://5ka.ru/product/maslo-podsolnechnoe-sloboda-rafinirovannoe-dezodor--21676/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        155.99
+      ],
+      "package_label": "1 л",
+      "reported_weight_g": 920,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 99.9,
+        "carbs_g": 0,
+        "calories_kcal": 899
+      }
+    },
+    {
+      "id": "5ka_4325082",
+      "name": "Масло Селяночка подсолнечное нерафинированное 650мл",
+      "product_url": "https://5ka.ru/product/maslo-selyanochka-podsolnechnoe-nerafinirovannoe-6--4325082/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        129.99
+      ],
+      "package_label": "650 мл",
+      "reported_weight_g": 598,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 99.8,
+        "carbs_g": 0,
+        "calories_kcal": 898
+      }
+    },
+    {
+      "id": "5ka_3387522",
+      "name": "Масло Красная цена подсолнечное рафинированное 900мл",
+      "product_url": "https://5ka.ru/product/maslo-krasnaya-tsena-podsolnechnoe-rafinirovannoe--3387522/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        99.99
+      ],
+      "package_label": "900 мл",
+      "reported_weight_g": 828,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 99.9,
+        "carbs_g": 0,
+        "calories_kcal": 899
+      }
+    },
+    {
+      "id": "5ka_3608379",
+      "name": "Масло подсолнечное Ароматы Жизни из жареных семечек нерафинированное 250мл",
+      "product_url": "https://5ka.ru/product/maslo-podsolnechnoe-aromaty-zhizni-iz-zharenykh-se--3608379/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        144.99
+      ],
+      "package_label": "250 мл",
+      "reported_weight_g": 230,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 99.9,
+        "carbs_g": 0,
+        "calories_kcal": 899
+      }
+    },
+    {
+      "id": "5ka_4266515",
+      "name": "Рис Селяночка длиннозерный первый сорт 5х80г",
+      "product_url": "https://5ka.ru/product/ris-selyanochka-dlinnozernyy-pervyy-sort-5kh80g--4266515/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "last week",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        114.99,
+        99.99
+      ],
+      "package_label": "400 г",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": {
+        "protein_g": 7,
+        "fat_g": 0.4,
+        "carbs_g": 77,
+        "calories_kcal": 340
+      }
+    },
+    {
+      "id": "5ka_67513",
+      "name": "Томаты сливовидные красные",
+      "product_url": "https://5ka.ru/product/tomaty-slivovidnye-krasnye--67513/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "2 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 0.9,
+        "fat_g": 0.2,
+        "carbs_g": 3.9,
+        "calories_kcal": 18
+      }
+    },
+    {
+      "id": "5ka_3631961",
+      "name": "Томаты Global Village соленые красные 1кг",
+      "product_url": "https://5ka.ru/product/tomaty-global-village-solenye-krasnye-1kg--3631961/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "1 кг",
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 1,
+        "fat_g": 0,
+        "carbs_g": 3,
+        "calories_kcal": 15
+      }
+    },
+    {
+      "id": "5ka_4440117",
+      "name": "Томаты Flamenco красные свежие",
+      "product_url": "https://5ka.ru/product/tomaty-flamenco-krasnye-svezhie--4440117/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 0.6,
+        "fat_g": 0.2,
+        "carbs_g": 4.2,
+        "calories_kcal": 20
+      }
+    },
+    {
+      "id": "5ka_3017019",
+      "name": "Томаты Бакинские",
+      "product_url": "https://5ka.ru/product/tomaty-bakinskie--3017019/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        399.99
+      ],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_4221768",
+      "name": "Томаты Фламенко сливовидные",
+      "product_url": "https://5ka.ru/product/tomaty-flamenko-slivovidnye--4221768/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 0.9,
+        "fat_g": 0,
+        "carbs_g": 3.9,
+        "calories_kcal": 18
+      }
+    },
+    {
+      "id": "5ka_4379098",
+      "name": "Томаты Artfood очищенные в собственном соку 670г",
+      "product_url": "https://5ka.ru/product/tomaty-artfood-ochishchennye-v-sobstvennom-soku-67--4379098/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Томаты в заливке: не подтверждена база КБЖУ и использование всей массы без слива",
+      "displayed_prices_rub": [
+        279.99
+      ],
+      "package_label": "670 г",
+      "reported_weight_g": 670,
+      "nutrition_per_100g": {
+        "protein_g": 1.3,
+        "fat_g": 0.2,
+        "carbs_g": 5.2,
+        "calories_kcal": 28.2
+      }
+    },
+    {
+      "id": "5ka_4426953",
+      "name": "Томаты Pomi протёртые, 700г",
+      "product_url": "https://5ka.ru/product/tomaty-pomi-protyortye-700g--4426953/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        559.99
+      ],
+      "package_label": "700 мл",
+      "reported_weight_g": 700,
+      "nutrition_per_100g": {
+        "protein_g": 1.3,
+        "fat_g": 0.5,
+        "carbs_g": 5,
+        "calories_kcal": 31
+      }
+    },
+    {
+      "id": "5ka_4380560",
+      "name": "Аппетитка Global Village с нежно-острым вкусом 350г",
+      "product_url": "https://5ka.ru/product/appetitka-global-village-s-nezhno-ostrym-vkusom-35--4380560/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        174.99,
+        119.99
+      ],
+      "package_label": "350 г",
+      "reported_weight_g": 350,
+      "nutrition_per_100g": {
+        "protein_g": 1,
+        "fat_g": 3.5,
+        "carbs_g": 9,
+        "calories_kcal": 70
+      }
+    },
+    {
+      "id": "5ka_3604771",
+      "name": "Томаты Розовые Отборные Азербайджан",
+      "product_url": "https://5ka.ru/product/tomaty-rozovye-otbornye-azerbaydzhan--3604771/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 1.1,
+        "fat_g": 0.2,
+        "carbs_g": 5.2,
+        "calories_kcal": 24
+      }
+    },
+    {
+      "id": "5ka_4272752",
+      "name": "Томаты Фермерские",
+      "product_url": "https://5ka.ru/product/tomaty-fermerskie--4272752/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_3901877",
+      "name": "Томаты Бондюэль очищенные в томатной мякоти, 680г",
+      "product_url": "https://5ka.ru/product/tomaty-bondyuel-ochishchennye-v-tomatnoy-myakoti-6--3901877/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "680 г",
+      "reported_weight_g": 680,
+      "nutrition_per_100g": {
+        "protein_g": 0,
+        "fat_g": 0,
+        "carbs_g": 17,
+        "calories_kcal": 70
+      }
+    },
+    {
+      "id": "5ka_3399627",
+      "name": "Мякоть томатов Пиканта протёртая, 500г",
+      "product_url": "https://5ka.ru/product/myakot-tomatov-pikanta-protyortaya-500g--3399627/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "500 г",
+      "reported_weight_g": 500,
+      "nutrition_per_100g": {
+        "protein_g": 1.5,
+        "fat_g": 0,
+        "carbs_g": 6.5,
+        "calories_kcal": 30
+      }
+    },
+    {
+      "id": "5ka_4089971",
+      "name": "Хлопья Селяночка 5 злаков ржаные-овсяные-ячменные-пшеничные-гречневые не требующие варки 400г",
+      "product_url": "https://5ka.ru/product/khlopya-selyanochka-5-zlakov-rzhanye-ovsyanye-yach--4089971/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        59.99,
+        53.99
+      ],
+      "package_label": "400 г",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": {
+        "protein_g": 12,
+        "fat_g": 3,
+        "carbs_g": 70,
+        "calories_kcal": 350
+      }
+    },
+    {
+      "id": "5ka_4266550",
+      "name": "Каша Красная Цена Традиционная овсяная со сливками быстрого приготовления 35г",
+      "product_url": "https://5ka.ru/product/kasha-krasnaya-tsena-traditsionnaya-ovsyanaya-so-s--4266550/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "35 г",
+      "reported_weight_g": 35,
+      "nutrition_per_100g": {
+        "protein_g": 10,
+        "fat_g": 6,
+        "carbs_g": 68,
+        "calories_kcal": 376
+      }
+    },
+    {
+      "id": "5ka_3231230",
+      "name": "Рис длиннозерный 900г",
+      "product_url": "https://5ka.ru/product/ris-dlinnozernyy-900g--3231230/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        56.99
+      ],
+      "package_label": "900 г",
+      "reported_weight_g": 900,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_4353225",
+      "name": "Рис Global Village бурый 800г",
+      "product_url": "https://5ka.ru/product/ris-global-village-buryy-800g--4353225/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        129.99,
+        115.99
+      ],
+      "package_label": "800 г",
+      "reported_weight_g": 800,
+      "nutrition_per_100g": {
+        "protein_g": 7,
+        "fat_g": 2,
+        "carbs_g": 77,
+        "calories_kcal": 350
+      }
+    },
+    {
+      "id": "5ka_3992161",
+      "name": "Рис Global Village Для плова 800г",
+      "product_url": "https://5ka.ru/product/ris-global-village-dlya-plova-800g--3992161/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        109.99,
+        96.99
+      ],
+      "package_label": "800 г",
+      "reported_weight_g": 800,
+      "nutrition_per_100g": {
+        "protein_g": 6,
+        "fat_g": 9,
+        "carbs_g": 79,
+        "calories_kcal": 420
+      }
+    },
+    {
+      "id": "5ka_3603635",
+      "name": "Каша детская молочная рисовая Агуша Яблоко-Груша с 6 мес., 200г",
+      "product_url": "https://5ka.ru/product/kasha-detskaya-molochnaya-risovaya-agusha-yabloko--3603635/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Единицы упаковки не совместимы с граммовой моделью",
+      "displayed_prices_rub": [
+        47.99
+      ],
+      "package_label": "200 мл",
+      "reported_weight_g": 210,
+      "nutrition_per_100g": {
+        "protein_g": 3.1,
+        "fat_g": 2.7,
+        "carbs_g": 9.8,
+        "calories_kcal": 77
+      }
+    },
+    {
+      "id": "5ka_4361230",
+      "name": "Крупа Увелка гречневая 500г",
+      "product_url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-500g--4361230/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        79.99,
+        67.99
+      ],
+      "package_label": "500 г",
+      "reported_weight_g": 500,
+      "nutrition_per_100g": {
+        "protein_g": 13,
+        "fat_g": 2.5,
+        "carbs_g": 61,
+        "calories_kcal": 340
+      }
+    },
+    {
+      "id": "5ka_4101174",
+      "name": "Йогурт Epica Crispy клюква-кокос-миндаль-шоколад-клубника-смесь печенья 7.3% 138г",
+      "product_url": "https://5ka.ru/product/yogurt-epica-crispy-klyukva-kokos-mindal-shokolad--4101174/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Не подтверждена база КБЖУ для продукта с отдельным топпингом",
+      "displayed_prices_rub": [
+        82.99
+      ],
+      "package_label": "138 г",
+      "reported_weight_g": 138,
+      "nutrition_per_100g": {
+        "protein_g": 5.7,
+        "fat_g": 4.8,
+        "carbs_g": 11.3,
+        "calories_kcal": 110
+      }
+    },
+    {
+      "id": "5ka_3447286",
+      "name": "Суп Yelli Масурдал из чечевицы, 250г",
+      "product_url": "https://5ka.ru/product/sup-yelli-masurdal-iz-chechevitsy-250g--3447286/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        228.99
+      ],
+      "package_label": "250 г",
+      "reported_weight_g": 250,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_4169026",
+      "name": "Чечевица Global Village зеленая 450г",
+      "product_url": "https://5ka.ru/product/chechevitsa-global-village-zelenaya-450g--4169026/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        109.99,
+        87.99
+      ],
+      "package_label": "450 г",
+      "reported_weight_g": 450,
+      "nutrition_per_100g": {
+        "protein_g": 28,
+        "fat_g": 2,
+        "carbs_g": 58,
+        "calories_kcal": 360
+      }
+    },
+    {
+      "id": "5ka_3235377",
+      "name": "Фасоль Global Village белая 425мл",
+      "product_url": "https://5ka.ru/product/fasol-global-village-belaya-425ml--3235377/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        124.99,
+        109.99
+      ],
+      "package_label": "425 мл",
+      "reported_weight_g": 425,
+      "nutrition_per_100g": {
+        "protein_g": 6.1,
+        "fat_g": 0,
+        "carbs_g": 14.9,
+        "calories_kcal": 84
+      }
+    },
+    {
+      "id": "5ka_3415786",
+      "name": "Фасоль Красная Цена красная в собственном соку, 360г",
+      "product_url": "https://5ka.ru/product/fasol-krasnaya-tsena-krasnaya-v-sobstvennom-soku-3--3415786/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Не подтверждена база КБЖУ и масса без заливки; требуется сверка этикетки",
+      "displayed_prices_rub": [
+        74.99
+      ],
+      "package_label": "360 г",
+      "reported_weight_g": 360,
+      "nutrition_per_100g": {
+        "protein_g": 5,
+        "fat_g": 0.5,
+        "carbs_g": 13,
+        "calories_kcal": 80
+      }
+    },
+    {
+      "id": "5ka_3651907",
+      "name": "Чечевица Мистраль смесь красной и жёлтой, 450г",
+      "product_url": "https://5ka.ru/product/chechevitsa-mistral-smes-krasnoy-i-zhyoltoy-450g--3651907/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        197.99
+      ],
+      "package_label": "450 г",
+      "reported_weight_g": 450,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_20062",
+      "name": "Фасоль консервированная Бондюэль белая 400г",
+      "product_url": "https://5ka.ru/product/fasol-konservirovannaya-bondyuel-belaya-400g--20062/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Не подтверждена база КБЖУ и масса без заливки; требуется сверка этикетки",
+      "displayed_prices_rub": [
+        194.99
+      ],
+      "package_label": "425 мл",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": {
+        "protein_g": 5.3,
+        "fat_g": 0.2,
+        "carbs_g": 16,
+        "calories_kcal": 87
+      }
+    },
+    {
+      "id": "5ka_3235374",
+      "name": "Фасоль Global Village красная в собственном соку 400г",
+      "product_url": "https://5ka.ru/product/fasol-global-village-krasnaya-v-sobstvennom-soku-4--3235374/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Не подтверждена база КБЖУ и масса без заливки; требуется сверка этикетки",
+      "displayed_prices_rub": [],
+      "package_label": "425 мл",
+      "reported_weight_g": 400,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_3191300",
+      "name": "Филе куриное охлажденное",
+      "product_url": "https://5ka.ru/product/file-kurinoe-okhlazhdennoe--3191300/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        449.99
+      ],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_2160069",
+      "name": "Филе грудки Первая Свежесть куриное охлажденное",
+      "product_url": "https://5ka.ru/product/file-grudki-pervaya-svezhest-kurinoe-okhlazhdennoe--2160069/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Цена за вес, не фиксированную упаковку",
+      "displayed_prices_rub": [
+        592.99
+      ],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 18,
+        "fat_g": 8,
+        "carbs_g": 0.5,
+        "calories_kcal": 140
+      }
+    },
+    {
+      "id": "5ka_2160041",
+      "name": "Бедро куриное Первая Свежесть охлажденное",
+      "product_url": "https://5ka.ru/product/bedro-kurinoe-pervaya-svezhest-okhlazhdennoe--2160041/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "4 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Неоднозначный съедобный выход: хвосты, скорлупа или кости",
+      "displayed_prices_rub": [
+        415.99
+      ],
+      "package_label": null,
+      "reported_weight_g": 1000,
+      "nutrition_per_100g": {
+        "protein_g": 17,
+        "fat_g": 13,
+        "carbs_g": 0.4,
+        "calories_kcal": 185
+      }
+    },
+    {
+      "id": "5ka_3664240",
+      "name": "Минтай Borealis филе замороженное 750г",
+      "product_url": "https://5ka.ru/product/mintay-borealis-file-zamorozhennoe-750g--3664240/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "3 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "750 г",
+      "reported_weight_g": 750,
+      "nutrition_per_100g": {
+        "protein_g": 20,
+        "fat_g": 1,
+        "carbs_g": 0,
+        "calories_kcal": 89
+      }
+    },
+    {
+      "id": "5ka_4408804",
+      "name": "Форель Русское Море филе-кусок слабосоленая 150г",
+      "product_url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-150g--4408804/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        344.99,
+        308.99
+      ],
+      "package_label": "150 г",
+      "reported_weight_g": 150,
+      "nutrition_per_100g": {
+        "protein_g": 18,
+        "fat_g": 12,
+        "carbs_g": 0,
+        "calories_kcal": 180
+      }
+    },
+    {
+      "id": "5ka_3361889",
+      "name": "Сельдь Fish House филе Оригинальное слабосоленая в масле 250г",
+      "product_url": "https://5ka.ru/product/seld-fish-house-file-originalnoe-slabosolenaya-v-m--3361889/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "6 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет полного КБЖУ",
+      "displayed_prices_rub": [
+        169.99
+      ],
+      "package_label": "250 г",
+      "reported_weight_g": 250,
+      "nutrition_per_100g": null
+    },
+    {
+      "id": "5ka_4216558",
+      "name": "Филе бедра индейки Пава-Пава охлажденное 450г",
+      "product_url": "https://5ka.ru/product/file-bedra-indeyki-pava-pava-okhlazhdennoe-450g--4216558/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "yesterday",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / цена не опубликована",
+      "displayed_prices_rub": [],
+      "package_label": "450 г",
+      "reported_weight_g": 450,
+      "nutrition_per_100g": {
+        "protein_g": 20,
+        "fat_g": 6,
+        "carbs_g": 0,
+        "calories_kcal": 130
+      }
+    },
+    {
+      "id": "5ka_4439965",
+      "name": "Сельдь Fish House тихоокеанская соленая филе без кожи, 200г",
+      "product_url": "https://5ka.ru/product/seld-fish-house-tikhookeanskaya-solenaya-file-bez--4439965/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "5 days ago",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        139.99,
+        109.99
+      ],
+      "package_label": "200 г",
+      "reported_weight_g": 200,
+      "nutrition_per_100g": {
+        "protein_g": 19,
+        "fat_g": 18,
+        "carbs_g": 0,
+        "calories_kcal": 238
+      }
+    },
+    {
+      "id": "5ka_4383612",
+      "name": "Баклажаны Global Village обжаренные с овощами 350г",
+      "product_url": "https://5ka.ru/product/baklazhany-global-village-obzharennye-s-ovoshchami--4383612/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        119.99,
+        99.99
+      ],
+      "package_label": "350 г",
+      "reported_weight_g": 350,
+      "nutrition_per_100g": {
+        "protein_g": 1,
+        "fat_g": 2,
+        "carbs_g": 6.5,
+        "calories_kcal": 50
+      }
+    },
+    {
+      "id": "5ka_4383611",
+      "name": "Баклажаны Global Village в аджике 350г",
+      "product_url": "https://5ka.ru/product/baklazhany-global-village-v-adzhike-350g--4383611/",
+      "checked_at": "2026-10-14T18:24:33Z",
+      "web_cache_age": "today",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет одной однозначной цены",
+      "displayed_prices_rub": [
+        119.99,
+        104.99
+      ],
+      "package_label": "350 г",
+      "reported_weight_g": 350,
+      "nutrition_per_100g": {
+        "protein_g": 0.5,
+        "fat_g": 1.5,
+        "carbs_g": 8,
+        "calories_kcal": 50
+      }
+    },
+    {
+      "id": "5ka_53673",
+      "name": "Гречка Мистраль 900г",
+      "product_url": "https://5ka.ru/product/grechka-mistral-900g--53673/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Цена отсутствует или несколько цен/условия скидки",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3628270",
+      "name": "Чечевица Агро-Альянс красная 450г",
+      "product_url": "https://5ka.ru/product/chechevitsa-agro-alyans-krasnaya-450g--3628270/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3612567",
+      "name": "Йогурт Epica натуральный 6% 130г",
+      "product_url": "https://5ka.ru/product/yogurt-epica-naturalnyy-6-130g--3612567/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3688509",
+      "name": "Филе грудки индейки ИндиЛайт без кости охлажденное, 500г",
+      "product_url": "https://5ka.ru/product/file-grudki-indeyki-indilayt-bez-kosti-okhlazhdenn--3688509/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4379628",
+      "name": "Капуста брокколи Agama замороженная, 400г",
+      "product_url": "https://5ka.ru/product/kapusta-brokkoli-agama-zamorozhennaya-400g--4379628/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4386494",
+      "name": "Хлеб Haverland цельнозерновой с творогом и кусочками моркови 250г",
+      "product_url": "https://5ka.ru/product/khleb-haverland-tselnozernovoy-s-tvorogom-i-kusoch--4386494/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4111681",
+      "name": "Хлеб Грiдневъ 100% ржаной на закваске солодовый бездрожжевой из цельнозерновой муки 300г",
+      "product_url": "https://5ka.ru/product/khleb-gridnev-100-rzhanoy-na-zakvaske-solodovyy-be--4111681/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4087616",
+      "name": "Смесь овощная Бондюэль Фасулье овощи по-турецки замороженная, 400г",
+      "product_url": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-fasule-ovoshchi-po-turet--4087616/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3467794",
+      "name": "Кефир Домик в деревне 1% БЗМЖ 900г",
+      "product_url": "https://5ka.ru/product/kefir-domik-v-derevne-1-bzmzh-900g--3467794/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3673816",
+      "name": "Кефир Му-у на кефирных грибках 3.2% БЗМЖ 900г",
+      "product_url": "https://5ka.ru/product/kefir-mu-u-na-kefirnykh-gribkakh-3-2-bzmzh-900g--3673816/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4217907",
+      "name": "Сметана Искренне ваш 15% БЗМЖ 300г",
+      "product_url": "https://5ka.ru/product/smetana-iskrenne-vash-15-bzmzh-300g--4217907/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Противоречивое КБЖУ: 36 г углеводов при 160 ккал, требуется сверка этикетки",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4096065",
+      "name": "Овощи Bonduelle Мексиканский микс с рисом 400г",
+      "product_url": "https://5ka.ru/product/ovoshchi-bonduelle-meksikanskiy-miks-s-risom-400g--4096065/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_3964986",
+      "name": "Мука Селяночка пшеничная высшего сорта 2кг",
+      "product_url": "https://5ka.ru/product/muka-selyanochka-pshenichnaya-vysshego-sorta-2kg--3964986/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    },
+    {
+      "id": "5ka_4090297",
+      "name": "Хлеб Зерница Полезные рецепты Пшеничный злаковый нарезанный 300г",
+      "product_url": "https://5ka.ru/product/khleb-zernitsa-poleznye-retsepty-pshenichnyy-zlako--4090297/",
+      "status": "candidate_not_for_calculation",
+      "reason": "Нет в наличии / отсутствует цена",
+      "checked_at": null,
+      "note": "Проверено в предыдущем сборе 14.10.2026; точные наблюдения не перенесены в этот набор."
+    }
+  ],
+  "unread_cards": [
+    {
+      "id": "4204902",
+      "url": "https://5ka.ru/product/grechka-natsional-kamolino-800g--4204902/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3674200",
+      "url": "https://5ka.ru/product/grechka-mistral-yadritsa-5kh80g--3674200/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3446736",
+      "url": "https://5ka.ru/product/grechka-makfa-yadritsa-bystrorazvarivaemaya-800g--3446736/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3369264",
+      "url": "https://5ka.ru/product/shpinat-mini-125g--3369264/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4025761",
+      "url": "https://5ka.ru/product/perets-ramiro-sladkiy-210g--4025761/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "2128016",
+      "url": "https://5ka.ru/product/zelen-assorti-200g--2128016/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3638922",
+      "url": "https://5ka.ru/product/prorostki-fasoli-solnechnaya-planeta-mash-150g--3638922/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4052118",
+      "url": "https://5ka.ru/product/golubika-250g--4052118/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3661147",
+      "url": "https://5ka.ru/product/miks-artfruit-malina-golubika-v-serdtse-250g--3661147/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4047903",
+      "url": "https://5ka.ru/product/yabloki-market-perekrestok-red-delishes-4sht--4047903/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3335012",
+      "url": "https://5ka.ru/product/vishnya-zimove-zamorozhennaya-300g--3335012/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4276565",
+      "url": "https://5ka.ru/product/nerka-fish-house-file-kusok-slabosolenaya-150g--4276565/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3387456",
+      "url": "https://5ka.ru/product/forel-russkoe-more-file-lomtiki-slabosolenaya-120g--3387456/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3387452",
+      "url": "https://5ka.ru/product/semga-russkoe-more-file-kusok-slabosolenaya-200g--3387452/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "11778",
+      "url": "https://5ka.ru/product/forel-raduzhnaya-file-lomtiki-slabosolenaya-120g--11778/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3649025",
+      "url": "https://5ka.ru/product/kinoa-mistral-500g--3649025/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4106665",
+      "url": "https://5ka.ru/product/kinoa-mistral-beloe-5kh80g--4106665/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4182020",
+      "url": "https://5ka.ru/product/bulgur-mistral-po-turetski-s-vermishelyu-500g--4182020/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3438131",
+      "url": "https://5ka.ru/product/bulgur-gotovo-s-ovoshchami-250g--3438131/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3408218",
+      "url": "https://5ka.ru/product/bulgur-mistral-500g--3408218/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3505778",
+      "url": "https://5ka.ru/product/kinoa-natsional-450g--3505778/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3438672",
+      "url": "https://5ka.ru/product/makarony-la-molisana-spaghetto-quadrato-1-450g--3438672/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "2085905",
+      "url": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-allunovo-n-104-250g--2085905/:",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "4312307",
+      "url": "https://5ka.ru/product/makaronnye-izdeliya-barilla-kampanelle-iz-tvyordyk--4312307/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4281950",
+      "url": "https://5ka.ru/product/makaronnye-izdeliya-barilla-lingvini-rigate-iz-tvy--4281950/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4199594",
+      "url": "https://5ka.ru/product/makarony-maltagliati-capellini-002-450g--4199594/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3430150",
+      "url": "https://5ka.ru/product/tvorog-savushkin-khutorok-9-bzmzh-300g--3430150/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3486018",
+      "url": "https://5ka.ru/product/tvorog-vkusnoteevo-9-bzmzh-750g--3486018/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4096840",
+      "url": "https://5ka.ru/product/tvorog-ruzskoe-moloko-ruzskiy-9-bzmzh-200g--4096840/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4354542",
+      "url": "https://5ka.ru/product/tvorog-brest-litovsk-9-bzmzh-300g--4354542/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3478153",
+      "url": "https://5ka.ru/product/steyk-govyazhiy-miratorg-black-angus-ribay-bez-kos--3478153/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3673175",
+      "url": "https://5ka.ru/product/steyk-miratorg-ribay-govyazhiy-okhlazhdennyy-500g--3673175/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3688982",
+      "url": "https://5ka.ru/product/steyk-miratorg-black-angus-pikanya-govyazhiy-bez-k--3688982/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4267626",
+      "url": "https://5ka.ru/product/myaso-goleni-pava-pava-indeyki-okhlazhdennoe-450g--4267626/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4314036",
+      "url": "https://5ka.ru/product/svinina-cherkizovo-po-dizhonski-beskostnaya-700g--4314036/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3645970",
+      "url": "https://5ka.ru/product/chernosliv-grand-master-b-k-630g--3645970/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "13921",
+      "url": "https://5ka.ru/product/chernosliv-dary-prirody-sushenyy-150g--13921/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "50767",
+      "url": "https://5ka.ru/product/klyukva-semushka-sushenaya-150g--50767/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3457479",
+      "url": "https://5ka.ru/product/granola-myusli-bionova-yagodnye-zapechennye-khrust--3457479/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3457480",
+      "url": "https://5ka.ru/product/granola-myusli-bionova-orekhovye-zapechennye-khrus--3457480/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4349398",
+      "url": "https://5ka.ru/product/khlopya-assorti-bystrov-klubnika-chernika-persik-n--4349398/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3628506",
+      "url": "https://5ka.ru/product/khlopya-kukuruznye-khrutka-khrustyashchie-700g--3628506/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3617469",
+      "url": "https://5ka.ru/product/maslo-olivkovoe-borges-extra-virgin-fruity-nerafin--3617469/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4155590",
+      "url": "https://5ka.ru/product/maslo-luglio-olio-di-sansa-di-oliva-olivkovoe-1l--4155590/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3671633",
+      "url": "https://5ka.ru/product/slivki-selo-zelenoe-dlya-vzbivaniya-ultrapasterizo--3671633/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3424885",
+      "url": "https://5ka.ru/product/sol-setra-morskaya-yodirovannaya-krupnaya-500g--3424885/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "2250692",
+      "url": "https://5ka.ru/product/ogurtsy-korotkoplodnye-450g--2250692/",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "4332895",
+      "url": "https://5ka.ru/product/maslo-almador-podsolnechnoe-s-dobavleniem-olivkovo--4332895/",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3636426",
+      "url": "https://5ka.ru/product/kasha-ovsyanaya-uvelka-s-klubnikoy-bystrogo-prigot--3636426/",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4407633",
+      "url": "https://5ka.ru/product/kasha-druzhba-na-moloke-pyatyorochka-kafe-200g--4407633/",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4472500",
+      "url": "https://5ka.ru/product/grechka-po-kupecheski-pyatyorochka-kafe-300g--4472500/",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "4356575",
+      "url": "https://5ka.ru/product/yogurt-rastishka-so-vkusom-plombira-i-drazhe-s-yag--4356575/",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "4280773",
+      "url": "https://5ka.ru/product/yogurt-rastishka-so-vkusom-malinovogo-morozhenogo--4280773/",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "3447287",
+      "url": "https://5ka.ru/product/sup-yelli-sem-bobov-250g--3447287/",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4216819",
+      "url": "https://5ka.ru/product/fasol-krasnaya-tsena-belaya-naturalnaya-360g--4216819/",
+      "reason": "Timeout"
+    },
+    {
+      "id": "3627481",
+      "url": "https://5ka.ru/product/ryba-maslyanaya-fish-house-lomtiki-kholodnogo-kopc--3627481/",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4238259",
+      "url": "https://5ka.ru/product/seld-fish-house-slabosolenaya-file-kusochki-v-masl--4238259/",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4419105",
+      "url": "https://5ka.ru/product/adzhika-global-village-po-domashnemu-200g--4419105/",
+      "reason": "Нет прочитанного содержимого"
+    },
+    {
+      "id": "3621896",
+      "url": "https://5ka.ru/product/syr-myagkiy-president-bri-s-beloy-plesenyu-60-bzmz--3621896/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3358536",
+      "url": "https://5ka.ru/product/syr-unagrande-motsarella-dlya-pitstsy-45-bzmzh-460--3358536/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3626124",
+      "url": "https://5ka.ru/product/syr-mont-blu-s-goluboy-blagorodnoy-plesenyu-50-bzm--3626124/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3939729",
+      "url": "https://5ka.ru/product/syr-plavlennyy-viola-chetyre-syra-50-bzmzh-400g--3939729/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4255306",
+      "url": "https://5ka.ru/product/maslo-president-kisloslivochnoe-nesolenoe-82-bzmzh--4255306/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4285473",
+      "url": "https://5ka.ru/product/maslo-aleksandrovskaya-ferma-slivochnoe-sladko-sli--4285473/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "4357095",
+      "url": "https://5ka.ru/product/maslo-ekomilk-traditsionnoe-sladko-slivochnoe-neso--4357095/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "3643092",
+      "url": "https://5ka.ru/product/maslo-sladkoslivochnoe-iskrenne-vash-traditsionnoe--3643092/:",
+      "reason": "HTTP 403"
+    },
+    {
+      "id": "2065120",
+      "url": "https://5ka.ru/product/baton-kolomenskoe-nareznoy-narezka-400g--2065120/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4274972",
+      "url": "https://5ka.ru/product/ketchup-heinz-italyanskiy-800g--4274972/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "4116830",
+      "url": "https://5ka.ru/product/ketchup-heinz-tomatnyy-460g--4116830/:",
+      "reason": "Timeout"
+    },
+    {
+      "id": "2140646",
+      "url": "https://5ka.ru/product/sous-barilla-pesto-dzhenoveze-s-bazilikom-190g--2140646/:",
+      "reason": "HTTP 403"
+    }
+  ],
+  "source_observations": [
+    {
+      "id": "5ka_14301",
+      "url": "https://5ka.ru/product/grechka-agro-alyans-ekstra-elitnaya-900g--14301/",
+      "web_cache_age": "last week"
+    },
+    {
+      "id": "5ka_3934932",
+      "url": "https://5ka.ru/product/grechka-selyanochka-yadritsa-bystrorazvarivayushch--3934932/",
+      "web_cache_age": "6 days ago"
+    },
+    {
+      "id": "5ka_3991887",
+      "url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-yadritsa-450g--3991887/",
+      "web_cache_age": "last week"
+    },
+    {
+      "id": "5ka_3667232",
+      "url": "https://5ka.ru/product/grechka-yadritsa-selyanochka-bystrorazvarivayushch--3667232/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3996273",
+      "url": "https://5ka.ru/product/grechka-natsional-altayskaya-800g--3996273/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3391534",
+      "url": "https://5ka.ru/product/grechka-mistral-zelyonaya-450g--3391534/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4175043",
+      "url": "https://5ka.ru/product/griby-eringi-200g--4175043/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3655737",
+      "url": "https://5ka.ru/product/shampinony-global-village-400g--3655737/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3193948",
+      "url": "https://5ka.ru/product/kartofel-global-village-fasovannyy-mytyy-dlya-zhar--3193948/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_54727",
+      "url": "https://5ka.ru/product/golubika-125g--54727/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4169429",
+      "url": "https://5ka.ru/product/vishnya-livianta-bez-kostochki-zamorozhennaya-300g--4169429/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3431069",
+      "url": "https://5ka.ru/product/smes-ovoshchnaya-morozko-green-ovoshchnoe-trio-bys--3431069/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4087615",
+      "url": "https://5ka.ru/product/smes-ovoshchnaya-bondyuel-vok-ovoshchi-po-aziatski--4087615/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4119553",
+      "url": "https://5ka.ru/product/treska-atlanticheskaya-borealis-file-bez-kozhi-zam--4119553/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_3624880",
+      "url": "https://5ka.ru/product/tunets-vkus-art-file-bez-kozhi-zamorozhennoe-500g--3624880/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3387455",
+      "url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-200g--3387455/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3923407",
+      "url": "https://5ka.ru/product/forel-baltiyskiy-bereg-file-kusok-slabosolenaya-20--3923407/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4072222",
+      "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-aziatskaya-s-souso--4072222/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4252535",
+      "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-ovoshchi-po-dereve--4252535/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4252536",
+      "url": "https://5ka.ru/product/smes-ovoshchnaya-global-village-8-ovoshchey-bystro--4252536/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_52306",
+      "url": "https://5ka.ru/product/makarony-de-cecco-tagliatelle-alluovo-n-107-so-shp--52306/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_4052128",
+      "url": "https://5ka.ru/product/tvorog-savushkin-rassypchatyy-5-bzmzh-700g--4052128/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4266462",
+      "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-9-bzmzh-750g--4266462/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4215262",
+      "url": "https://5ka.ru/product/file-indeyki-indilayt-s-tomatami-i-oregano-600g--4215262/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3428419",
+      "url": "https://5ka.ru/product/mindal-semushka-zharenyy-150g--3428419/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3428420",
+      "url": "https://5ka.ru/product/gretskiy-orekh-semushka-110g--3428420/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3645939",
+      "url": "https://5ka.ru/product/gretskiy-orekh-grand-master-380g--3645939/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4357606",
+      "url": "https://5ka.ru/product/belok-yaichnyy-vkus-polza-pasterizovannyy-zhidkiy--4357606/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4213682",
+      "url": "https://5ka.ru/product/yaytso-okskoe-sv-stolovoe-10sht--4213682/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3062835",
+      "url": "https://5ka.ru/product/yaytso-kurinoe-okskoe-stolovoe-so-10sht--3062835/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3341462",
+      "url": "https://5ka.ru/product/yaytso-kurinoe-leto-s1-20sht--3341462/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3062836",
+      "url": "https://5ka.ru/product/yaytso-kurinoe-okskoe-stolovoe-s1-10sht--3062836/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3001671",
+      "url": "https://5ka.ru/product/yaytso-kurinoe-leto-pishchevoe-s1-10sht--3001671/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4264824",
+      "url": "https://5ka.ru/product/granola-bionova-yagodnaya-proteinovaya-280g--4264824/",
+      "web_cache_age": "6 days ago"
+    },
+    {
+      "id": "5ka_4292180",
+      "url": "https://5ka.ru/product/krevetka-vkus-art-vannamey-ochishchennaya-bez-veny--4292180/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4385565",
+      "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-obezzhirennyy-bzmzh-30--4385565/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3463740",
+      "url": "https://5ka.ru/product/tvorog-iz-uglicha-obezzhirennyy-1-8-bzmzh-200g--3463740/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3469543",
+      "url": "https://5ka.ru/product/gorokh-mistral-zheltyy-kolotyy-900g--3469543/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3232765",
+      "url": "https://5ka.ru/product/gorokh-skayfud-kolotyy-shlifovannyy-900g--3232765/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3335498",
+      "url": "https://5ka.ru/product/syr-krasnaya-tsena-rossiyskiy-45-bzmzh--3335498/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4292987",
+      "url": "https://5ka.ru/product/gorokh-selyanochka-kolotyy-shlifovannyy-800g--4292987/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3194302",
+      "url": "https://5ka.ru/product/tvorog-savushkin-myagkiy-obezzhirennyy-0-1-bzmzh-1--3194302/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4046889",
+      "url": "https://5ka.ru/product/syr-brest-litovsk-rossiyskiy-polutverdyy-50-bzmzh--4046889/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3658261",
+      "url": "https://5ka.ru/product/morkov-mytaya-v-podlozhke-600g--3658261/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4409653",
+      "url": "https://5ka.ru/product/banany-vyalenye-100g--4409653/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_2071663",
+      "url": "https://5ka.ru/product/maslo-podsolnechnoe-nerafinirovannoe-900ml--2071663/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3021692",
+      "url": "https://5ka.ru/product/banany-krasnaya-tsena-fasovannye--3021692/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_21676",
+      "url": "https://5ka.ru/product/maslo-podsolnechnoe-sloboda-rafinirovannoe-dezodor--21676/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4325082",
+      "url": "https://5ka.ru/product/maslo-selyanochka-podsolnechnoe-nerafinirovannoe-6--4325082/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3387522",
+      "url": "https://5ka.ru/product/maslo-krasnaya-tsena-podsolnechnoe-rafinirovannoe--3387522/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3608379",
+      "url": "https://5ka.ru/product/maslo-podsolnechnoe-aromaty-zhizni-iz-zharenykh-se--3608379/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4266515",
+      "url": "https://5ka.ru/product/ris-selyanochka-dlinnozernyy-pervyy-sort-5kh80g--4266515/",
+      "web_cache_age": "last week"
+    },
+    {
+      "id": "5ka_10234",
+      "url": "https://5ka.ru/product/kasha-ovsyanaya-myllyn-paras-500g--10234/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_67513",
+      "url": "https://5ka.ru/product/tomaty-slivovidnye-krasnye--67513/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3631961",
+      "url": "https://5ka.ru/product/tomaty-global-village-solenye-krasnye-1kg--3631961/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4440117",
+      "url": "https://5ka.ru/product/tomaty-flamenco-krasnye-svezhie--4440117/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3017019",
+      "url": "https://5ka.ru/product/tomaty-bakinskie--3017019/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4221768",
+      "url": "https://5ka.ru/product/tomaty-flamenko-slivovidnye--4221768/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4379098",
+      "url": "https://5ka.ru/product/tomaty-artfood-ochishchennye-v-sobstvennom-soku-67--4379098/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4426953",
+      "url": "https://5ka.ru/product/tomaty-pomi-protyortye-700g--4426953/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4380560",
+      "url": "https://5ka.ru/product/appetitka-global-village-s-nezhno-ostrym-vkusom-35--4380560/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3604771",
+      "url": "https://5ka.ru/product/tomaty-rozovye-otbornye-azerbaydzhan--3604771/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4272752",
+      "url": "https://5ka.ru/product/tomaty-fermerskie--4272752/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3901877",
+      "url": "https://5ka.ru/product/tomaty-bondyuel-ochishchennye-v-tomatnoy-myakoti-6--3901877/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_3399627",
+      "url": "https://5ka.ru/product/myakot-tomatov-pikanta-protyortaya-500g--3399627/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4216694",
+      "url": "https://5ka.ru/product/kasha-ovsyanaya-na-moloke-pyatyorochka-kafe-200g--4216694/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4089971",
+      "url": "https://5ka.ru/product/khlopya-selyanochka-5-zlakov-rzhanye-ovsyanye-yach--4089971/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4266548",
+      "url": "https://5ka.ru/product/kasha-krasnaya-tsena-ovsyanaya-s-klubnikoy-bystrog--4266548/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_4050775",
+      "url": "https://5ka.ru/product/khleb-kolomenskoe-tostovyy-zlakovyy-narezka-250g--4050775/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4266550",
+      "url": "https://5ka.ru/product/kasha-krasnaya-tsena-traditsionnaya-ovsyanaya-so-s--4266550/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3231230",
+      "url": "https://5ka.ru/product/ris-dlinnozernyy-900g--3231230/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3424356",
+      "url": "https://5ka.ru/product/krupa-uvelka-druzhba-smes-risa-kruglozernogo-i-psh--3424356/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4353225",
+      "url": "https://5ka.ru/product/ris-global-village-buryy-800g--4353225/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3992161",
+      "url": "https://5ka.ru/product/ris-global-village-dlya-plova-800g--3992161/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4347960",
+      "url": "https://5ka.ru/product/ris-mistral-osman-belyy-kruglozernyy-500g--4347960/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4289753",
+      "url": "https://5ka.ru/product/khlebtsy-dr-korner-kornersy-risovye-smetana-i-zele--4289753/",
+      "web_cache_age": "last week"
+    },
+    {
+      "id": "5ka_3603635",
+      "url": "https://5ka.ru/product/kasha-detskaya-molochnaya-risovaya-agusha-yabloko--3603635/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3231481",
+      "url": "https://5ka.ru/product/grechka-yadritsa-900g--3231481/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4361230",
+      "url": "https://5ka.ru/product/krupa-uvelka-grechnevaya-500g--4361230/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4101174",
+      "url": "https://5ka.ru/product/yogurt-epica-crispy-klyukva-kokos-mindal-shokolad--4101174/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3626624",
+      "url": "https://5ka.ru/product/yogurt-epica-s-mango-i-semenami-chia-5-130g--3626624/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3603166",
+      "url": "https://5ka.ru/product/grechka-uvelka-ekstra-5kh80g--3603166/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4413143",
+      "url": "https://5ka.ru/product/grechka-uvelka-fermerskaya-800g--4413143/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4437537",
+      "url": "https://5ka.ru/product/yogurt-sarafanovo-bezlaktoznyy-1-5-125g--4437537/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3447286",
+      "url": "https://5ka.ru/product/sup-yelli-masurdal-iz-chechevitsy-250g--3447286/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3438133",
+      "url": "https://5ka.ru/product/sup-pyure-gotovo-iz-chechevitsy-250g--3438133/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4169026",
+      "url": "https://5ka.ru/product/chechevitsa-global-village-zelenaya-450g--4169026/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3235377",
+      "url": "https://5ka.ru/product/fasol-global-village-belaya-425ml--3235377/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_3415786",
+      "url": "https://5ka.ru/product/fasol-krasnaya-tsena-krasnaya-v-sobstvennom-soku-3--3415786/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3651907",
+      "url": "https://5ka.ru/product/chechevitsa-mistral-smes-krasnoy-i-zhyoltoy-450g--3651907/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_20062",
+      "url": "https://5ka.ru/product/fasol-konservirovannaya-bondyuel-belaya-400g--20062/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3235374",
+      "url": "https://5ka.ru/product/fasol-global-village-krasnaya-v-sobstvennom-soku-4--3235374/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_3191300",
+      "url": "https://5ka.ru/product/file-kurinoe-okhlazhdennoe--3191300/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_2160069",
+      "url": "https://5ka.ru/product/file-grudki-pervaya-svezhest-kurinoe-okhlazhdennoe--2160069/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4410826",
+      "url": "https://5ka.ru/product/kotlety-kurinye-nasha-ryaba-kurolety-okhlazhdennye--4410826/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4399349",
+      "url": "https://5ka.ru/product/tefteli-troekurovo-klassicheskie-kurinye-okhlazhde--4399349/",
+      "web_cache_age": "4 days ago"
+    },
+    {
+      "id": "5ka_3631395",
+      "url": "https://5ka.ru/product/kolbaski-kurinye-pervaya-svezhest-dlya-zharki-s-sy--3631395/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_2160041",
+      "url": "https://5ka.ru/product/bedro-kurinoe-pervaya-svezhest-okhlazhdennoe--2160041/",
+      "web_cache_age": "4 days ago"
+    },
+    {
+      "id": "5ka_4366946",
+      "url": "https://5ka.ru/product/kuritsa-v-souse-teriyaki-s-risom-zamorozhennaya-gl--4366946/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3664240",
+      "url": "https://5ka.ru/product/mintay-borealis-file-zamorozhennoe-750g--3664240/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4408804",
+      "url": "https://5ka.ru/product/forel-russkoe-more-file-kusok-slabosolenaya-150g--4408804/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3361889",
+      "url": "https://5ka.ru/product/seld-fish-house-file-originalnoe-slabosolenaya-v-m--3361889/",
+      "web_cache_age": "6 days ago"
+    },
+    {
+      "id": "5ka_4216558",
+      "url": "https://5ka.ru/product/file-bedra-indeyki-pava-pava-okhlazhdennoe-450g--4216558/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4439965",
+      "url": "https://5ka.ru/product/seld-fish-house-tikhookeanskaya-solenaya-file-bez--4439965/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4383612",
+      "url": "https://5ka.ru/product/baklazhany-global-village-obzharennye-s-ovoshchami--4383612/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4383611",
+      "url": "https://5ka.ru/product/baklazhany-global-village-v-adzhike-350g--4383611/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4280098",
+      "url": "https://5ka.ru/product/syr-natura-slivochnyy-narezka-45-bzmzh-300g--4280098/",
+      "web_cache_age": "3 days ago"
+    },
+    {
+      "id": "5ka_4280101",
+      "url": "https://5ka.ru/product/syr-natura-slivochnyy-lyogkiy-16-bzmzh-400g--4280101/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4135603",
+      "url": "https://5ka.ru/product/maslo-slivochnoe-ekoniva-traditsionnoe-82-5-bzmzh--4135603/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4357094",
+      "url": "https://5ka.ru/product/maslo-ekomilk-krestyanskoe-slivochnoe-72-5-bzmzh-1--4357094/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3668480",
+      "url": "https://5ka.ru/product/khleb-schar-pan-blanco-bez-glyutena-narezka-250g--3668480/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4256835",
+      "url": "https://5ka.ru/product/bulochka-bagerstat-dlya-burgera-s-kunzhutom-3kh56g--4256835/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_2039592",
+      "url": "https://5ka.ru/product/lepeshka-pshenichnaya-delicados-tortilya-meksikans--2039592/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3498077",
+      "url": "https://5ka.ru/product/khleb-cheremushki-zernovik-narezka-460g--3498077/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_2061861",
+      "url": "https://5ka.ru/product/khleb-tostovyy-harry-s-american-sandwich-pshenichn--2061861/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4174080",
+      "url": "https://5ka.ru/product/khlebtsy-magic-grain-rzhanye-s-semenami-lna-kunzhu--4174080/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4054469",
+      "url": "https://5ka.ru/product/khlebtsy-croisette-rzhanye-tonkie-200g--4054469/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3497593",
+      "url": "https://5ka.ru/product/khlebtsy-shchedrye-rzhanye-tonkie-170g--3497593/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3446523",
+      "url": "https://5ka.ru/product/spagetti-makfa-tselnozernovye-500g--3446523/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4065775",
+      "url": "https://5ka.ru/product/tvorog-stantsiya-molochnaya-5-bzmzh-180g--4065775/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4379638",
+      "url": "https://5ka.ru/product/kapusta-brokkoli-i-tsvetnaya-agama-zamorozhennaya--4379638/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4130483",
+      "url": "https://5ka.ru/product/chechevitsa-mistral-krasnaya-kolotaya-450g--4130483/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4380066",
+      "url": "https://5ka.ru/product/khlopya-vkus-polza-ovsyanye-iz-golozernogo-ovsa-be--4380066/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_23862",
+      "url": "https://5ka.ru/product/tvorog-iskrenne-vash-5-bzmzh-180g--23862/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3487310",
+      "url": "https://5ka.ru/product/tvorog-prostokvashino-traditsionnyy-9-bzmzh-180g--3487310/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4089117",
+      "url": "https://5ka.ru/product/syr-hochland-gryunlander-polutvyordyy-50-bzmzh-400--4089117/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_4124097",
+      "url": "https://5ka.ru/product/ovoshchnaya-smes-zimove-ratatuy-po-domashnemu-zamo--4124097/",
+      "web_cache_age": "2 days ago"
+    },
+    {
+      "id": "5ka_3979117",
+      "url": "https://5ka.ru/product/file-grudki-pava-pava-indeyki-premium-500g--3979117/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_3413519",
+      "url": "https://5ka.ru/product/maslo-sladkoslivochnoe-brest-litovsk-82-5-bzmzh-18--3413519/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4461341",
+      "url": "https://5ka.ru/product/file-bedra-tsyplyat-petelinka-okhlazhdennoe-2kh400--4461341/",
+      "web_cache_age": "yesterday"
+    },
+    {
+      "id": "5ka_4353603",
+      "url": "https://5ka.ru/product/ris-natsional-lazer-dlinnozernyy-shlifovannyy-dlya--4353603/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_3433425",
+      "url": "https://5ka.ru/product/kefir-asenevskaya-ferma-3-2-bzmzh-900g--3433425/",
+      "web_cache_age": "5 days ago"
+    },
+    {
+      "id": "5ka_3665624",
+      "url": "https://5ka.ru/product/smetana-domik-v-derevne-15-bzmzh-300g--3665624/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_4103219",
+      "url": "https://5ka.ru/product/khleb-sibirskiy-pekar-zernovoy-multizlakovyy-so-ln--4103219/",
+      "web_cache_age": "today"
+    },
+    {
+      "id": "5ka_2149541",
+      "url": "https://5ka.ru/product/khleb-cheremushki-borodinskiy-narezka-390g--2149541/",
+      "web_cache_age": "today"
+    }
+  ]
+}

@@ -20,6 +20,7 @@ def test_products_contract(client):
         "id",
         "name",
         "state",
+        "state_basis",
         "nutrition_per_100g",
         "package_size_g",
         "price",
@@ -36,6 +37,7 @@ def test_products_contract(client):
     }
     assert product["id"] == "oats"
     assert product["state"] == "dry"
+    assert product["state_basis"] == "physical_state"
     assert product["package_size_g"] == 500
     assert isinstance(product["price"], (int, float))
     assert json.loads(response.text, parse_float=Decimal)["products"][0]["price"] == Decimal(
