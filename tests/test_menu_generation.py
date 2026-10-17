@@ -14,8 +14,9 @@ from pydantic import ValidationError
 
 from meal_budget import evaluation, generate_menu
 from meal_budget.core.config import PROJECT_ROOT, Settings
-from meal_budget.schemas.generation import GeneratedPlan, GenerationRequest
+from meal_budget.schemas.generation import GeneratedPlan, GenerationRequest, GenerationResult
 from meal_budget.schemas.products import ProductCatalog
+from meal_budget.services import menu_generation
 from meal_budget.services.deepseek import DeepSeekProvider, GenerationError
 from meal_budget.services.menu_generation import MenuGenerationService
 
@@ -151,10 +152,12 @@ class RecordingTransport(httpx.MockTransport):
         await super().aclose()
 
 
-def run(settings, request, catalog, transport):
+def run(settings, request, catalog, transport, *, diagnostics=None):
     async def generate():
         async with DeepSeekProvider(settings, transport=transport) as provider:
-            return await MenuGenerationService(provider, settings).generate(request, catalog)
+            return await MenuGenerationService(provider, settings).generate(
+                request, catalog, diagnostics=diagnostics
+            )
 
     return asyncio.run(generate())
 
@@ -266,6 +269,7 @@ def test_repairs(
     if kind == "nutrition":
         assert correction["violations"][0] == {
             "code": "nutrition_range",
+            "field": "days.0.nutrition.calories_kcal",
             "day": 1,
             "nutrient": "calories_kcal",
             "actual": "80",
@@ -287,7 +291,7 @@ def test_excluded_never_passes(
     assert len(transport.requests) == 3
     correction = json.loads(json.loads(transport.requests[-1].content)["messages"][-1]["content"])
     assert correction["correction"]["violations"] == [
-        {"code": "excluded_product", "product_id": "a"}
+        {"code": "excluded_product", "field": "recipes.0.ingredients.0.product_id"}
     ]
     assert transport.closed
 
@@ -643,7 +647,7 @@ def test_missing_day_repaired(
     assert [day.day for day in result.calculation.days] == [1, 2]
     feedback = json.loads(json.loads(transport.requests[1].content)["messages"][-1]["content"])
     assert feedback["correction"]["violations"] == [
-        {"code": "day_count", "expected": 2, "actual": 1}
+        {"code": "day_count", "field": "days", "expected": 2, "actual": 1}
     ]
 
 
@@ -1425,3 +1429,544 @@ def test_generated_paths_are_ignored_but_project_json_is_not():
         check=True,
     )
     assert result.stdout.splitlines() == paths[:4]
+
+
+@pytest.fixture
+def diagnostic_report(cli_inputs, monkeypatch):
+    from meal_budget import evaluate_menu
+
+    request_path, output = cli_inputs
+
+    def generate(replies, *, expected_exit):
+        transport = cli_transport(monkeypatch, replies)
+        assert (
+            generate_menu.main(
+                [
+                    "--request",
+                    str(request_path),
+                    "--output",
+                    output.name,
+                    "--report",
+                    "report.json",
+                ]
+            )
+            == expected_exit
+        )
+        report_path = output.parent / "report.json"
+        report = evaluate_menu.read_report(Path("report.json"))
+        assert report_path.stat().st_mode & 0o777 == 0o600
+        assert output.exists() == (expected_exit == 0)
+        return report, report_path.read_text(), transport
+
+    return generate
+
+
+def test_report_low_protein_and_success_after_repair(
+    diagnostic_report, generated_plan, cli_inputs, generation_catalog
+):
+    # Тестовый b имеет те же ккал/жиры/углеводы и цену, но вдвое меньше белка.
+    product = generation_catalog.products[1]
+    product.nutrition_per_100g = generation_catalog.products[0].nutrition_per_100g.model_copy(
+        update={"protein_g": Decimal(5)}
+    )
+    product.price = Decimal("10.00")
+    catalog_path = cli_inputs[0].parent / "catalog.json"
+    catalog_path.write_text(generation_catalog.model_dump_json())
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["ingredients"][0]["product_id"] = "b"
+    report, _, transport = diagnostic_report(
+        [response(bad), response(generated_plan)], expected_exit=0
+    )
+    first, fixed = report.attempts
+    assert first.attempt == 1 and first.stage == "constraints"
+    assert first.violation_count == 1 and not first.truncated
+    protein = first.violations[0]
+    assert protein.code == "nutrition_range" and protein.field == "days.0.nutrition.protein_g"
+    assert Decimal(protein.actual) == 5
+    assert Decimal(protein.minimum) == 9 and Decimal(protein.maximum) == 11
+    assert fixed.attempt == 2 and fixed.stage == "constraints"
+    assert fixed.violations == [] and fixed.violation_count == 0 and not fixed.truncated
+    assert len(transport.requests) == report.metadata.calls == 2
+
+
+def test_report_three_failures_preserves_current_reasons(diagnostic_report, generated_plan):
+    budget = copy.deepcopy(generated_plan)
+    budget["recipes"][0]["ingredients"][0]["grams"] = "100.000001"
+    low = copy.deepcopy(generated_plan)
+    low["recipes"][0]["ingredients"][0]["grams"] = 80
+    unknown = copy.deepcopy(generated_plan)
+    unknown["recipes"][0]["ingredients"][0]["product_id"] = "untrusted_model_reference"
+    report, text, transport = diagnostic_report(
+        [response(budget), response(low), response(unknown)], expected_exit=1
+    )
+    assert report.error_code == "attempts_exhausted"
+    assert report.metadata.calls == len(transport.requests) == 3
+    assert [a.attempt for a in report.attempts] == [1, 2, 3]
+    assert [a.stage for a in report.attempts] == ["constraints", "constraints", "calculation"]
+    budget_violation = report.attempts[0].violations[0]
+    assert budget_violation.code == "budget_exceeded" and budget_violation.field == "total_cost"
+    assert Decimal(budget_violation.actual) == 20 and Decimal(budget_violation.maximum) == 10
+    assert budget_violation.minimum is None
+    assert report.attempts[-1].violations[0].model_dump(exclude_none=True) == {
+        "code": "unknown_product_id",
+        "field": "recipes.0.ingredients.0.product_id",
+    }
+    assert "untrusted_model_reference" not in text
+    for call, code, obsolete in [
+        (1, "budget_exceeded", "nutrition_range"),
+        (2, "nutrition_range", "budget_exceeded"),
+    ]:
+        correction = json.loads(
+            json.loads(transport.requests[call].content)["messages"][-1]["content"]
+        )["correction"]
+        codes = {v["code"] for v in correction["violations"]}
+        assert code in codes and obsolete not in codes
+    assert report.budget_pass is report.nutrition_pass is None
+
+
+@pytest.mark.parametrize("kind", ["schema", "parsing", "calculation"])
+def test_report_never_contains_untrusted_text(
+    diagnostic_report, generated_plan, cli_inputs, generation_request, kind, capsys, caplog
+):
+    private = "private-free-text-marker"
+    generation_request.wishes = private
+    generation_request.price_region = "private-region-marker"
+    cli_inputs[0].write_text(generation_request.model_dump_json())
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["name"] = private
+    bad["recipes"][0]["steps"] = [private]
+    if kind == "schema":
+        bad["recipes"][0]["ingredients"][0]["grams"] = FAKE_KEY
+        bad[FAKE_KEY] = private
+        bad["123456"] = private
+        bad["recipes"][0][private] = private
+    elif kind == "calculation":
+        # Контекст custom ValidationError содержит недоверенный ID, но не отчет.
+        bad["recipes"][0]["id"] = "private-recipe-id"
+        bad["recipes"].append(copy.deepcopy(bad["recipes"][0]))
+    else:
+        bad = "not-json " + private + FAKE_KEY
+    caplog.set_level(logging.DEBUG)
+    report, text, _ = diagnostic_report([response(bad)], expected_exit=1)
+    assert len(report.attempts) == 3
+    assert {a.stage for a in report.attempts} == {kind}
+    if kind == "schema":
+        values = [v.model_dump(exclude_none=True) for v in report.attempts[0].violations]
+        assert {"code": "decimal_parsing", "field": "recipes.0.ingredients.0.grams"} in values
+        assert {"code": "extra_forbidden", "field": "*"} in values
+    if kind == "calculation":
+        assert report.attempts[0].violations[0].code == "duplicate_recipe_id"
+        assert report.attempts[0].violations[0].field == "$"
+    captured = capsys.readouterr()
+    for forbidden in (
+        FAKE_KEY,
+        private,
+        "private-region-marker",
+        "private-recipe-id",
+        "123456",
+        "Authorization",
+        "reasoning_content",
+    ):
+        assert forbidden not in text + captured.out + captured.err + caplog.text
+    data = json.loads(text)
+    assert not {"request", "wishes", "plan", "raw_response"} & data.keys()
+    for attempt in data["attempts"]:
+        for violation in attempt["violations"]:
+            assert set(violation) == {"code", "field", "actual", "minimum", "maximum"}
+
+
+@pytest.mark.parametrize("stage", ["schema", "constraints"])
+def test_report_truncation_counts_all_violations(
+    diagnostic_report, generated_plan, cli_inputs, generation_request, stage
+):
+    from meal_budget.evaluate_menu import MAX_REPORT_BYTES
+    from meal_budget.schemas.diagnostics import MAX_ATTEMPT_VIOLATIONS
+
+    bad = copy.deepcopy(generated_plan)
+    if stage == "schema":
+        for index in range(150):
+            bad[f"untrusted-extra-{index}"] = "not saved"
+        expected_count = 150
+    else:
+        generation_request.days = 31
+        cli_inputs[0].write_text(generation_request.model_dump_json())
+        bad["recipes"][0]["ingredients"][0]["grams"] = 1
+        bad["days"] = [
+            {"day": day, "meals": [{"recipe_id": "r", "servings": 1}]} for day in range(1, 32)
+        ]
+        expected_count = 124
+    report, text, transport = diagnostic_report([response(bad)], expected_exit=1)
+    assert len(text.encode()) < MAX_REPORT_BYTES
+    for attempt in report.attempts:
+        assert attempt.stage == stage
+        assert attempt.violation_count == expected_count
+        assert attempt.truncated
+        assert len(attempt.violations) == MAX_ATTEMPT_VIOLATIONS
+    correction = json.loads(json.loads(transport.requests[-1].content)["messages"][-1]["content"])[
+        "correction"
+    ]
+    assert len(correction["violations"]) == 100
+
+
+def test_diagnostic_byte_limit_keeps_exact_values():
+    from meal_budget.services.menu_generation import attempt_diagnostic
+
+    actual = "1." + "2" * 100
+    violations = [
+        {
+            "code": "nutrition_range",
+            "field": "days.0.nutrition.protein_g",
+            "actual": actual,
+            "minimum": actual,
+            "maximum": actual,
+        }
+    ] * 20
+    # Большие безопасные поля и Decimal-строки ограничиваются также по байтам.
+    for violation in violations:
+        violation["field"] = "days.0.nutrition.protein_g." + "a" * 170
+    diagnostic = attempt_diagnostic(1, "constraints", violations)
+    assert diagnostic.violation_count == 20 and diagnostic.truncated
+    assert 0 < len(diagnostic.violations) < 20
+    assert all(v.actual == actual for v in diagnostic.violations)
+    assert (
+        len(json.dumps({"attempts": [diagnostic.model_dump(mode="json")]}, indent=2).encode())
+        <= 12288
+    )
+
+
+def test_old_report_has_no_recoverable_diagnostics():
+    from meal_budget.schemas.evaluation import RunSummary
+
+    report = RunSummary.model_validate(
+        {
+            "scenario": "ordinary",
+            "catalog_version": "old",
+            "outcome": "error",
+            "error_code": "attempts_exhausted",
+        }
+    )
+    assert report.attempts is None
+
+
+def test_diagnostics_accept_valid_decimal_with_many_trailing_zeros(
+    provider_settings, generation_request, generation_catalog, generated_plan
+):
+    generation_request.budget = Decimal("10." + "0" * 200)
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["ingredients"][0]["grams"] = "100.000001"
+    transport = RecordingTransport([response(bad), response(generated_plan)])
+    diagnostics = []
+
+    async def generate():
+        async with DeepSeekProvider(provider_settings, transport=transport) as provider:
+            return await MenuGenerationService(provider, provider_settings).generate(
+                generation_request, generation_catalog, diagnostics=diagnostics
+            )
+
+    result = asyncio.run(generate())
+    assert result.metadata.calls == 2
+    assert Decimal(diagnostics[0].violations[0].maximum) == 10
+    assert len(diagnostics[0].violations[0].maximum) <= 120
+
+
+@pytest.fixture(params=[ValueError, RuntimeError])
+def broken_diagnostic_collector(monkeypatch, request):
+    calls = []
+
+    def fail(attempt, stage, violations):
+        calls.append(attempt)
+        raise request.param("untrusted-diagnostic-error " + FAKE_KEY)
+
+    monkeypatch.setattr(menu_generation, "attempt_diagnostic", fail)
+    return calls
+
+
+@pytest.mark.parametrize("outcome,calls", [("success", 1), ("repaired", 2), ("exhausted", 3)])
+def test_diagnostic_fault_preserves_generation_outcome_and_calls(
+    broken_diagnostic_collector,
+    diagnostic_report,
+    generated_plan,
+    cli_inputs,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    outcome,
+    calls,
+    capsys,
+    caplog,
+):
+    caplog.set_level(logging.DEBUG)
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["ingredients"][0]["grams"] = 80
+    plans = {
+        "success": [generated_plan],
+        "repaired": [bad, generated_plan],
+        "exhausted": [bad, bad, bad],
+    }[outcome]
+    report, text, transport = diagnostic_report(
+        [response(plan) for plan in plans], expected_exit=1 if outcome == "exhausted" else 0
+    )
+    assert report.metadata.calls == len(transport.requests) == calls
+    assert transport.closed
+    assert broken_diagnostic_collector == [1]  # Не повторяем сломанный сборщик.
+    assert [attempt.attempt for attempt in report.attempts] == list(range(1, calls + 1))
+    for attempt in report.attempts:
+        assert attempt.stage == "constraints" and not attempt.available
+        assert attempt.violations == []
+        assert attempt.violation_count is attempt.truncated is None
+    baseline_transport = RecordingTransport([response(plan) for plan in plans])
+    if outcome == "exhausted":
+        assert report.outcome == "error" and report.error_code == "attempts_exhausted"
+        with pytest.raises(GenerationError) as error:
+            run(provider_settings, generation_request, generation_catalog, baseline_transport)
+        assert error.value.code == report.error_code
+        assert error.value.metadata.responses == report.metadata.responses
+    else:
+        assert report.outcome == "success" and report.error_code is None
+        saved = GenerationResult.model_validate_json(cli_inputs[1].read_bytes())
+        baseline = run(
+            provider_settings, generation_request, generation_catalog, baseline_transport
+        )
+        # Различаться может только измеренная длительность, не основной результат.
+        assert saved.model_dump(exclude={"metadata"}) == baseline.model_dump(exclude={"metadata"})
+        assert saved.metadata.responses == baseline.metadata.responses
+    assert len(baseline_transport.requests) == calls
+    captured = capsys.readouterr()
+    for secret in (FAKE_KEY, "untrusted-diagnostic-error", "Traceback", generation_request.wishes):
+        assert secret not in text + captured.out + captured.err + caplog.text
+
+
+def test_diagnostic_fault_does_not_reset_deadline(
+    broken_diagnostic_collector,
+    monkeypatch,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    generated_plan,
+):
+    clock = [0.0]
+    provider_settings.generation_total_timeout = 1
+    monkeypatch.setattr(menu_generation, "monotonic", lambda: clock[0])
+    fail = menu_generation.attempt_diagnostic
+
+    def expire_then_fail(*args):
+        clock[0] = 1.0
+        return fail(*args)
+
+    monkeypatch.setattr(menu_generation, "attempt_diagnostic", expire_then_fail)
+    transport = RecordingTransport([response(generated_plan)])
+    diagnostics = []
+    with pytest.raises(GenerationError) as error:
+        run(
+            provider_settings,
+            generation_request,
+            generation_catalog,
+            transport,
+            diagnostics=diagnostics,
+        )
+    assert error.value.code == "generation_timeout"
+    assert error.value.metadata.calls == len(transport.requests) == 1
+    assert error.value.metadata.duration_seconds == 1
+    assert broken_diagnostic_collector == [1]
+    assert len(diagnostics) == 1 and not diagnostics[0].available
+    assert transport.closed
+
+
+def test_diagnostic_failure_is_local_to_each_generation(
+    broken_diagnostic_collector,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    generated_plan,
+):
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["ingredients"][0]["grams"] = 80
+    transport = RecordingTransport([response(bad)] * 3 + [response(generated_plan)])
+    failed_diagnostics, successful_diagnostics = [], []
+
+    async def generate():
+        async with DeepSeekProvider(provider_settings, transport=transport) as provider:
+            service = MenuGenerationService(provider, provider_settings)
+            with pytest.raises(GenerationError) as error:
+                await service.generate(
+                    generation_request, generation_catalog, diagnostics=failed_diagnostics
+                )
+            assert error.value.code == "attempts_exhausted" and error.value.metadata.calls == 3
+            return await service.generate(
+                generation_request, generation_catalog, diagnostics=successful_diagnostics
+            )
+
+    result = asyncio.run(generate())
+    assert result.metadata.calls == 1 and len(transport.requests) == 4 and transport.closed
+    assert broken_diagnostic_collector == [1, 1]
+    assert len(failed_diagnostics) == 3 and len(successful_diagnostics) == 1
+    assert not successful_diagnostics[0].available
+
+
+@pytest.mark.parametrize("exception", [asyncio.CancelledError, KeyboardInterrupt, SystemExit])
+def test_diagnostic_collection_propagates_base_exceptions(
+    monkeypatch,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    generated_plan,
+    exception,
+):
+    def stop(*args):
+        raise exception()
+
+    monkeypatch.setattr(menu_generation, "attempt_diagnostic", stop)
+    transport = RecordingTransport([response(generated_plan)])
+    diagnostics = []
+
+    async def generate():
+        async with DeepSeekProvider(provider_settings, transport=transport) as provider:
+            with pytest.raises(exception):
+                await MenuGenerationService(provider, provider_settings).generate(
+                    generation_request, generation_catalog, diagnostics=diagnostics
+                )
+
+    asyncio.run(generate())
+    assert diagnostics == []
+    assert len(transport.requests) == 1 and transport.closed
+
+
+def test_task_cancellation_after_diagnostic_fault_propagates(
+    broken_diagnostic_collector,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    generated_plan,
+):
+    bad = copy.deepcopy(generated_plan)
+    bad["recipes"][0]["ingredients"][0]["grams"] = 80
+    diagnostics = []
+
+    async def scenario():
+        entered = asyncio.Event()
+
+        class WaitingStream(httpx.AsyncByteStream):
+            closed = False
+
+            async def __aiter__(self):
+                entered.set()
+                await asyncio.Event().wait()
+                yield b"unreachable"
+
+            async def aclose(self):
+                self.closed = True
+
+        stream = WaitingStream()
+        transport = RecordingTransport([response(bad), httpx.Response(200, stream=stream)])
+
+        async def generate():
+            async with DeepSeekProvider(provider_settings, transport=transport) as provider:
+                await MenuGenerationService(provider, provider_settings).generate(
+                    generation_request, generation_catalog, diagnostics=diagnostics
+                )
+
+        task = asyncio.create_task(generate())
+        await asyncio.wait_for(entered.wait(), timeout=5)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        assert task.cancelled()
+        assert len(transport.requests) == 2 and stream.closed and transport.closed
+
+    asyncio.run(scenario())
+    assert broken_diagnostic_collector == [1]
+    assert len(diagnostics) == 1 and not diagnostics[0].available
+
+
+def test_failure_of_diagnostic_fallback_does_not_break_generation(
+    broken_diagnostic_collector,
+    monkeypatch,
+    provider_settings,
+    generation_request,
+    generation_catalog,
+    generated_plan,
+):
+    def fail_fallback(*args, **kwargs):
+        raise RuntimeError(FAKE_KEY)
+
+    monkeypatch.setattr(menu_generation, "AttemptDiagnostic", fail_fallback)
+    transport = RecordingTransport([response(generated_plan)])
+    diagnostics = []
+    result = run(
+        provider_settings,
+        generation_request,
+        generation_catalog,
+        transport,
+        diagnostics=diagnostics,
+    )
+    assert result.metadata.calls == len(transport.requests) == 1
+    assert diagnostics == [] and broken_diagnostic_collector == [1]
+    assert transport.closed
+
+
+def test_diagnostic_isolation_does_not_suppress_primary_errors(
+    monkeypatch, provider_settings, generation_request, generation_catalog, generated_plan
+):
+    def fail_validation(*args):
+        raise RuntimeError("primary-validation-fault")
+
+    monkeypatch.setattr(menu_generation, "_validate_plan", fail_validation)
+    transport = RecordingTransport([response(generated_plan)])
+    with pytest.raises(RuntimeError, match="primary-validation-fault"):
+        run(provider_settings, generation_request, generation_catalog, transport, diagnostics=[])
+    assert len(transport.requests) == 1 and transport.closed
+
+
+def test_cli_rate_limit_and_report_write_failure_preserve_both_reasons(
+    cli_inputs, monkeypatch, capsys, caplog
+):
+    caplog.set_level(logging.DEBUG)
+    request, output = cli_inputs
+    report = output.parent / "report.json"
+    transport = cli_transport(monkeypatch, [httpx.Response(429, text=FAKE_KEY)])
+    original_fdopen = generate_menu.os.fdopen
+
+    class FailingWriter:
+        def __init__(self, file):
+            self.file = file
+
+        def __enter__(self):
+            return self
+
+        def write(self, content):
+            self.file.write(content[:10])
+            self.file.flush()
+            raise OSError("private-write-failure " + FAKE_KEY)
+
+        def __exit__(self, *args):
+            self.file.close()
+
+    monkeypatch.setattr(
+        generate_menu.os,
+        "fdopen",
+        lambda *args, **kwargs: FailingWriter(original_fdopen(*args, **kwargs)),
+    )
+    assert (
+        generate_menu.main(
+            [
+                "--request",
+                str(request),
+                "--output",
+                output.name,
+                "--report",
+                report.name,
+            ]
+        )
+        == 2
+    )
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err.splitlines() == [
+        "provider_rate_limit: Достигнут лимит запросов провайдера генерации.",
+        "Не удалось сохранить сводку ошибки.",
+    ]
+    for secret in (FAKE_KEY, "private-write-failure", "Traceback", "OSError"):
+        assert secret not in captured.out + captured.err + caplog.text
+    assert len(transport.requests) == 1 and transport.closed
+    assert not output.exists() and not report.exists()
+    assert list(output.parent.iterdir()) == []  # Временный частичный файл тоже удален.

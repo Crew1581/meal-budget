@@ -16,6 +16,7 @@ from meal_budget.evaluation import (
     require_ready_scenario,
     verify_preparation,
 )
+from meal_budget.schemas.diagnostics import AttemptDiagnostic
 from meal_budget.schemas.evaluation import RunSummary
 from meal_budget.schemas.generation import GenerationRequest, GenerationResult
 from meal_budget.schemas.products import ProductCatalog
@@ -42,10 +43,16 @@ def directory_flags() -> int:
 
 
 async def run_generation(
-    request: GenerationRequest, catalog: ProductCatalog, settings: Settings
+    request: GenerationRequest,
+    catalog: ProductCatalog,
+    settings: Settings,
+    *,
+    diagnostics: list[AttemptDiagnostic] | None = None,
 ) -> GenerationResult:
     async with DeepSeekProvider(settings) as provider:
-        return await MenuGenerationService(provider, settings).generate(request, catalog)
+        return await MenuGenerationService(provider, settings).generate(
+            request, catalog, diagnostics=diagnostics
+        )
 
 
 @contextmanager
@@ -206,6 +213,7 @@ def main(argv=None) -> int:
             requested_model=settings.deepseek_model or None,
             thinking=settings.deepseek_thinking,
             outcome="not_run",
+            attempts=[],
         )
     except ScenarioPreparationError as exc:
         print(str(exc), file=sys.stderr)
@@ -223,7 +231,14 @@ def main(argv=None) -> int:
         print("Не удалось подготовить назначения внутри generated/.", file=sys.stderr)
         return 2
     try:
-        result = asyncio.run(run_generation(request, catalog, settings))
+        result = asyncio.run(
+            run_generation(
+                request,
+                catalog,
+                settings,
+                diagnostics=summary.attempts if args.report else None,
+            )
+        )
         save_result(args.output, result.model_dump_json(indent=2), overwrite=args.overwrite)
         if args.report:
             summary.outcome = "success"
@@ -232,6 +247,7 @@ def main(argv=None) -> int:
             summary.nutrition_pass = True
             save_result(args.report, summary.model_dump_json(indent=2), overwrite=args.overwrite)
     except GenerationError as exc:
+        print(f"{exc.code}: {exc}", file=sys.stderr)
         if args.report:
             summary.outcome = "error"
             summary.error_code = exc.code
@@ -243,7 +259,6 @@ def main(argv=None) -> int:
             except (OSError, ValueError):
                 print("Не удалось сохранить сводку ошибки.", file=sys.stderr)
                 return 2
-        print(f"{exc.code}: {exc}", file=sys.stderr)
         return 1
     except (OSError, ValueError):
         print("Не удалось сохранить проверенный результат.", file=sys.stderr)

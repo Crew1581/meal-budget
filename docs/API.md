@@ -333,6 +333,9 @@ OpenAPI serialization-схемы описывают числовой выход.
 {"detail":{"code":"generation_busy","message":"Генерация уже выполняется.","metadata":null}}
 ```
 
+Внутренняя история проверок MEAL-6 (`RunSummary.attempts`) сохраняется только в
+локальном CLI `--report`: HTTP-ответы и ошибки ею не расширены.
+
 `metadata` содержит прежние `calls`, `duration_seconds`, `responses`, если сервис
 начал обработку; для доступа, размера тела и схемы — `null`.
 
