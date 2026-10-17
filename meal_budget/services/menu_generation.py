@@ -1,5 +1,6 @@
 import asyncio
 import json
+from contextlib import suppress
 from decimal import Decimal, localcontext
 from time import monotonic
 from typing import get_args
@@ -13,6 +14,7 @@ from meal_budget.schemas.diagnostics import (
     AttemptDiagnostic,
     DiagnosticStage,
     DiagnosticViolation,
+    ResponseMetadata,
 )
 from meal_budget.schemas.generation import (
     CallMetadata,
@@ -350,6 +352,7 @@ class MenuGenerationService:
         catalog: ProductCatalog,
         *,
         diagnostics: list[AttemptDiagnostic] | None = None,
+        response_metadata: list[ResponseMetadata] | None = None,
     ) -> GenerationResult:
         start = monotonic()
         calls = 0
@@ -415,10 +418,12 @@ class MenuGenerationService:
                         completion = await self.provider.complete(messages)
                     except InvalidResponse as exc:
                         responses.append(exc.response_metadata)
+                        finish_reason = exc.finish_reason
                         violations = [{"code": exc.violation}]
                         last_invalid = True
                     else:
                         responses.append(completion.metadata)
+                        finish_reason = completion.finish_reason
                         try:
                             raw = parse_json(completion.content)
                             if isinstance(raw, dict):
@@ -437,6 +442,12 @@ class MenuGenerationService:
                                 plan, request, catalog, tolerance
                             )
                             last_invalid = False
+                    if response_metadata is not None:
+                        # Вспомогательный учет не меняет исход, отмена не подавляется.
+                        with suppress(Exception):
+                            response_metadata.append(
+                                ResponseMetadata(attempt=calls, finish_reason=finish_reason)
+                            )
                     collect_diagnostic(stage, violations)
                     check_deadline()
                     if calculation is not None:

@@ -5,9 +5,16 @@
 `examples/evaluation/scenarios.json` содержит шесть сценариев. В MEAL-5
 **ordinary и weekly готовы (`ready`)** по версии `5ka-2026-10-14-observed-v3`:
 ручные witness пересчитаны существующим ядром с допуском ±10% каждого показателя
-каждого дня. Единственный реальный ordinary 2026-10-15 завершился
-`attempts_exhausted` после трех вызовов. Проверенного меню не получено;
-качество рецептов не оценено. См. [STATUS](STATUS.md).
+каждого дня. ordinary 2026-10-15 завершился `attempts_exhausted`; после MEAL-6
+запуск 2026-10-17 с `deepseek-flash`, thinking enabled / effort high дал проверенное
+меню за три вызова (94,68 с). Первые два — `incomplete_response`, по 8192 completion
+tokens; третий прошел проверки. `finish_reason` тогда не сохранялся: гипотеза об
+упоре в лимит не подтверждена. Стабильность и weekly не доказаны. См. [STATUS](STATUS.md).
+
+**MEAL-7: ordinary с 16384 выполнен пользователем — success за один вызов,
+30,21 с, finish_reason=stop, 15 078 токенов.** Бюджет и КБЖУ прошли проверки;
+подробности и ограничения — [STATUS](STATUS.md). weekly пока не запускался.
+Проверки реализации автономные, через тестовый транспорт.
 
 preferences, quick, tight-budget и impossible остаются **blocked**,
 request/witness=null. Для них еще не подготовлены отдельные анкеты и свидетельства
@@ -200,15 +207,18 @@ report, не повторная независимая проверка меню
 Попытка опубликовать outcome=success для blocked-сценария также отвергается.
 Сводка без --result относится к отдельному `data/5ka-products.json`, не к demo.
 
-## Шаблон платного запуска — только после отдельного согласования
+## MEAL-7: один ordinary с лимитом 16384 — только после отдельного согласования
 
-Разрешенный ordinary уже завершен ошибкой; новых платных запусков MEAL-6 нет.
-Следующий пример — справочный, **не разрешение на повтор**. Диагностику старого
-запуска восстановить нельзя: в его отчете ее нет, отклоненные меню не сохранены.
+Пользователь выполнил один ordinary 2026-10-17: **success**, один вызов,
+`finish_reason=stop`; безопасные метаданные отчета сверены в [STATUS](STATUS.md).
+Это не доказывает влияние лимита 16384 на результат или стабильность генерации.
+Следующая команда остается шаблоном нового отдельного ручного запуска,
+**не разрешением на платный запрос или автоматический повтор**.
+В старых отчетах нет finish_reason, восстановить его по числу токенов нельзя.
 
 Готовая синтетическая анкета находится в `examples/evaluation/ordinary.request.json`
 (без witness). Из корня репозитория; новый результат —
-`generated/evaluation/ordinary-meal5-run-1.menu.json`, отчет — соседний новый файл.
+`generated/evaluation/ordinary-meal7-16384-run-1.menu.json`, отчет — соседний новый файл.
 Не повторять команду автоматически; существующие файлы не заменяются.
 Ключ вводить через скрытый ввод, не argv/history; CLI не читает `.env`:
 
@@ -216,13 +226,50 @@ report, не повторная независимая проверка меню
 set +x
 read -r -s -p 'DeepSeek API key: ' DEEPSEEK_API_KEY
 export DEEPSEEK_API_KEY
-export DEEPSEEK_MODEL=deepseek-flash
-export DEEPSEEK_THINKING=disabled
-CATALOG_PATH=data/5ka-products.json GENERATION_NUTRITION_TOLERANCE=0.10 \
-  uv run --frozen python -m meal_budget.generate_menu \
+CATALOG_PATH=data/5ka-products.json DEEPSEEK_MODEL=deepseek-flash \
+  DEEPSEEK_THINKING=enabled DEEPSEEK_REASONING_EFFORT=high \
+  DEEPSEEK_MAX_OUTPUT_TOKENS=16384 GENERATION_TOTAL_TIMEOUT=180 \
+  GENERATION_NUTRITION_TOLERANCE=0.10 \
+  uv run --frozen --no-env-file python -m meal_budget.generate_menu \
   --request examples/evaluation/ordinary.request.json \
-  --scenario ordinary --output evaluation/ordinary-meal5-run-1.menu.json \
-  --report evaluation/ordinary-meal5-run-1.report.json
+  --scenario ordinary --output evaluation/ordinary-meal7-16384-run-1.menu.json \
+  --report evaluation/ordinary-meal7-16384-run-1.report.json
+unset DEEPSEEK_API_KEY
+```
+
+`DEEPSEEK_MAX_OUTPUT_TOKENS` уже поддерживается Settings (1–32768) и передается как
+`max_tokens` без преобразования. Default **8192** не изменен; 16384 применяется
+только к этой команде. `deepseek-flash`, enabled/high заданы явно, не новые defaults.
+Анкета, каталог `5ka-2026-10-14-observed-v3`, бюджет, цели и допуск ±10% прежние.
+Общий deadline **180 с на весь цикл**, максимум **3 вызова**, без скрытых сетевых
+повторов. Byte-limit по умолчанию остается 262144, read timeout — 60 с; увеличенный
+лимит токенов не увеличивает их и не гарантирует завершения за deadline.
+
+После запуска проверить `response_metadata` вместе с `attempts`, usage по каждой
+попытке, calls/длительность и математические/ручные критерии. `stop` сам по себе
+не означает приемлемое меню. Не оценивать эффект 16384 только по итоговому success:
+важны причины всех отклоненных ответов. Report пока не хранит отдельные поля
+reasoning_effort/max_tokens: параметры эксперимента зафиксированы этой командой.
+
+### weekly — отдельный запуск после оценки ordinary
+
+**Не выполнять оба блока подряд.** weekly пока не запускался и не запускается
+автоматически: только отдельно после оценки ordinary и отдельного согласования.
+Та же модель, enabled/high и 16384, прежние weekly-анкета, каталог и допуски;
+другие новые файлы:
+
+```bash
+set +x
+read -r -s -p 'DeepSeek API key: ' DEEPSEEK_API_KEY
+export DEEPSEEK_API_KEY
+CATALOG_PATH=data/5ka-products.json DEEPSEEK_MODEL=deepseek-flash \
+  DEEPSEEK_THINKING=enabled DEEPSEEK_REASONING_EFFORT=high \
+  DEEPSEEK_MAX_OUTPUT_TOKENS=16384 GENERATION_TOTAL_TIMEOUT=180 \
+  GENERATION_NUTRITION_TOLERANCE=0.10 \
+  uv run --frozen --no-env-file python -m meal_budget.generate_menu \
+  --request examples/evaluation/weekly.request.json \
+  --scenario weekly --output evaluation/weekly-meal7-16384-run-1.menu.json \
+  --report evaluation/weekly-meal7-16384-run-1.report.json
 unset DEEPSEEK_API_KEY
 ```
 
@@ -232,6 +279,7 @@ unset DEEPSEEK_API_KEY
 запрошенную модель/режим, metadata с фактическими моделями, calls, длительностью и
 предоставленным usage, результат бюджета/КБЖУ и шаблон ручной оценки.
 С MEAL-6 локальный report также содержит `attempts`, описанный ниже.
+С MEAL-7 отдельное `response_metadata` хранит безопасные причины завершения ответов.
 При ошибке budget_pass/nutrition_pass остаются null: непроверенный план не сохраняется.
 Локальные ошибки конфигурации/файла до старта сервиса не создают report.
 До создания любых родителей CLI совместно проверяет output/report: запрещены
@@ -255,6 +303,55 @@ unset DEEPSEEK_API_KEY
 Endpoint не сохраняет меню и не создает CLI-report; HTTP результат/ошибку сохранять
 в `generated/` защищенным способом, не выдавать их за формат --report.
 Нового endpoint или второго сервиса генерации нет.
+
+## MEAL-7: причины завершения в локальном отчете
+
+Только `--report` получает отдельное `response_metadata`, максимум три записи:
+
+```json
+[
+  {"attempt": 1, "finish_reason": "length"},
+  {"attempt": 2, "finish_reason": "length"},
+  {"attempt": 3, "finish_reason": "stop"}
+]
+```
+
+Это **пример формата**, не результат нового платного прогона и не восстановление
+причин исторического ordinary. Порядок соответствует полученным ответам в
+`metadata.responses`; `attempt` — номер вызова, с которым сопоставляется `attempts`.
+Сохраняются причины успеха, ошибок JSON/схемы/расчета/ограничений, а также ответов,
+отвергнутых провайдером через `InvalidResponse`, без копирования меню или текста.
+Сбой сборщика нарушений `attempts` не мешает отдельному учету причин завершения.
+
+| Значение | Трактовка |
+| --- | --- |
+| `stop` | Провайдер завершил ответ; JSON, схема и ограничения еще должны пройти проверку |
+| `length` | Провайдер сообщил об ограничении длины; даже валидный JSON не принимается |
+| `content_filter`, `tool_calls`, `insufficient_system_resource` | Известная другая причина; меню не принимается |
+| `other` | Любое неизвестное значение, включая произвольный текст или неожиданный тип; меню не принимается |
+| null | Причина отсутствует/недоступна; завершенность не подтверждена, меню не принимается |
+
+Набор фиксирован; исходный неизвестный текст не сохраняется. При `length` и прочих
+неподтвержденных завершениях не разбирается меню, `previous_plan` для correction=null.
+Исправления используют прежний общий бюджет вызовов. Схемы `GenerationResult`,
+`GenerationMetadata`, `CallMetadata`, HTTP-ошибки/OpenAPI и файл успешного меню
+**не расширены**: локальная диагностика отделена от публичных контрактов.
+
+При parseable JSON-конверте с единственным choice причина сохраняется даже при
+ошибке схемы message/model/usage. Обрезанный/невалидный JSON-конверт, несколько
+choices, неподдерживаемое сжатие или превышение byte-limit не позволяют надежно
+прочитать причину: null, без эвристического извлечения текста. HTTP-ошибки провайдера
+не читаются; timeout/сетевая ошибка без ответа не создают запись. Поэтому calls
+может быть больше числа записей. Если сломался сам вспомогательный приемник
+response_metadata, история также может быть неполной, но исход генерации не меняется;
+отмена и завершение процесса не подавляются. Отсутствие записи не означает `stop`.
+Старые отчеты читаются с `response_metadata=null`, причины задним числом не известны.
+
+`length` отличает ограничение длины от `stop`, но само по себе не различает
+`max_tokens` и предел контекста и не объясняет распределение thinking/output tokens.
+Ровно 8192 completion tokens без сохраненного finish_reason — лишь косвенный признак.
+В report не сохраняются reasoning_content, сырой ответ, неудачные меню, пользовательский
+текст или секреты. Математическая проверка не доказывает качество/безопасность питания.
 
 ## MEAL-6: контекст и диагностика без сети
 
