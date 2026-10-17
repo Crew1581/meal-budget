@@ -2,7 +2,7 @@
 
 from typing import Annotated, Literal
 
-from pydantic import Field
+from pydantic import BeforeValidator, Field
 
 from meal_budget.schemas.common import Contract
 
@@ -11,6 +11,34 @@ DiagnosticStage = Literal["parsing", "schema", "calculation", "constraints"]
 DiagnosticNumber = Annotated[
     str, Field(max_length=120, pattern=r"^-?\d+(?:\.\d+)?(?:[Ee][+-]?\d+)?$")
 ]
+
+
+def safe_finish_reason(value: object) -> str | None:
+    if value is None:
+        return None
+    if isinstance(value, str) and value in {
+        "stop",
+        "length",
+        "content_filter",
+        "tool_calls",
+        "insufficient_system_resource",
+    }:
+        return value
+    return "other"
+
+
+FinishReason = Annotated[
+    Literal[
+        "stop", "length", "content_filter", "tool_calls", "insufficient_system_resource", "other"
+    ]
+    | None,
+    BeforeValidator(safe_finish_reason),
+]
+
+
+class ResponseMetadata(Contract):
+    attempt: int = Field(ge=1, le=3)
+    finish_reason: FinishReason = None
 
 
 class DiagnosticViolation(Contract):

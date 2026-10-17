@@ -3,7 +3,7 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from meal_budget.schemas.common import Contract, Money, ProductId, ShortText
-from meal_budget.schemas.diagnostics import AttemptDiagnostic
+from meal_budget.schemas.diagnostics import AttemptDiagnostic, ResponseMetadata
 from meal_budget.schemas.generation import GeneratedPlan, GenerationMetadata, GenerationRequest
 
 
@@ -54,6 +54,8 @@ class RunSummary(Contract):
     outcome: Literal["success", "error", "blocked", "not_run"]
     error_code: str | None = None
     metadata: GenerationMetadata | None = None
+    # Отдельно от общих с HTTP метаданных; None у старых отчетов.
+    response_metadata: list[ResponseMetadata] | None = Field(default=None, max_length=3)
     # None у старых отчетов: история причин тогда не собиралась.
     attempts: list[AttemptDiagnostic] | None = Field(default=None, max_length=3)
     budget_pass: bool | None = None

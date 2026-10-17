@@ -16,7 +16,7 @@ from meal_budget.evaluation import (
     require_ready_scenario,
     verify_preparation,
 )
-from meal_budget.schemas.diagnostics import AttemptDiagnostic
+from meal_budget.schemas.diagnostics import AttemptDiagnostic, ResponseMetadata
 from meal_budget.schemas.evaluation import RunSummary
 from meal_budget.schemas.generation import GenerationRequest, GenerationResult
 from meal_budget.schemas.products import ProductCatalog
@@ -48,10 +48,11 @@ async def run_generation(
     settings: Settings,
     *,
     diagnostics: list[AttemptDiagnostic] | None = None,
+    response_metadata: list[ResponseMetadata] | None = None,
 ) -> GenerationResult:
     async with DeepSeekProvider(settings) as provider:
         return await MenuGenerationService(provider, settings).generate(
-            request, catalog, diagnostics=diagnostics
+            request, catalog, diagnostics=diagnostics, response_metadata=response_metadata
         )
 
 
@@ -214,6 +215,7 @@ def main(argv=None) -> int:
             thinking=settings.deepseek_thinking,
             outcome="not_run",
             attempts=[],
+            response_metadata=[],
         )
     except ScenarioPreparationError as exc:
         print(str(exc), file=sys.stderr)
@@ -237,6 +239,7 @@ def main(argv=None) -> int:
                 catalog,
                 settings,
                 diagnostics=summary.attempts if args.report else None,
+                response_metadata=summary.response_metadata if args.report else None,
             )
         )
         save_result(args.output, result.model_dump_json(indent=2), overwrite=args.overwrite)

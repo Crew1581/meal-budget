@@ -9,6 +9,7 @@ import httpx
 from pydantic import BaseModel, Field
 
 from meal_budget.core.config import Settings
+from meal_budget.schemas.diagnostics import FinishReason, safe_finish_reason
 from meal_budget.schemas.generation import CallMetadata, GenerationMetadata
 
 ERROR_MESSAGES = {
@@ -33,10 +34,17 @@ class GenerationError(Exception):
 
 
 class InvalidResponse(GenerationError):
-    def __init__(self, violation: str, metadata: CallMetadata | None = None):
+    def __init__(
+        self,
+        violation: str,
+        metadata: CallMetadata | None = None,
+        *,
+        finish_reason: FinishReason = None,
+    ):
         super().__init__("invalid_response")
         self.violation = violation
         self.response_metadata = metadata or CallMetadata()
+        self.finish_reason = finish_reason
 
 
 class ProviderUsage(BaseModel):
@@ -52,7 +60,7 @@ class ProviderMessage(BaseModel):
 
 
 class ProviderChoice(BaseModel):
-    finish_reason: str
+    finish_reason: FinishReason = None
     message: ProviderMessage
 
 
@@ -66,6 +74,7 @@ class ProviderResponse(BaseModel):
 class Completion:
     content: str
     metadata: CallMetadata
+    finish_reason: FinishReason = None
 
 
 def _object(pairs):
@@ -177,17 +186,26 @@ class DeepSeekProvider:
             raise GenerationError("provider_timeout") from None
         except httpx.RequestError:
             raise GenerationError("provider_unavailable") from None
+        finish_reason = None
         try:
-            envelope = ProviderResponse.model_validate(parse_json(bytes(raw)))
+            value = parse_json(bytes(raw))
+            # Причина доступна и при поврежденной схеме message/model/usage.
+            # Не пытаемся восстановить ее из обрезанного JSON или нескольких choices.
+            choices = value.get("choices") if isinstance(value, dict) else None
+            if isinstance(choices, list) and len(choices) == 1 and isinstance(choices[0], dict):
+                finish_reason = safe_finish_reason(choices[0].get("finish_reason"))
+            envelope = ProviderResponse.model_validate(value)
         except (ValueError, UnicodeError, RecursionError):
-            raise InvalidResponse("invalid_provider_json") from None
+            raise InvalidResponse("invalid_provider_json", finish_reason=finish_reason) from None
         metadata = CallMetadata(
             model=envelope.model,
             usage=envelope.usage.model_dump(exclude_none=True) if envelope.usage else None,
         )
         choice = envelope.choices[0]
         if choice.finish_reason != "stop":
-            raise InvalidResponse("incomplete_response", metadata)
+            raise InvalidResponse(
+                "incomplete_response", metadata, finish_reason=choice.finish_reason
+            )
         if not choice.message.content:
-            raise InvalidResponse("empty_response", metadata)
-        return Completion(choice.message.content, metadata)
+            raise InvalidResponse("empty_response", metadata, finish_reason=choice.finish_reason)
+        return Completion(choice.message.content, metadata, choice.finish_reason)
