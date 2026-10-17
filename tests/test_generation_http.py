@@ -13,6 +13,7 @@ from meal_budget.api.generation_guard import MAX_REQUEST_BYTES
 from meal_budget.api.generations import GENERATION_PATH
 from meal_budget.core.config import PROJECT_ROOT, Settings
 from meal_budget.schemas.generation import GeneratedPlan
+from meal_budget.services import menu_generation
 from meal_budget.services.deepseek import DeepSeekProvider
 
 ACCESS_TOKEN = "developer-test-token"
@@ -247,6 +248,13 @@ def test_service_errors_and_slot_release(app_factory, kind, status, code, calls)
         assert result.status_code == status
         assert result.json()["detail"]["code"] == code
         assert result.json()["detail"]["metadata"]["calls"] == calls
+        assert set(result.json()["detail"]) == {"code", "message", "metadata"}
+        assert set(result.json()["detail"]["metadata"]) == {
+            "calls",
+            "duration_seconds",
+            "responses",
+        }
+        assert "AttemptDiagnostic" not in client.get("/openapi.json").text
         assert len(transport.requests) == calls
         assert "private-" not in result.text
         assert "plan" not in result.json()["detail"]
@@ -256,6 +264,50 @@ def test_service_errors_and_slot_release(app_factory, kind, status, code, calls)
         success = client.post(GENERATION_PATH, headers=HEADERS, json=example_request())
         assert success.status_code == 200
     assert providers[0]._client.is_closed
+
+
+@pytest.mark.parametrize("success", [True, False])
+def test_http_contract_does_not_depend_on_diagnostic_collector(app_factory, monkeypatch, success):
+    diagnostic_calls = []
+
+    def fail(*args):
+        diagnostic_calls.append(args)
+        raise RuntimeError("private-diagnostic-error")
+
+    monkeypatch.setattr(menu_generation, "attempt_diagnostic", fail)
+
+    async def handler(request):
+        plan = example_plan()
+        if not success:
+            plan["recipes"][0]["ingredients"][0]["grams"] = 1
+        return httpx.Response(200, json=envelope(plan))
+
+    app, transport, _ = app_factory(RecordingTransport(handler))
+    with TestClient(app) as client:
+        response = client.post(GENERATION_PATH, headers=HEADERS, json=example_request())
+        assert response.status_code == (200 if success else 422)
+        body = response.json() if success else response.json()["detail"]
+        if success:
+            assert set(body) == {
+                "catalog_version",
+                "plan",
+                "calculation",
+                "warnings",
+                "nutrition_tolerance",
+                "metadata",
+            }
+        else:
+            assert set(body) == {"code", "message", "metadata"}
+            assert body["code"] == "attempts_exhausted"
+        assert set(body["metadata"]) == {"calls", "duration_seconds", "responses"}
+        assert body["metadata"]["calls"] == len(transport.requests) == (1 if success else 3)
+        schema = client.get("/openapi.json").json()
+        assert (
+            not {"AttemptDiagnostic", "DiagnosticViolation"}
+            & schema["components"]["schemas"].keys()
+        )
+        assert "private-diagnostic-error" not in response.text
+    assert diagnostic_calls == [] and transport.closed
 
 
 def test_enabled_without_provider_key_and_old_routes(app_factory):
