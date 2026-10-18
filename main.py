@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
 
+from meal_budget.api.app_jobs import router as app_router
 from meal_budget.api.generation_guard import GenerationGuard
 from meal_budget.api.generations import generation_http_exception
 from meal_budget.api.generations import router as generation_router
@@ -26,6 +27,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app_settings = settings if settings is not None else Settings()
     token = app_settings.generation_access_token.get_secret_value()
     slot = GenerationSlot()
+    if app_settings.generation_app_enabled and not app_settings.generation_http_enabled:
+        raise RuntimeError("GENERATION_APP_ENABLED требует GENERATION_HTTP_ENABLED=true.")
     if app_settings.generation_http_enabled and (
         not token or any(not 33 <= ord(character) <= 126 for character in token)
     ):
@@ -79,11 +82,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             app.state.catalog = None
 
     application = FastAPI(title="Meal Budget API", version="0.1.0", lifespan=lifespan)
+    application.state.settings = app_settings
     application.include_router(router)
     if app_settings.generation_http_enabled:
         application.include_router(generation_router)
         application.include_router(jobs_router)
-        application.add_middleware(GenerationGuard, token=token, slot=slot)
+        if app_settings.generation_app_enabled:
+            application.include_router(app_router)
+        application.add_middleware(
+            GenerationGuard, token=token, slot=slot, app_enabled=app_settings.generation_app_enabled
+        )
         application.add_exception_handler(HTTPException, generation_http_exception)
     application.add_exception_handler(RequestValidationError, calculation_validation_error)
     return application

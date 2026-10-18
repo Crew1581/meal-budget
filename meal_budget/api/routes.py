@@ -14,6 +14,7 @@ from meal_budget.schemas.menu import (
     MenuCalculationResponse,
 )
 from meal_budget.schemas.products import ProductCatalog
+from meal_budget.services.app_admission import is_app_path
 from meal_budget.services.menu_calculation import MenuCalculationError, calculate_menu
 
 router = APIRouter()
@@ -35,7 +36,7 @@ def products(request: Request) -> ProductCatalog:
 
 async def calculation_validation_error(request: Request, exc: RequestValidationError):
     path = get_route_path(request.scope)
-    if is_generation_path(path):
+    if is_generation_path(path) or is_app_path(path):
         return error_response(422, "invalid_request", "Некорректная анкета генерации.")
     if path != "/v1/menu-calculations":
         return await request_validation_exception_handler(request, exc)

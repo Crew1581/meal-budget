@@ -65,8 +65,33 @@ class GenerationJobs:
             return job_id
 
     async def get(self, job_id: str) -> JobStatus | None:
+        return await self._get(job_id)
+
+    async def submit_app(self, request: GenerationRequest, installation_id: str, key: str) -> str:
         await self.cleanup()
-        job = await self.store.get(job_id)
+        async with self.admission:
+            job_id, replay = await self.store.create_app(
+                request,
+                self.catalog.catalog_version,
+                installation_id,
+                key,
+                self.settings,
+                self.available and not self.stopping,
+            )
+            if not replay:
+                self.wake.set()
+            return job_id
+
+    async def get_app(self, job_id: str, installation_id: str) -> JobStatus | None:
+        return await self._get(job_id, installation_id)
+
+    async def _get(self, job_id: str, installation_id: str | None = None) -> JobStatus | None:
+        await self.cleanup()
+        job = (
+            await self.store.get(job_id)
+            if installation_id is None
+            else await self.store.get(job_id, installation_id)
+        )
         # Между async cleanup и SELECT могла завершиться запись уже истекшего result.
         if (
             job is not None

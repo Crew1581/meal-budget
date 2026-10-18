@@ -379,8 +379,8 @@ OpenAPI serialization-схемы описывают числовой выход.
 миграций из README. Оба маршрута требуют тот же `GenerationAccessToken` Bearer,
 проверяемый до тела/JSON, в том числе с `root_path`, mounts и завершающим `/`.
 Без серверного подтверждения guard — 401 даже с правильным заголовком.
-Общий серверный токен **нельзя встраивать в публичный Flutter**; токены установок
-и пользовательские квоты пока отсутствуют.
+Общий серверный токен **нельзя встраивать в публичный Flutter**; отдельные токены
+установок и квоты реализованы в app API MEAL-9 ниже, не в developer POST.
 
 ### POST /v1/generation-jobs
 
@@ -494,3 +494,143 @@ GET выполняет проверку TTL, не возвращает прос�
 HTTP-ошибка не гарантирует отсутствия записи и не разрешает автоматический повтор POST.
 Bearer проверяется до тела и остальных ошибок.
 Локальный пример POST/GET без внешней сети — [README](../README.md#фоновые-задания-meal-8).
+
+## MEAL-9: установки и отдельное API приложения
+
+По умолчанию **все три маршрута недоступны** (404, нет в OpenAPI).
+Нужно `GENERATION_APP_ENABLED=true` вместе с `GENERATION_HTTP_ENABLED=true`;
+app=true/http=false — ошибка конфигурации, а не автоматическое включение.
+Нужны та же PostgreSQL, отдельно применённая миграция 002 и один прежний worker/слот.
+Developer API остаётся закрытым прежним Bearer, без идемпотентности/app-квот;
+сохраняет административный доступ к заданиям. CLI/расчёт/модель не изменены.
+Все ответы новых маршрутов, включая ошибки и redirect, — `Cache-Control: no-store`.
+
+### POST /v1/installations
+
+Без авторизации и без обязательного тела. До маршрутизации действует тот же
+лимит тела 65536 байт (включая chunked), root_path/mounts/slash и scope-proof.
+**201**:
+
+```json
+{"installation_id":"00000000-0000-4000-8000-000000000001","token":"mbi_<непрозрачный секрет>","token_type":"Bearer"}
+```
+
+Иллюстративный токен выше невалиден. Настоящий — `mbi_` + 43 base64url-символа
+от 32 криптографически случайных байт (256 бит). UUID случайный; не используются
+email/телефон/IP/fingerprint. БД хранит только SHA-256 токена, UNIQUE + CHECK 32 bytes,
+UUID PRIMARY KEY и created_at. Токен возвращается **только при создании**.
+Передавать только `Authorization: Bearer <token>` по HTTPS, хранить в OS secure storage.
+Токен не имеет автоматического срока, refresh/recovery/rotation API нет; UUID не секрет
+и не заменяет Bearer. Потеря/переустановка без сохранённого секрета — новая установка,
+старые задания недоступны, никакого восстановления аккаунта. Регистрация сама по себе
+неидемпотентна: потеря 201 может оставить строку без известного клиенту токена.
+
+Регистрация атомарно ограничена `INSTALLATIONS_DAILY_LIMIT=20` за UTC-сутки и
+`INSTALLATIONS_TOTAL_LIMIT=200` строк всего. Установки автоматически не удаляются.
+Для daily — 429 `installation_daily_quota_exceeded` до следующей UTC-полуночи;
+для total — 429 `installation_capacity_reached`, Retry-After=86400, нужна операторская
+проверка, через сутки ёмкость не гарантируется. Это cap таблицы, не защита от всех ботов.
+
+### POST /v1/app/generation-jobs
+
+`Authorization` с installation Bearer (OpenAPI `InstallationToken`); developer Bearer
+здесь отвергается. Installation Bearer не допускается на `/v1/generation-jobs`,
+его GET и `/v1/menu-generations`. Авторизация до тела/валидации; неверный/отсутствующий
+токен — 401 `unauthorized`, `WWW-Authenticate: Bearer`.
+
+Тело — прежний `GenerationRequest`, 64 KiB до JSON. Обязателен **один**
+`Idempotency-Key`: 1–64 ASCII-символа `[A-Za-z0-9_-]`, регистр значим,
+без пробелов/запятых/переводов строки. Отсутствующий заголовок — 422 `invalid_request`,
+недопустимый/повторный — 422 `invalid_idempotency_key`, без отражения содержимого.
+Сохраняйте ключ и исходные параметры до POST. Пример протокола:
+
+```http
+POST /v1/installations
+
+POST /v1/app/generation-jobs
+Authorization: Bearer <полученный token>
+Idempotency-Key: meal-request-001
+Content-Type: application/json
+
+<GenerationRequest, например examples/generation-request.json>
+
+GET /v1/app/generation-jobs/<id из ответа 202>
+Authorization: Bearer <тот же token>
+```
+
+202 имеет прежнюю форму `{"id":"<UUID>","state":"queued"}`. Это подтверждение приёма,
+не актуальное состояние: **повтор тоже возвращает такую форму**, даже если задание
+уже завершено. GET даёт актуальный снимок. Схема проверяется до admission;
+доменные ошибки генерации остаются failed, как у developer-заданий.
+
+В одной установке новый ключ создаёт одно задание. Повтор того же ключа и
+нормализованной анкеты возвращает прежний ID, без генерации/списания новой квоты.
+Другой запрос с тем же ключом — **409 `idempotency_conflict`**.
+Одинаковые ключи разных установок независимы. Используется SHA-256 валидированных
+параметров с defaults и очищенными схемой краевыми пробелами, сортировкой JSON-полей,
+точной канонизацией Decimal и множеств excluded/disliked ID (порядок/дубли незначимы).
+JSON whitespace и числовые строки/числа с равным валидированным Decimal не различаются.
+Внутренние пробелы/содержимое wishes значимы. Дополнительной сырой копии анкеты нет.
+`catalog_version` **не входит в хеш**; принятый job сохраняет исходную версию.
+Смена каталога не создаёт конфликт/новое задание при повторе. Старая queued с иной
+версией при recovery всё так же становится failed/catalog_version_mismatch.
+
+Известный повтор подтверждается **без доступного worker**: это чтение прежнего
+приёма. Новый ключ при аварии → 503 `worker_unavailable`. Повторная проверка после
+cleanup и COMMIT под admission lock сохраняют гарантию MEAL-8: приём не начинается
+после перехода unavailable, начатая транзакция завершается до перехода.
+
+Ключ хранится в строке задания: queued/running — без отдельного deadline,
+completed/failed — `GENERATION_JOBS_RETENTION_SECONDS` от finished_at (default 24 ч).
+На границе TTL ключ и job исчезают вместе. Просроченное задание не подтверждается;
+GET → 404, тот же ключ затем рассматривается как **новый приём** по текущему каталогу
+и квотам, с новым ID. Вечной идемпотентности и восстановления результата нет.
+Не повторяйте POST автоматически после истечения retention.
+
+### GET /v1/app/generation-jobs/{job_id}
+
+Та же схема `JobStatus` и безопасные ошибки, что у developer GET. SQL фильтрует
+**id + installation_id до чтения/разбора результата и проверки доступности worker**.
+Чужой, developer-owned (owner=null), неизвестный и истёкший ID дают одинаковый
+404 `job_not_found`. Невалидный UUID — безопасный 422. Чужое queued/running не
+раскрывается даже через 503: owner check имеет приоритет. Свое незавершённое задание
+при аварии worker → 503 `worker_unavailable`, terminal → 200; recovery/TTL прежние.
+
+### Точные границы квот и ошибок
+
+Новые **принятые app-задания**: default 3/установку/UTC-сутки
+(`GENERATION_APP_DAILY_INSTALLATION_LIMIT`) и 30/все установки/UTC-сутки
+(`GENERATION_APP_DAILY_GLOBAL_LIMIT`). Часы PostgreSQL, UTC-дата берётся после DB-lock
+в транзакции приёма. Граница принятия — COMMIT. Квоты/счётчики/ключ/job атомарны,
+конкурентные запросы через разные соединения не обходят лимиты (advisory xact lock,
+UNIQUE владельца+ключа). Queue limit общий с developer API и остаётся прежним.
+Порядок: auth → body/schema/key → cleanup → поиск повтора/конфликта → worker →
+queue → global quota → personal quota → счётчики + INSERT + COMMIT.
+
+Отказ до COMMIT, SQL rollback и отмена до COMMIT не расходуют квоту; неизвестный
+исход COMMIT требует **того же ключа**. Accepted расходует квоту независимо от failed,
+interrupted, restart, TTL/удаления job. Счётчики не зависят от таблицы jobs, прежние
+UTC-даты удаляются при следующем новом принятии. Повторы бесплатны по счётчику
+даже при полной очереди/исчерпанной квоте. Новые установки не обходят global limit.
+Developer/sync/CLI не учитываются в app-квотах. Это **не денежный лимит**: одно задание
+может сделать до трёх обращений к провайдеру, а незавершённый внешний вызов — стоить денег.
+
+| HTTP | code | Retry-After |
+| --- | --- | --- |
+| 409 | `idempotency_conflict` | нет |
+| 422 | `invalid_idempotency_key`, `invalid_request` | нет |
+| 429 | `generation_queue_full` | 1 секунда, не обещание свободного места |
+| 429 | `app_daily_quota_exceeded` | целые секунды до следующей UTC-полуночи, минимум 1 |
+| 429 | `installation_daily_job_quota_exceeded` | до следующей UTC-полуночи |
+| 429 | `installation_daily_quota_exceeded` | до следующей UTC-полуночи |
+| 429 | `installation_capacity_reached` | 86400, ограничение снимает только оператор |
+| 503 | `job_storage_unavailable`, `worker_unavailable` | нет |
+
+Прежние 401/404/413/422 сохранены; форма ошибок `detail: {code, message, metadata:null}`,
+без токенов/ключей/анкеты/SQL/DSN. Установка не доказывает уникальность человека;
+cap регистрации можно исчерпать. Нужны внешняя защита закрытого пилота, HTTPS,
+rate/connection/time limits и маскирование секретов на proxy/APM; общий секрет
+регистрации в Flutter не нужен и недопустим. Нет полной публичной abuse-защиты,
+профиля на сервере, JWT, refresh или Flutter-реализации. **Нет exactly-once внешнего
+платного провайдера**: durable running не повторяется после сбоя даже при потере результата.
+Команды и безопасный локальный пример — [README](../README.md#api-приложения-meal-9-закрытый-пилот).

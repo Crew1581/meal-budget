@@ -11,6 +11,13 @@ from meal_budget.api.generations import (
     error_response,
     is_generation_path,
 )
+from meal_budget.services.app_admission import (
+    INSTALLATION_SCOPE_KEY,
+    INSTALLATION_TOKEN,
+    INSTALLATIONS_PATH,
+    is_app_path,
+    token_hash,
+)
 from meal_budget.services.generation_slot import GenerationSlot
 
 MAX_REQUEST_BYTES = 65536
@@ -19,25 +26,60 @@ MAX_REQUEST_BYTES = 65536
 class GenerationGuard:
     """Доступ/тело до JSON; синхронный маршрут разделяет слот с worker."""
 
-    def __init__(self, app: ASGIApp, *, token: str, slot: GenerationSlot):
+    def __init__(
+        self, app: ASGIApp, *, token: str, slot: GenerationSlot, app_enabled: bool = False
+    ):
         self.app = app
         self.token = token.encode("ascii")
         self.slot = slot
+        self.app_enabled = app_enabled
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if (
             scope["type"] != "http"
             or scope["method"] not in ("POST", "GET")
-            or not is_generation_path(get_route_path(scope))
+            or not (
+                is_generation_path(get_route_path(scope))
+                or (self.app_enabled and is_app_path(get_route_path(scope)))
+            )
         ):
             await self.app(scope, receive, send)
             return
 
         request = Request(scope)
-        credentials = await bearer(request)
-        if credentials is None or not secrets.compare_digest(
-            credentials.credentials.encode("utf-8"), self.token
-        ):
+        app_path = is_app_path(get_route_path(scope))
+        registration = app_path and get_route_path(scope).rstrip("/") == INSTALLATIONS_PATH
+        if app_path:
+            original_send = send
+
+            async def uncached_send(message):
+                if message["type"] == "http.response.start":
+                    message["headers"] = [*message["headers"], (b"cache-control", b"no-store")]
+                await original_send(message)
+
+            send = uncached_send
+        credentials = None if registration else await bearer(request)
+        valid = registration
+        if credentials is not None:
+            value = credentials.credentials
+            if app_path:
+                if INSTALLATION_TOKEN.fullmatch(value) and not secrets.compare_digest(
+                    value.encode("ascii"), self.token
+                ):
+                    try:
+                        store = scope["app"].state.generation_jobs.store
+                        owner = await store.authenticate_installation(token_hash(value))
+                    except Exception:
+                        await error_response(
+                            503, "job_storage_unavailable", "Хранилище заданий недоступно."
+                        )(scope, receive, send)
+                        return
+                    if owner is not None:
+                        scope[INSTALLATION_SCOPE_KEY] = owner
+                        valid = True
+            else:
+                valid = secrets.compare_digest(value.encode("utf-8"), self.token)
+        if not valid:
             await error_response(401, "unauthorized", "Требуется токен доступа к генерации.")(
                 scope, receive, send
             )
@@ -91,6 +133,7 @@ class GenerationGuard:
             await self.app(scope, bounded_receive, send)
         finally:
             scope.pop(GUARDED_REQUEST_KEY, None)
+            scope.pop(INSTALLATION_SCOPE_KEY, None)
             if synchronous:
                 self.slot.release()
 

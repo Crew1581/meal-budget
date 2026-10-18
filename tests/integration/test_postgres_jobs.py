@@ -277,8 +277,11 @@ def test_clean_migrations_repeat_apply_rollback_and_startup(postgres_url, app_fa
             == "timestamp with time zone"
         )
         assert fields["request_json"] == fields["result_json"] == "jsonb"
-        assert connection.execute("SELECT migration_id FROM _yoyo_migration").fetchall() == [
-            ("001_generation_jobs_postgresql",)
+        assert connection.execute(
+            "SELECT migration_id FROM _yoyo_migration ORDER BY migration_id"
+        ).fetchall() == [
+            ("001_generation_jobs_postgresql",),
+            ("002_installations_app_admission",),
         ]
     migrate(postgres_url, rollback=True)
     with psycopg.connect(postgres_url) as connection:
