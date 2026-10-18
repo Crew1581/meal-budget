@@ -11,7 +11,7 @@ Flutter / локальная SQLite
 ```
 
 Небольшой серверный проект без микросервисов и аккаунтов. Клиент хранит
-настройки, меню и заметки; сервер — каталог и временные задания MEAL-8.
+настройки, меню и заметки; сервер — каталог, установки MEAL-9 и временные задания.
 Результат модели не является доверенным расчётом и не должен отправляться
 клиенту как проверенный без независимой проверки сервера.
 
@@ -277,12 +277,12 @@ durable-очередь, без Redis/Celery и отдельного брокер
 (конфигурируется 1–100), плюс один running. FIFO по created_at/id; снижение лимита
 не удаляет принятые задания. BackgroundTasks HTTP-запроса не используются.
 
-В PostgreSQL одна таблица generation_jobs: id UUID, state TEXT с CHECK,
+Базовая таблица PostgreSQL generation_jobs: id UUID, state TEXT с CHECK,
 created_at/started_at/finished_at TIMESTAMPTZ, catalog_version TEXT,
 request_json/result_json JSONB, безопасный error_code TEXT. CHECK ограничивает
 комбинации состояния, времён, результата и ошибки. Decimal внутри JSONB — точные
 строки без float; отдельных денежных столбцов нет. Если появятся — NUMERIC(scale 2).
-Дополнительных таблиц каталога, меню и пользователей нет.
+В MEAL-9 добавлены установки и счётчики admission (ниже), но не профиль/таблицы меню/каталог.
 
 ### Транзакционные гарантии и процессные ограничения
 
@@ -306,7 +306,8 @@ request_json/result_json JSONB, безопасный error_code TEXT. CHECK ог
 
 Транзакция running фиксируется **до** обращения к провайдеру. После commit приема
 задание не зависит от жизни HTTP-запроса; потеря 202 создает неопределенность
-для клиента, а не разрешение безопасно повторять POST. Идемпотентности/квот нет.
+для клиента, а не разрешение безопасно повторять developer POST. App POST MEAL-9
+имеет отдельные идемпотентность/квоты (ниже).
 **Exactly-once внешнего платного вызова не обещается:** после ответа провайдера
 возможна потеря БД/процесса до фиксации результата. Running не повторяется даже
 если провайдер фактически еще не был вызван. Общий активный слот и startup-recovery
@@ -383,3 +384,82 @@ API опционален (profile api), миграции явные. Катал�
 Автономные тесты используют in-memory адаптер только из tests/, SQL-интеграция —
 отдельные временные БД выделенного PostgreSQL. Нет fallback на SQLite и молчаливых
 skips без БД. GitHub Actions имеет отдельный PostgreSQL service job.
+
+## MEAL-9: установки и транзакционный app admission
+
+```text
+POST /v1/installations → bounded-body guard → random UUID + opaque token (256 bit)
+  → installations: UUID / UNIQUE SHA-256(token) / created_at → 201 + no-store
+POST /v1/app/generation-jobs → installation Bearer до тела → bounded body
+  → GenerationRequest + Idempotency-Key → GenerationJobs.submit_app
+  → тот же admission lock → JobStore.create_app → одна PostgreSQL-транзакция
+  → прежняя очередь → прежний worker → прежний общий GenerationSlot → прежний сервис
+GET /v1/app/generation-jobs/{id} → installation Bearer → SQL id + owner
+  → TTL → worker availability → прежний JobStatus
+```
+
+Включение отдельно `GENERATION_APP_ENABLED=false` по умолчанию. Требует
+`GENERATION_HTTP_ENABLED=true`, иначе create_app отказывает. Никаких второго worker,
+слота/клиента или очереди нет. Developer API сохраняет отдельную авторизацию и
+административное чтение временных заданий; его admission не тратит app-квоты.
+Root_path/mounts/slash и fail-closed scope-proof общие, установка хранится только
+в приватном scope до выхода middleware. Регистрация не требует Bearer, но тоже
+требует guard и ограничение тела. Все app-ответы имеют no-store. Ключи/токены не
+логируются и не передаются провайдеру, профиль остаётся на устройстве.
+
+Новая yoyo 002 явно зависит от 001, не переписывает её. installations хранит
+UUID, 32-byte SHA-256 token hash (UNIQUE + CHECK), created_at; секрет генерируется
+`secrets.token_urlsafe(32)` с префиксом `mbi_`, не JWT. В задания добавлены nullable
+installation_id FK, idempotency_key и request_hash: CHECK «все NULL либо все заполнены»,
+формат ключа/длина хеша, UNIQUE(installation_id, idempotency_key). Ключ использует
+COLLATE "C" для точного ASCII-сравнения независимо от default collation БД. Старые developer jobs
+остаются с NULL без выдуманного владельца. Отдельной сырой копии анкеты нет.
+SQL фильтрует владельца до преобразования JSONB в GenerationResult и до выдачи
+ошибки состояния: чужие/неизвестные ID неотличимы (404), даже при аварии worker.
+
+App admission держит тот же transaction-scoped QUEUE_LOCK, что developer create.
+В READ COMMITTED после lock ищет и блокирует прежний job (FOR UPDATE), затем берёт
+clock_timestamp() PostgreSQL/UTC для даты квоты и проверки TTL уже захваченной строки,
+сравнивает SHA-256 канонизированных валидированных параметров. JSON sort/compact, явные defaults,
+точное Decimal coefficient/exponent без float/округления, сортированные множества ID.
+Версия каталога не входит в хеш; исходная версия задания не меняется при повторе.
+Повтор возвращает только прежнее подтверждение 202, даже без доступного worker.
+Конфликт — 409. Новый admission проверяет worker, общую очередь, global/personal quota,
+увеличивает оба счётчика и вставляет job в одной транзакции. UNIQUE/FK/CHECK дополняют
+DB-lock; защита не ограничивается процессным asyncio.Lock. Оба lock не удерживаются
+во время провайдера. Процессный admission lock сохраняет упорядочивание MEAL-8 с
+переходом worker в unavailable, включая POST, задержанный на cleanup.
+
+app_daily_usage (UTC day PK, accepted > 0) и installation_daily_usage
+(installation_id FK + UTC day PK, accepted > 0) независимы от TTL заданий.
+Default 30 global и 3 personal — квота новых принятых заданий, не денежный бюджет.
+Accepted COMMIT остаётся учтённым после failed/interrupted/restart/TTL. Rollback/отмена
+до COMMIT не оставляют ни ключа/job, ни частичного счётчика. Старые дни удаляются
+в транзакции следующего нового admission; повторы и отказы ничего не списывают.
+Все установки делят global quota. 429 quotas получает Retry-After до UTC-полуночи,
+полная очередь — 1 секунду без обещания освобождения.
+
+Ключ хранится непосредственно в job: queued/running удерживают его, затем terminal
+TTL (24 ч по умолчанию). Удаление строки атомарно удаляет ключ/анкету/результат,
+нет dangling reference или вечного tombstone. После expiry тот же ключ — новый
+admission с новой квотой/каталогом, GET старого ID — 404. Это не бессрочная гарантия.
+COMMIT при обрыве соединения может быть неопределённым; тот же ключ позволяет
+повторить подтверждение в пределах retention, но не восстановить истёкшие данные.
+
+Регистрация использует отдельный advisory xact lock, count+INSERT ограничены
+20/UTC-сутки и 200 всего по умолчанию. Установки не удаляются автоматически,
+total-cap требует вмешательства оператора (Retry-After=86400 не гарантирует освобождение).
+Токен бессрочный до удаления оператором/отключения API; recovery/rotation/revoke API нет.
+Переустановка без сохранённого OS-secret создаёт новую установку, не возвращает старую.
+Токен идентифицирует установку, **не уникального человека**; cap ограничивает таблицу,
+но его можно исчерпать. Публичный запуск требует внешнего rate/connection/time limit,
+контроля доступа пилота, HTTPS, redaction proxy/APM и дальнейшей abuse-политики.
+Общий регистрационный секрет в Flutter не добавляется.
+
+`migrate_jobs rollback --steps 1` на текущей истории откатывает только 002,
+удаляет app jobs/установки/счётчики и сохраняет legacy developer jobs. Без --steps
+rollback откатывает всю историю, как раньше. Миграции и API не запускаются вместе;
+операции только на тестовой/выведенной БД, не как сброс квот. Schema-probe 002 нужен
+только при включённом app API; выключенный app не ломает developer API со схемой 001.
+Автоматических миграций нет. Все старые гарантии cancellation/recovery и внешнего
+провайдера прежние: один процесс, до трёх вызовов, **не exactly-once**.

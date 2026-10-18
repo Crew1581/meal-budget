@@ -14,6 +14,7 @@ from meal_budget.schemas.generation import (
     GenerationRequest,
     GenerationResult,
 )
+from meal_budget.services.app_admission import is_app_path
 from meal_budget.services.deepseek import GenerationError
 
 GENERATION_PATH = "/v1/menu-generations"
@@ -56,7 +57,10 @@ def error_response(
 
 async def generation_http_exception(request: Request, exc: HTTPException):
     # FastAPI использует 400 при RecursionError и других сбоях JSON-парсера.
-    if is_generation_path(get_route_path(request.scope)) and exc.status_code == 400:
+    if (
+        is_generation_path(get_route_path(request.scope))
+        or is_app_path(get_route_path(request.scope))
+    ) and exc.status_code == 400:
         return error_response(422, "invalid_request", "Некорректная анкета генерации.")
     return await http_exception_handler(request, exc)
 

@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     deepseek_max_output_tokens: int = Field(default=8192, ge=1, le=32768)
     deepseek_max_response_bytes: int = Field(default=262144, ge=1024, le=1048576)
     generation_http_enabled: bool = False
+    generation_app_enabled: bool = False
+    generation_app_daily_installation_limit: int = Field(default=3, ge=1, le=1000)
+    generation_app_daily_global_limit: int = Field(default=30, ge=1, le=10000)
+    installations_daily_limit: int = Field(default=20, ge=1, le=10000)
+    installations_total_limit: int = Field(default=200, ge=1, le=100000)
     generation_access_token: SecretStr = SecretStr("")
     generation_jobs_database_url: SecretStr = SecretStr("")
     generation_jobs_pool_size: int = Field(default=4, ge=1, le=10)
