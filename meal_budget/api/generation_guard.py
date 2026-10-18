@@ -9,24 +9,26 @@ from meal_budget.api.generations import (
     GUARDED_REQUEST_KEY,
     bearer,
     error_response,
+    is_generation_path,
 )
+from meal_budget.services.generation_slot import GenerationSlot
 
 MAX_REQUEST_BYTES = 65536
 
 
 class GenerationGuard:
-    """Один слот на процесс, без очереди; проверка доступа до чтения тела."""
+    """Доступ/тело до JSON; синхронный маршрут разделяет слот с worker."""
 
-    def __init__(self, app: ASGIApp, *, token: str):
+    def __init__(self, app: ASGIApp, *, token: str, slot: GenerationSlot):
         self.app = app
         self.token = token.encode("ascii")
-        self.busy = False
+        self.slot = slot
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if (
             scope["type"] != "http"
-            or scope["method"] != "POST"
-            or get_route_path(scope).rstrip("/") != GENERATION_PATH
+            or scope["method"] not in ("POST", "GET")
+            or not is_generation_path(get_route_path(scope))
         ):
             await self.app(scope, receive, send)
             return
@@ -40,13 +42,15 @@ class GenerationGuard:
                 scope, receive, send
             )
             return
-        # Проверка и захват без await: атомарно внутри одного event loop Uvicorn.
-        if self.busy:
+        synchronous = (
+            scope["method"] == "POST" and get_route_path(scope).rstrip("/") == GENERATION_PATH
+        )
+        # Только прежний синхронный POST захватывает слот до чтения тела.
+        if synchronous and not self.slot.try_acquire():
             await error_response(429, "generation_busy", "Генерация уже выполняется.")(
                 scope, receive, send
             )
             return
-        self.busy = True
         try:
             length = request.headers.get("content-length")
             normalized_length = (length.lstrip("0") or "0") if length is not None else None
@@ -87,7 +91,8 @@ class GenerationGuard:
             await self.app(scope, bounded_receive, send)
         finally:
             scope.pop(GUARDED_REQUEST_KEY, None)
-            self.busy = False
+            if synchronous:
+                self.slot.release()
 
     @staticmethod
     async def too_large(scope: Scope, receive: Receive, send: Send) -> None:

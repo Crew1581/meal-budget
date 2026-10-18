@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:17-alpine
+    # SQL/параметры и DETAIL с содержимым ошибочной строки не должны попадать в лог.
+    command:
+      - postgres
+      - -c
+      - log_statement=none
+      - -c
+      - log_error_verbosity=terse
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_parameter_max_length_on_error=0
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-meal_budget}
+      POSTGRES_USER: ${POSTGRES_USER:-meal_budget}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in environment}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  api:
+    profiles: ["api"]
+    build: .
+    image: meal-budget:local
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      GENERATION_HTTP_ENABLED: ${GENERATION_HTTP_ENABLED:-false}
+      GENERATION_ACCESS_TOKEN: ${GENERATION_ACCESS_TOKEN:-}
+      GENERATION_JOBS_DATABASE_URL: ${GENERATION_JOBS_DATABASE_URL:-}
+      GENERATION_JOBS_POOL_SIZE: ${GENERATION_JOBS_POOL_SIZE:-4}
+      GENERATION_JOBS_DB_TIMEOUT: ${GENERATION_JOBS_DB_TIMEOUT:-5}
+      GENERATION_JOBS_QUEUE_LIMIT: ${GENERATION_JOBS_QUEUE_LIMIT:-4}
+      GENERATION_JOBS_RETENTION_SECONDS: ${GENERATION_JOBS_RETENTION_SECONDS:-86400}
+      GENERATION_JOBS_CLEANUP_INTERVAL: ${GENERATION_JOBS_CLEANUP_INTERVAL:-60}
+      GENERATION_TOTAL_TIMEOUT: ${GENERATION_TOTAL_TIMEOUT:-180}
+      GENERATION_NUTRITION_TOLERANCE: ${GENERATION_NUTRITION_TOLERANCE:-0.10}
+      CATALOG_PATH: ${CATALOG_PATH:-data/products.json}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_THINKING: ${DEEPSEEK_THINKING:-disabled}
+      DEEPSEEK_REASONING_EFFORT: ${DEEPSEEK_REASONING_EFFORT:-low}
+      DEEPSEEK_MAX_OUTPUT_TOKENS: ${DEEPSEEK_MAX_OUTPUT_TOKENS:-8192}
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
+      interval: 5s
+      timeout: 4s
+      retries: 10
+
+volumes:
+  postgres-data:

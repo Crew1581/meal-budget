@@ -162,6 +162,11 @@ def test_live_http_with_local_provider(tmp_path, root_path):
 
 def create_cli_app():
     """Фабрика только для subprocess-теста настоящего Uvicorn CLI."""
+    from job_store_fake import MemoryJobStore
+
+    import main
+
+    main.JobStore = MemoryJobStore
     app = create_app(live_settings(os.environ["MEAL_TEST_PROVIDER_URL"]))
     lifespan = app.router.lifespan_context
 

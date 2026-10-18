@@ -1,6 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
+from job_store_fake import MemoryJobStore
 
+import main
 from main import create_app
 from meal_budget.core.config import PROJECT_ROOT, Settings
 
@@ -9,6 +11,23 @@ from meal_budget.core.config import PROJECT_ROOT, Settings
 def isolated_catalog(monkeypatch):
     # Обычные тесты не зависят от обновляемого веб-каталога.
     monkeypatch.setenv("CATALOG_PATH", str(PROJECT_ROOT / "tests/fixtures/products.json"))
+
+
+@pytest.fixture
+def job_rows():
+    return {}
+
+
+@pytest.fixture(autouse=True)
+def isolated_job_store(monkeypatch, request, job_rows):
+    if request.node.get_closest_marker("postgres"):
+        return
+
+    class TestJobStore(MemoryJobStore):
+        rows = job_rows
+
+    monkeypatch.setattr(main, "JobStore", TestJobStore)
+    monkeypatch.setenv("GENERATION_JOBS_DATABASE_URL", "")
 
 
 @pytest.fixture

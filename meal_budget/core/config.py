@@ -29,6 +29,14 @@ class Settings(BaseSettings):
     deepseek_max_response_bytes: int = Field(default=262144, ge=1024, le=1048576)
     generation_http_enabled: bool = False
     generation_access_token: SecretStr = SecretStr("")
+    generation_jobs_database_url: SecretStr = SecretStr("")
+    generation_jobs_pool_size: int = Field(default=4, ge=1, le=10)
+    generation_jobs_db_timeout: float = Field(default=5, gt=0, le=60, allow_inf_nan=False)
+    generation_jobs_queue_limit: int = Field(default=4, ge=1, le=100)
+    generation_jobs_retention_seconds: float = Field(
+        default=86400, gt=0, le=604800, allow_inf_nan=False
+    )
+    generation_jobs_cleanup_interval: float = Field(default=60, gt=0, le=3600, allow_inf_nan=False)
     generation_total_timeout: float = Field(default=180, gt=0, le=600, allow_inf_nan=False)
     generation_nutrition_tolerance: Decimal = Field(
         default=Decimal("0.10"), ge=0, le=1, allow_inf_nan=False
