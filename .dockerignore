@@ -5,6 +5,9 @@
 !.python-version
 !main.py
 !manage.py
+!migrations/
+!migrations/postgresql/
+!migrations/postgresql/**
 !meal_budget/
 !meal_budget/**
 !data/

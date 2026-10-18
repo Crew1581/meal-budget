@@ -13,6 +13,7 @@ RUN uv sync --frozen --no-dev --no-cache && \
     mkdir generated && chown 10001:10001 generated && chmod 700 generated
 COPY main.py manage.py ./
 COPY meal_budget/ ./meal_budget/
+COPY migrations/postgresql/ ./migrations/postgresql/
 COPY data/ ./data/
 COPY examples/evaluation/scenarios.json ./examples/evaluation/scenarios.json
 COPY examples/evaluation/ordinary.request.json examples/evaluation/weekly.request.json ./examples/evaluation/

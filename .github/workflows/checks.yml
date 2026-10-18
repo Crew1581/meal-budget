@@ -13,4 +13,27 @@ jobs:
       - run: uv sync --frozen
       - run: uv run --frozen ruff check .
       - run: uv run --frozen ruff format --check .
-      - run: uv run --frozen pytest
+      - run: uv run --frozen pytest -m "not postgres"
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: meal_budget_test
+          POSTGRES_USER: meal_test
+          POSTGRES_PASSWORD: ci-test-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U meal_test -d meal_budget_test"
+          --health-interval 2s --health-timeout 3s --health-retries 20
+    env:
+      MEAL_TEST_POSTGRES_URL: postgresql://meal_test:ci-test-only@127.0.0.1:5432/meal_budget_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+      - run: uv sync --frozen
+      - run: uv run --frozen pytest -m postgres tests/integration

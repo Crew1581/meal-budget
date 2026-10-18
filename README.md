@@ -17,6 +17,8 @@
 - Ручной CLI генерации из JSON-файла.
 - Закрытый `POST /v1/menu-generations` для разработчика: выключен по умолчанию,
   отдельный Bearer-токен, одна генерация на процесс и тело до 64 KiB.
+- MEAL-8: закрытые `POST /v1/generation-jobs` (202) и `GET /v1/generation-jobs/{id}`;
+  один worker, ограниченная очередь и временное хранение в PostgreSQL.
 
 MEAL-5: импортированы **70 SKU** отдельно собранного снимка 5ka.ru
 (`5ka-2026-10-14-observed-v3`), включая кешированные представления карточек.
@@ -41,8 +43,9 @@ ordinary с лимитом 16384: **success за один вызов, 30,21 с, 
 По умолчанию `data/products.json` содержит прежние три **синтетических demo-продукта**
 (`demo-meal-3-v1`), не реальные товары «Пятёрочки». Обычный запуск и прежние
 технические примеры работают без выбора fixture. Тесты используют отдельные fixtures.
-Серверной БД, аккаунтов и фоновых заданий пока нет. DeepSeek вызывается только
-при явном CLI-запуске или авторизованном POST после включения endpoint.
+Аккаунтов нет. PostgreSQL хранит только временные задания, не профиль и
+не мобильные данные. DeepSeek вызывается только при явном CLI-запуске,
+авторизованном синхронном POST или выполнении принятого задания.
 По умолчанию API не требует ключа или модели DeepSeek.
 
 ## Установка и запуск
@@ -87,12 +90,13 @@ Working directory: `$PROJECT_DIR$`; без дополнительных пара
 исключается из исходников. Системный Python 3.12 и глобальные настройки IDE менять не требуется.
 
 Корневой `main.py` собирает приложение в `create_app()`: подключает маршруты,
-обработчики ошибок и middleware, владеет каталогом и HTTPX-клиентом через lifespan.
+обработчики ошибок и middleware, владеет каталогом, HTTPX-клиентом, пулом PostgreSQL и
+worker через lifespan (генерационные ресурсы — только при включении HTTP-генерации).
 `manage.py` отвечает только за запуск Uvicorn. Альтернативный запуск из корня:
 
 ```bash
 uv run --frozen uvicorn main:create_app --factory \
-  --host 127.0.0.1 --port 8000 --workers 1
+  --host 127.0.0.1 --port 8000 --workers 1 --no-access-log
 ```
 
 ```bash
@@ -102,7 +106,8 @@ curl -X POST http://127.0.0.1:8000/v1/menu-calculations \
   -H 'Content-Type: application/json' --data-binary @examples/menu-calculation.json
 uv run --frozen ruff check .
 uv run --frozen ruff format --check .
-uv run --frozen pytest
+uv run --frozen pytest -m "not postgres"
+uv run --frozen python tools/test_postgres.py -q
 ```
 
 Пример расчета — техническая проверка API, не рекомендация по питанию.
@@ -127,6 +132,9 @@ meal_budget/
   schemas/         # каталог, расчет и контракт сервиса генерации
   services/        # расчетное ядро, DeepSeek transport и проверка генерации без FastAPI
   generate_menu.py # ручной CLI, не HTTP endpoint
+  migrate_jobs.py  # отдельные apply/rollback PostgreSQL через yoyo
+migrations/        # версионированная серверная схема, не миграции Flutter
+compose.yaml       # PostgreSQL с volume/healthcheck; API — профиль api
 data/products.json # синтетический demo-каталог по умолчанию
 data/5ka-products.json # 70 наблюдаемых SKU, явный CATALOG_PATH, demo_unverified
 data/5ka-candidates.json # 79 кандидатов вне расчетов, не ProductCatalog
@@ -162,6 +170,12 @@ docs/              # продукт, архитектура, API, решения
 | `GENERATION_TOTAL_TIMEOUT` | 180 секунд на весь цикл; максимум 600 |
 | `GENERATION_HTTP_ENABLED` | `false`; включает закрытый endpoint разработчика |
 | `GENERATION_ACCESS_TOKEN` | Пусто; отдельный серверный SecretStr, обязателен при включении; печатный ASCII без пробелов |
+| `GENERATION_JOBS_DATABASE_URL` | Пусто, SecretStr; PostgreSQL URL из защищенного окружения; нужен только для HTTP-генерации/миграций |
+| `GENERATION_JOBS_POOL_SIZE` | `4`; максимум соединений psycopg async pool, от 1 до 10; минимум пула — 1 |
+| `GENERATION_JOBS_DB_TIMEOUT` | `5` секунд; ожидание пула/старта, connect timeout (округляется вверх), SQL statement/lock timeout; максимум 60 |
+| `GENERATION_JOBS_QUEUE_LIMIT` | `4`; от 1 до 100 ожидающих, отдельно от одного активного задания |
+| `GENERATION_JOBS_RETENTION_SECONDS` | `86400` (24 часа) после completed/failed; максимум 7 суток |
+| `GENERATION_JOBS_CLEANUP_INTERVAL` | `60` секунд между очистками простаивающего worker; максимум 3600 |
 | `GENERATION_NUTRITION_TOLERANCE` | `0.10`: каждый показатель каждого дня в ±10%, границы включительно |
 
 Отсутствие ключа не мешает запуску. Модель не выбирается по модели OpenCode.
@@ -352,6 +366,9 @@ Uvicorn не обязан отменять обработчик при разр�
 503 `configuration_missing`, calls=0; пустой каталог — `catalog_unavailable`.
 В bash из корня проекта, терминал сервера (не используйте shell tracing):
 
+Предварительно запустите PostgreSQL по разделу «Фоновые задания MEAL-8»;
+для включенной HTTP-генерации он теперь обязателен.
+
 ```bash
 set +x
 uv sync --frozen
@@ -359,12 +376,15 @@ read -r -s -p 'DeepSeek API key: ' DEEPSEEK_API_KEY
 export DEEPSEEK_API_KEY
 read -r -s -p 'Generation access token (отдельный секрет): ' GENERATION_ACCESS_TOKEN
 export GENERATION_ACCESS_TOKEN
+read -r -s -p 'PostgreSQL URL: ' GENERATION_JOBS_DATABASE_URL
+export GENERATION_JOBS_DATABASE_URL
 export GENERATION_HTTP_ENABLED=true
 export DEEPSEEK_MODEL=deepseek-flash
 export DEEPSEEK_THINKING=disabled
+uv run --frozen python -m meal_budget.migrate_jobs apply
 uv run --frozen python manage.py
 # После остановки сервера:
-unset DEEPSEEK_API_KEY GENERATION_ACCESS_TOKEN GENERATION_HTTP_ENABLED
+unset DEEPSEEK_API_KEY GENERATION_ACCESS_TOKEN GENERATION_HTTP_ENABLED GENERATION_JOBS_DATABASE_URL
 ```
 
 В другом терминале введите **тот же access token**, но не DeepSeek-ключ.
@@ -404,8 +424,175 @@ HTTP-коды и формат ошибок — в [API](docs/API.md).
 В расчете все числовые показатели возвращаются JSON-числами; в существующем
 GET каталога, plan, КБЖУ, grams, servings и nutrition_tolerance тоже возвращаются
 JSON-числами. Подробности и переход контракта — в [API](docs/API.md).
-PostgreSQL сейчас не требуется. Если появится, деньги — `NUMERIC(..., 2)`,
-миграции — yoyo-migrations, не Alembic. yoyo пока не установлен.
+Сервер заданий — PostgreSQL, миграции — yoyo-migrations, не Alembic.
+Анкета/результат — JSONB: Decimal сохраняется точными десятичными строками без
+промежуточного float; наружу по-прежнему отдаются JSON-числа. Отдельных денежных
+столбцов сейчас нет; при появлении использовать NUMERIC(scale 2), не FLOAT.
+Каталог пока остается JSON, телефон в будущем использует отдельную SQLite.
+
+## Фоновые задания MEAL-8
+
+**Закрытый API разработчика, не авторизация публичного Flutter.** Оба новых
+маршрута выключены вместе с HTTP-генерацией и защищены тем же серверным Bearer.
+Токены установок, квоты и идемпотентность еще не реализованы.
+**Повторный POST создает новое потенциально платное задание**, в том числе после
+потери ответа 202. Не повторяйте POST автоматически.
+
+При выключенной HTTP-генерации прежние маршруты и ручной CLI работают без БД.
+Перед включением `GENERATION_HTTP_ENABLED=true` поднимите PostgreSQL и примените
+миграции отдельной командой. Compose не читает реальный `.env` в примерах ниже:
+
+```bash
+set +x
+read -r -s -p 'Пароль локального PostgreSQL: ' POSTGRES_PASSWORD
+export POSTGRES_PASSWORD
+docker compose --env-file /dev/null up -d --wait db
+# URL с URL-encoded credentials: host 127.0.0.1, port 5432, database meal_budget.
+read -r -s -p 'PostgreSQL URL: ' GENERATION_JOBS_DATABASE_URL
+export GENERATION_JOBS_DATABASE_URL
+uv sync --frozen
+uv run --frozen python -m meal_budget.migrate_jobs apply
+# После настройки Bearer и провайдера, см. локальный безопасный пример ниже:
+uv run --frozen python manage.py
+```
+
+Rollback — **только для тестовой/выведенной из работы БД**, удаляет таблицу и
+ВСЕ задания. После него для следующего запуска снова нужен apply:
+
+```bash
+uv run --frozen python -m meal_budget.migrate_jobs rollback
+uv run --frozen python -m meal_budget.migrate_jobs apply
+```
+
+Подключение задается `GENERATION_JOBS_DATABASE_URL` (`postgresql://` или `postgres://`).
+Не передавайте DSN/пароль в argv, не выводите настройки, не включайте shell tracing
+или `docker compose config` без `--quiet`: вывод может содержать секреты.
+Миграции не запускаются в lifespan; без соединения/схемы включенный API прерывает
+startup с безопасным сообщением. При выключенной генерации пул и клиент провайдера
+не открываются. Один драйвер **psycopg 3**: async API + ограниченный psycopg_pool,
+синхронный backend yoyo `postgresql+psycopg` в отдельном процессе. Пул закрывается
+после worker/HTTPX. До 16 ожидающих получения соединения, затем/при DB timeout —
+безопасный 503. Восстановление соединений пула не повторяет внешнюю генерацию.
+Миграции и API не должны работать одновременно. Rollback первой версии удаляет
+таблицу и данные безвозвратно; роль миграций требует DDL, приложению достаточно DML.
+
+Рабочая история — **только `migrations/postgresql/`**, независимая первая версия
+`001_generation_jobs_postgresql`. SQLite-миграция находится в `migrations/archive_sqlite/`;
+доступного оригинала нет, ее происхождение/побайтовая неизменность не подтверждены.
+Архив не реконструируется; команда его не читает, образ его не содержит.
+Новые миграции должны явно зависеть от предыдущих; примененные не переписываются.
+
+### Переход с локального SQLite-прототипа
+
+Остановите старый API, сохраните SQLite-файлы приватно; новая версия их не читает,
+не удаляет и **не переносит автоматически**. Создайте отдельную пустую PostgreSQL БД,
+выполните apply, замените старый `GENERATION_JOBS_DB_PATH` на новый URL и запустите
+один API. Старые задания/результаты не появятся в новой БД: GET старого ID дает 404.
+Для требуемого переноса нужна отдельная согласованная процедура. Не повторяйте
+старые running и не пересоздавайте POST автоматически: токены могли быть потрачены.
+Старые файлы/sidecar и `var/` остаются в `.gitignore` как защита данных.
+
+Только **один процесс/worker Uvicorn, без reload и реплик**. Один worker генерации
+использует общий активный слот с прежним синхронным endpoint. Пока он занят,
+синхронный POST получает 429; задания ожидают в PostgreSQL. При заполнении очереди
+новый POST получает 429 `generation_queue_full` без обращения к провайдеру.
+Предел считается по `queued`, не по уже выполняющемуся заданию; уменьшение лимита
+после перезапуска не удаляет ранее принятые задания. FIFO — по времени создания и ID.
+Общий deadline начинается при выполнении, не при ожидании в очереди; прежние
+три вызова максимум, отсутствие сетевых retries и общий HTTPX-клиент сохранены.
+
+Задание сохраняется до отправки 202 и больше не принадлежит HTTP-запросу:
+disconnect клиента не отменяет работу. GET дает queued/running либо completed
+с проверенным `GenerationResult`, либо failed с безопасным `error_code`, без
+сырого ответа/анкеты. Некорректная схема анкеты отвергается до создания (422),
+доменные ошибки генерации фиксируются как failed. Версия каталога фиксируется
+при приеме. После перезапуска queued выполняются только по той же версии;
+иначе failed `catalog_version_mismatch`. Старые completed можно получить и после
+смены каталога: результат содержит свою исходную версию.
+Running после сбоя помечаются failed `interrupted`, **никогда не повторяются**:
+токены уже могли быть потрачены. Штатный shutdown отменяет активный цикл, закрывает
+поток, фиксирует interrupted, оставляет queued следующему запуску и закрывает
+HTTPX-клиент и пул. Это не гарантирует отсутствие расходов у провайдера.
+
+Принятие — успешный COMMIT; admission и переход worker в недоступность сериализованы.
+POST, оставшийся на cleanup во время аварии worker, получает 503 `worker_unavailable`
+без новой записи. Начатый admission завершается перед этим переходом; принятый COMMIT
+не отменяется. После аварийной остановки polling queued/running также дает 503
+`worker_unavailable`, а не здоровое ожидание; completed/failed и неизвестный ID
+сохраняют 200/404 при доступной БД. Автоматического перезапуска worker нет;
+нужен перезапуск API со штатным recovery. Подробные гарантии — в API/ARCHITECTURE.
+
+Count + INSERT сериализованы transaction-scoped advisory lock в READ COMMITTED.
+Захват queued → running — один UPDATE с FOR UPDATE SKIP LOCKED / RETURNING;
+состояние и результат сохраняются одной транзакцией, ошибки приводят к rollback.
+Транзакции/соединения не удерживаются во время DeepSeek. Общий активный слот,
+один worker и startup-recovery пока **зависят от одного процесса**, это не поддержка
+нескольких реплик. Exactly-once внешнего платного вызова не гарантируется:
+после успешного запроса возможен сбой до сохранения результата. Автоповтора нет.
+
+TTL отсчитывается от завершения completed/failed. Удаляются строка задания,
+анкета и результат; queued/running не удаляются. Worker очищает при старте,
+между заданиями и по интервалу простоя; POST/GET также выполняют очистку, поэтому
+GET просроченного задания дает **404 `job_not_found`**, как и неизвестный ID.
+Во время активной генерации фоновая очистка может отложиться до ее завершения;
+GET все равно проверяет TTL. DELETE — логическое удаление в PostgreSQL;
+MVCC/VACUUM, WAL и резервные копии не дают обещания немедленного физического стирания.
+Данные не логируются; доступ, TLS, шифрование носителя и backup retention —
+ответственность администратора БД.
+Compose отключает запись SQL/параметров и подробных DETAIL ошибочной строки;
+для внешнего PostgreSQL администратор должен обеспечить эквивалентную политику логов.
+
+### Локальный пример без DeepSeek и платных запросов
+
+Провайдер возвращает только фиксированный синтетический план под demo-каталог
+и `examples/generation-request.json`. Для других анкет/каталогов результат может
+не пройти проверки — это не настоящий генератор. Во всех командах ниже ключ
+фиктивный, URL только localhost; реальные секреты вводить не нужно.
+
+Терминал 1:
+
+```bash
+uv run --frozen python tools/local_generation_provider.py
+```
+
+Терминал 2 (явные настройки переопределяют локальный `.env`):
+
+```bash
+export CATALOG_PATH=data/products.json
+export GENERATION_HTTP_ENABLED=true
+export GENERATION_ACCESS_TOKEN=local-test-only
+export POSTGRES_PASSWORD=local-demo-only
+export POSTGRES_PORT=55432
+export GENERATION_JOBS_DATABASE_URL=postgresql://meal_budget:local-demo-only@127.0.0.1:55432/meal_budget
+docker compose --env-file /dev/null -p meal-budget-demo up -d --wait db
+export DEEPSEEK_API_KEY=local-fake-key
+export DEEPSEEK_MODEL=local-test
+export DEEPSEEK_BASE_URL=http://127.0.0.1:9001
+export DEEPSEEK_THINKING=disabled
+uv run --frozen python -m meal_budget.migrate_jobs apply
+uv run --frozen python manage.py
+```
+
+Терминал 3, создание и чтение (в Bash, без curl retries и автоматических редиректов):
+
+```bash
+set +x
+umask 077
+mkdir -p generated
+accepted=$(mktemp generated/local-job.XXXXXX.json)
+printf 'Authorization: Bearer local-test-only\n' | \
+  curl --disable --noproxy '*' --silent --show-error --fail --header @- \
+  --header 'Content-Type: application/json' --data-binary @examples/generation-request.json \
+  --output "$accepted" http://127.0.0.1:8000/v1/generation-jobs
+job_id=$(uv run --frozen python -c 'import json,sys; print(json.load(open(sys.argv[1]))["id"])' "$accepted")
+printf 'Authorization: Bearer local-test-only\n' | \
+  curl --disable --noproxy '*' --silent --show-error --fail --header @- \
+  "http://127.0.0.1:8000/v1/generation-jobs/$job_id"
+```
+
+Повторяйте только GET до completed/failed, не POST. Результат — технический
+тест, не рекомендация. После остановки закройте тестовый shell или удалите
+экспортированные настройки; не используйте тестовый access token на доступном извне API.
 
 ## Docker
 
@@ -418,12 +605,53 @@ docker run --rm -p 8000:8000 meal-budget:local
 из lock-файла, содержит demo по умолчанию, отдельный снимок 70 SKU,
 manifest с witness и две curated синтетические анкеты (не персональные данные).
 `.env` и секреты не копируются;
-настройки передаются через окружение при запуске. Compose не нужен.
+настройки передаются через окружение при запуске. Для заданий Compose содержит
+PostgreSQL 17 с healthcheck и volume; API — необязательный профиль `api`.
 В образ копируются корневые main.py/manage.py и пакет meal_budget/;
 сервер запускается `python manage.py --host 0.0.0.0 --port 8000` с одним worker.
 `/app/generated` доступен UID 10001 для ручного CLI; результаты внутри контейнера
 эфемерны. Для сохранения вне контейнера можно отдельно подключить каталог в
-`/app/generated` с правами на запись UID 10001. Генерация при запуске API не выполняется.
+`/app/generated` с правами на запись UID 10001. Новые задания при старте не создаются;
+при включении HTTP-генерации ранее принятые queued восстанавливаются по правилам MEAL-8.
+
+Данные заданий теперь сохраняются **в volume PostgreSQL `postgres-data`**, не
+в `/app/var` API. `docker compose down` сохраняет volume, `down --volumes` удаляет
+БД — не применяйте последнее к рабочим данным. Для API в Compose URL должен
+указывать на **db:5432**, а не localhost. Credentials вводите через окружение,
+как выше; затем явные миграции перед стартом API:
+
+```bash
+docker compose --env-file /dev/null up -d --wait db
+docker compose --env-file /dev/null --profile api build api
+docker compose --env-file /dev/null --profile api run --rm --no-deps api \
+  python -m meal_budget.migrate_jobs apply
+docker compose --env-file /dev/null --profile api up -d --wait api
+```
+
+Без `GENERATION_HTTP_ENABLED=true` генерация по-прежнему выключена. Для localhost-провайдера
+из контейнера нужен отдельный доступный сетевой адрес; `127.0.0.1` контейнера
+не означает host. Не запускайте второй API/worker на той же БД.
+
+## Проверки: автономные отдельно от PostgreSQL
+
+```bash
+uv sync --frozen
+uv run --frozen ruff check .
+uv run --frozen ruff format --check .
+uv run --frozen pytest -m "not postgres"
+# Сам создает уникальный Compose-проект, временные БД и удаляет только свои данные:
+uv run --frozen python tools/test_postgres.py -q
+```
+
+Автономные HTTP/worker-тесты используют адаптер только из tests/, не SQLite.
+Интеграционные SQL-проверки выполняются на настоящем PostgreSQL. Альтернатива
+для отдельного тестового сервера: `MEAL_TEST_POSTGRES_URL` с loopback host,
+БД **meal_budget_test** и ролью CREATEDB, затем
+`uv run --frozen pytest -m postgres tests/integration`. Каждому тесту создается
+уникальная БД `meal_test_*`, после теста удаляется только она. URL приложения
+и `.env` не используются. Без тестового PostgreSQL команда **падает**, не skip.
+Обычный `pytest` включает интеграцию и потому также требует тестовый сервер.
+GitHub Actions разделяет автономный job и PostgreSQL service/integration job.
 
 Полный pytest/Ruff запускается **в dev-окружении** после `uv sync --frozen`, с
 доступными git/curl для прежних интеграционных тестов. Это не проверка production-

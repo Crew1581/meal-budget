@@ -20,3 +20,11 @@ build/
 /menu-result.json
 # Все результаты CLI и временные файлы публикации.
 /generated/
+# Серверные задания, анкеты, результаты и журналы SQLite.
+/var/
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-*
+*.sqlite3-*
+*.db-*
